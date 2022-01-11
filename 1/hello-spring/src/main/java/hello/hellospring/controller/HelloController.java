@@ -32,7 +32,7 @@ public class HelloController {
     public String helloString(@RequestParam("name") String name) {
         // 위 두 메소드와 차이
         // : 해당 view 가 받아지는 게 아니라 아래 값이 그대로 반환된다.
-       return "hello " + name;
+        return "hello " + name;
     }
 
     // @ResponseBody 하고 객체를 반환하면 JSON 방식으로 반환한다.
