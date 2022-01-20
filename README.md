@@ -12,3 +12,4 @@ Lecture Study Log
    - `spring`, `jpa`
 5. [자바 ORM 표준 JPA 프로그래밍 - 기본편](./5)
    - `jpa`
+6. [실전! 스프링 부트와 JPA 활용1 - API 개발과 성능 최적화](./6)
