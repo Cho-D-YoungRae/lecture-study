@@ -4,6 +4,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class JpaMain {
@@ -18,14 +21,9 @@ public class JpaMain {
         tx.begin();
 
         try {
-            List<Member> result = em.createQuery("select m from Member as m", Member.class)
-                    .setFirstResult(5)
-                    .setMaxResults(10)
-                    .getResultList();
+            String sql = "SELECT id, age, team_id, name from member where name = 'kim'";
 
-            for (Member member : result) {
-                System.out.println("member.getName() = " + member.getName());
-            }
+            List<Member> resultList = em.createNamedQuery(sql, Member.class).getResultList();
 
             tx.commit();
         } catch (Exception e) {
