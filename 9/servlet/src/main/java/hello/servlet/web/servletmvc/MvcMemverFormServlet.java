@@ -12,10 +12,10 @@ import java.io.IOException;
 public class MvcMemverFormServlet extends HttpServlet {
 
     @Override
-    public void service(ServletRequest requset, ServletResponse response)
+    public void service(ServletRequest request, ServletResponse response)
             throws ServletException, IOException {
         String viewPath = "/WEB-INF/views/new-form.jsp";
-        RequestDispatcher dispatcher = requset.getRequestDispatcher(viewPath);
-        dispatcher.forward(requset, response);
+        RequestDispatcher dispatcher = request.getRequestDispatcher(viewPath);
+        dispatcher.forward(request, response);
     }
 }
