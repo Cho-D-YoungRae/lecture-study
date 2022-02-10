@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:h2:tcp:localhost/~/h2/db/mybatis_study
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+logging:
+  level:
+    study.mybatisstudy:
+      CompanyMapper: DEBUG  # 쿼리문과 입력되는 파라미터 확인가능
+      EmployeeMapper: TRACE # 반환되는결과까지 확인 가능
