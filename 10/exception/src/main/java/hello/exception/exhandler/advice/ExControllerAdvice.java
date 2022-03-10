@@ -23,7 +23,7 @@ public class ExControllerAdvice {
     @ExceptionHandler
     public ResponseEntity<ErrorResult> userExHandler(UserException e) {
         log.error("[exceptionHandler]", e);
-        ErrorResult errorResult = new ErrorResult("USER-EX", e.getMessage());
+        ErrorResult errorResult = new ErrorResult( "USER-EX", e.getMessage());
         return new ResponseEntity<>(errorResult, HttpStatus.BAD_REQUEST);
     }
 
