@@ -17,13 +17,12 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Team team = new Team();
-            team.setName("teamA");
-
             Member member = new Member();
             member.setUsername("member1");
 
-            member.changeTeam(team );
+            Team team = new Team();
+            team.setName("teamA");
+            team.getMembers().add(member);
 
             em.persist(team);
             em.persist(member);

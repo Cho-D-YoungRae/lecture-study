@@ -10,22 +10,12 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(exclude = "team")
+@ToString
 public class Member {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    @Column(name = "username")
     private String username;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "team_id")
-    private Team team;
-
-    public void changeTeam(Team team) {
-        this.team = team;
-        team.getMembers().add(this);
-    }
 }
