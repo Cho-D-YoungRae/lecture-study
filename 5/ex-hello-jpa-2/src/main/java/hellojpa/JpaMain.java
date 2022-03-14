@@ -18,18 +18,24 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Member member = new Member();
-            member.setUsername("user");
-            member.setCreatedBy("CHO");
-            member.setCreatedAt(LocalDateTime.now());
+            Child child1 = new Child();
+            Child child2 = new Child();
 
-            em.persist(member);
+            Parent parent = new Parent();
+            parent.addChild(child1);
+            parent.addChild(child2);
+
+            em.persist(parent);
 
             em.flush();
             em.clear();
 
+            Parent findParent = em.find(Parent.class, parent.getId());
+            System.out.println("findParent.getChildren() = " + findParent.getChildren());
+
             tx.commit();
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             tx.rollback();
         } finally {
             em.close();

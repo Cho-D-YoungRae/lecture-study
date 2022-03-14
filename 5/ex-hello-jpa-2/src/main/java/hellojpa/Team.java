@@ -19,8 +19,4 @@ public class Team extends BaseEntity {
     private Long id;
 
     private String name;
-
-    @OneToMany
-    @JoinColumn(name = "team_id")
-    private List<Member> members = new ArrayList<>();
 }

@@ -9,7 +9,7 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString
+@ToString(exclude = "team")
 public class Member extends BaseEntity {
 
     @Id
@@ -17,4 +17,8 @@ public class Member extends BaseEntity {
     private Long id;
 
     private String username;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_id")
+    private Team team;
 }
