@@ -1,10 +1,9 @@
-package hellojpa;
+package jpql;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class JpaMain {
@@ -18,13 +17,25 @@ public class JpaMain {
         tx.begin();
 
         try {
-            List<Member> result = em.createQuery("select m from Member m where m.username like '%kim%'",
-                            Member.class)
-                    .getResultList();
+
+            Member member = new Member();
+            member.setUsername("member");
+            member.setAge(10);
+            em.persist(member);
 
             em.flush();
             em.clear();
 
+            String jpql = "select m from Member m order by m.age desc";
+            List<Member> result = em.createQuery(jpql, Member.class)
+                    .setFirstResult(1)
+                    .setMaxResults(10)
+                    .getResultList();
+
+            System.out.println("result.size() = " + result.size());
+            for (Member member1 : result) {
+                System.out.println("member = " + member1);
+            }
             tx.commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());

@@ -3,7 +3,8 @@ package hellojpa;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Entity
 @Getter
@@ -18,7 +19,22 @@ public class Member extends BaseEntity {
 
     private String username;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "team_id")
-    private Team team;
+    @Embedded
+    private Period wordPeriod;
+
+    @Embedded
+    private Address homeAddress;
+
+    @ElementCollection
+    @CollectionTable(name = "favorite_food",
+            joinColumns = @JoinColumn(name = "member_id")
+    )
+    @Column(name = "food_name")
+    private Set<String> favoriteFoods = new HashSet<>();
+
+    @ElementCollection
+    @CollectionTable(name = "address",
+            joinColumns = @JoinColumn(name = "member_id")
+    )
+    private List<Address> addressHistory = new ArrayList<>();
 }
