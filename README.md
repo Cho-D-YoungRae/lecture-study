@@ -24,3 +24,5 @@ Lecture Study Log
     - `spring`
 11. [스프링부트 - MyBatis 이거 하나로 끝내자!!!](./11) - `youtube`
     - `mybatis`
+12. [스프링부트 시큐리티 & JWT 강의](./12) - `inflean`
+    - `spring-security`
