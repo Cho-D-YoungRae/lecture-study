@@ -1,7 +1,6 @@
 package com.example.security1.auth;
 
 import com.example.security1.model.User;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +17,6 @@ import java.util.List;
 
 // Security Session => Authentication => UserDetails
 @RequiredArgsConstructor
-@Getter
 public class PrincipalDetails implements UserDetails {
 
     private final User user;
