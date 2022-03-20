@@ -6,7 +6,7 @@ import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderStatus;
 import jpabook.jpashop.repository.OrderRepository;
 import jpabook.jpashop.repository.OrderSearch;
-import jpabook.jpashop.repository.OrderSimpleQueryDto;
+import jpabook.jpashop.repository.order.simplequery.OrderSimpleQueryDto;
 import jpabook.jpashop.repository.order.simplequery.OrderSimpleQueryRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +31,7 @@ public class OrderSimpleApiController {
 
     private final OrderSimpleQueryRepository orderSimpleQueryRepository;
 
+    // Hibernate5Module 사용하지 않는다면 LazyLoading 에 대해서 강제 초기화 진행해야한다.
     @GetMapping("/api/v1/simple-orders")
     public List<Order> ordersV1() {
         return orderRepository.findAllByString(new OrderSearch());
