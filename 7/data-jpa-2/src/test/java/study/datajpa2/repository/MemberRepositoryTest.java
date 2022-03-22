@@ -9,6 +9,7 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 import study.datajpa2.dto.MemberDto;
+import study.datajpa2.dto.MemberProjection;
 import study.datajpa2.entity.Member;
 import study.datajpa2.entity.Team;
 
@@ -356,5 +357,46 @@ class MemberRepositoryTest {
     @Test
     void callCustom(){
         List<Member> memberCustom = memberRepository.findMemberCustom();
+    }
+
+    @Test
+    void nativeQuery() {
+        Team teamA = new Team("teamA");
+        Team teamB = new Team("teamB");
+        teamRepository.save(teamA);
+        teamRepository.save(teamB);
+        Member member1 = new Member("member1", 10, teamA);
+        Member member2 = new Member("member2", 10, teamB);
+        memberRepository.save(member1);
+        memberRepository.save(member2);
+
+        em.flush();
+        em.clear();
+
+        Member findMember = memberRepository.findByNativeQuery("member1").get();
+        System.out.println("findMember = " + findMember);
+    }
+
+    @Test
+    void nativeQueryPage() {
+        Team teamA = new Team("teamA");
+        Team teamB = new Team("teamB");
+        teamRepository.save(teamA);
+        teamRepository.save(teamB);
+        Member member1 = new Member("member1", 10, teamA);
+        Member member2 = new Member("member2", 10, teamB);
+        memberRepository.save(member1);
+        memberRepository.save(member2);
+
+        em.flush();
+        em.clear();
+
+        Page<MemberProjection> result = memberRepository.findByNativeProjection(PageRequest.of(1, 10));
+        List<MemberProjection> content = result.getContent();
+        for (MemberProjection memberProjection : result) {
+            System.out.println("memberProjection.getId() = " + memberProjection.getId());
+            System.out.println("memberProjection.getUsername() = " + memberProjection.getUsername());
+            System.out.println("memberProjection.getTeamName() = " + memberProjection.getTeamName());
+        }
     }
 }
