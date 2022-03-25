@@ -1,56 +1,47 @@
 package me.study.restapistudy.event;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import lombok.*;
-
-import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
-@Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode(of = "id")
-@Entity
-public class Event {
+@Builder
+public class EventDto {
 
-    @Id
-    @GeneratedValue
-    private Long id;
-
+    @NotEmpty
     private String name;
 
+    @NotEmpty
     private String description;
 
+    @NotNull
     private LocalDateTime beginEnrollmentDateTime;
 
+    @NotNull
     private LocalDateTime closeEnrollmentDateTime;
 
+    @NotNull
     private LocalDateTime beginEventDateTime;
 
+    @NotNull
     private LocalDateTime endEventDateTime;
 
     private String location; // (optional) 이게 없으면 온라인 모임
 
+    @Min(0)
     private int basePrice; // (optional)
 
+    @Min(0)
     private int maxPrice; // (optional)
 
+    @Min(0)
     private int limitOfEnrollment;
-
-    private boolean offline;
-
-    private boolean free;
-
-    @Enumerated(EnumType.STRING)
-    private EventStatus eventStatus = EventStatus.DRAFT;
-
-    public void update() {
-        // Update free
-        free = (basePrice == 0 && maxPrice == 0);
-
-        offline = Objects.nonNull(location) && !location.isBlank();
-    }
 }
