@@ -23,35 +23,35 @@ class MemberJpaRepositoryTest {
     EntityManager em;
 
     @Autowired
-    MemberJpaRepository memberJpaRepository;
+    MemberJpaRepository memberRepository;
 
     @Test
     void basicTest() {
         Member member = new Member("member1", 10);
-        memberJpaRepository.save(member);
+        memberRepository.save(member);
 
-        Member findMember = memberJpaRepository.findById(member.getId()).get();
+        Member findMember = memberRepository.findById(member.getId()).get();
         assertThat(findMember).isEqualTo(member);
 
-        List<Member> result1 = memberJpaRepository.findAll();
+        List<Member> result1 = memberRepository.findAll();
         assertThat(result1).containsExactly(member);
 
-        List<Member> result2 = memberJpaRepository.findByUsername(member.getUsername());
+        List<Member> result2 = memberRepository.findByUsername(member.getUsername());
         assertThat(result2).containsExactly(member);
     }
 
     @Test
     void basicTest_Querydsl() {
         Member member = new Member("member1", 10);
-        memberJpaRepository.save(member);
+        memberRepository.save(member);
 
-        Member findMember = memberJpaRepository.findById_Querydsl(member.getId()).get();
+        Member findMember = memberRepository.findById_Querydsl(member.getId()).get();
         assertThat(findMember).isEqualTo(member);
 
-        List<Member> result1 = memberJpaRepository.findAll_Querydsl();
+        List<Member> result1 = memberRepository.findAll_Querydsl();
         assertThat(result1).containsExactly(member);
 
-        List<Member> result2 = memberJpaRepository.findByUsername_Querydsl(member.getUsername());
+        List<Member> result2 = memberRepository.findByUsername_Querydsl(member.getUsername());
         assertThat(result2).containsExactly(member);
     }
 
@@ -78,7 +78,7 @@ class MemberJpaRepositoryTest {
         condition.setAgeLoe(40);
         condition.setTeamName("teamB");
 
-        List<MemberTeamDto> result = memberJpaRepository.searchByBuilder(condition);
+        List<MemberTeamDto> result = memberRepository.searchByBuilder(condition);
 
         assertThat(result)
                 .extracting("username")
@@ -108,7 +108,7 @@ class MemberJpaRepositoryTest {
         condition.setAgeLoe(40);
         condition.setTeamName("teamB");
 
-        List<MemberTeamDto> result = memberJpaRepository.searchByBuilder(condition);
+        List<MemberTeamDto> result = memberRepository.search(condition);
 
         assertThat(result)
                 .extracting("username")
