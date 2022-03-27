@@ -28,3 +28,5 @@ Lecture Study Log
     - `spring-security`
 13. [스프링 기반 REST API 개발](./13) - `inflearn`, `백기선`
     - `spring`, `REST API`
+14. [Spring Boot JWT Tutorial](./14) - `inflearn`, `정은구`
+    - `spring-security`, `jwt`

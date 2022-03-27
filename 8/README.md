@@ -1,4 +1,4 @@
 # [실전! Querydsl](https://www.inflearn.com/course/Querydsl-%EC%8B%A4%EC%A0%84/dashboard)
 
 - [x] 2022/01/25 ~ 2022/01/29
-- [ ] 2022/03/26 ~ ing
+- [x] 2022/03/26 ~ 2022/03/28
