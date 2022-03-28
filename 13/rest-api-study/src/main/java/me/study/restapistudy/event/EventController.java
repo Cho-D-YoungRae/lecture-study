@@ -3,19 +3,21 @@ package me.study.restapistudy.event;
 import lombok.RequiredArgsConstructor;
 import me.study.restapistudy.index.IndexController;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.MediaTypes;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Optional;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
@@ -68,5 +70,59 @@ public class EventController {
                 .body(EntityModel.of(
                         errors,
                         linkTo(IndexController.class).withRel("index")));
+    }
+
+    @GetMapping
+    public ResponseEntity queryEvents(Pageable pageable, PagedResourcesAssembler<Event> assembler) {
+        Page<Event> page = eventRepository.findAll(pageable);
+        PagedModel<EntityModel<Event>> pagedModel = assembler.toModel(page, e ->
+                EntityModel.of(e, linkTo(EventController.class).slash(e.getId()).withSelfRel()));
+        pagedModel.add(Link.of("/docs/index.html#resources-events-list").withRel("profile"));
+        return ResponseEntity.ok(pagedModel);
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity getEvent(@PathVariable long id) {
+        Optional<Event> optionalEvent = eventRepository.findById(id);
+        if (optionalEvent.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Event event = optionalEvent.get();
+        return ResponseEntity.ok(EntityModel.of(
+                event,
+                linkTo(EventController.class).slash(event.getId()).withSelfRel(),
+                Link.of("/docs/index.html#resources-events-list").withRel("profile")
+        ));
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity updateEvent(
+            @PathVariable long id,
+            @RequestBody @Valid EventDto eventDto, Errors errors) {
+        Optional<Event> optionalEvent = eventRepository.findById(id);
+        if (optionalEvent.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        if (errors.hasErrors()) {
+            return ResponseEntity.badRequest().body(errors);
+        }
+
+        eventValidator.validate(eventDto, errors);
+        if (errors.hasErrors()) {
+            return ResponseEntity.badRequest().body(errors);
+        }
+
+        Event existingEvent = optionalEvent.get();
+        modelMapper.map(eventDto, existingEvent);
+        // Service 가 없어서 현재 트랜잭션 안에 있지 않으므로 이렇게 처리
+        Event savedEvent = eventRepository.save(existingEvent);
+
+        EntityModel<Event> entityModel = EntityModel.of(savedEvent,
+                linkTo(EventController.class).slash(savedEvent.getId()).withSelfRel(),
+                Link.of("/docs/index.html#resources-events-update").withRel("profile")
+        );
+        return ResponseEntity.ok(entityModel);
     }
 }
