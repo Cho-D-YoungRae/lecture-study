@@ -1,0 +1,34 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost/study_db
+    username: db-username
+    password: db-password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+        jdbc.lob.non_contextual_creation: true
+
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+
+logging.level.org:
+      hibernate:
+        SQL: DEBUG
+        type: trace
+      springframework:
+        security: DEBUG
+
+my-app:
+  admin-username: admin@email.com
+  admin-password: test!
+  user-username: user@email.com
+  user-password: test!
+  client-id: myApp
+  client-secret: pass
