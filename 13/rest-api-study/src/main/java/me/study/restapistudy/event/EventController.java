@@ -1,6 +1,9 @@
 package me.study.restapistudy.event;
 
 import lombok.RequiredArgsConstructor;
+import me.study.restapistudy.account.Account;
+import me.study.restapistudy.account.AccountAdapter;
+import me.study.restapistudy.account.CurrentUser;
 import me.study.restapistudy.index.IndexController;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -11,12 +14,18 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -33,7 +42,9 @@ public class EventController {
     private final EventValidator eventValidator;
 
     @PostMapping
-    public ResponseEntity createEvent(@Valid @RequestBody EventDto eventDto, Errors errors) {
+    public ResponseEntity createEvent(
+            @Valid @RequestBody EventDto eventDto, Errors errors,
+            @CurrentUser Account currentUser) {
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(errors);
         }
@@ -46,6 +57,7 @@ public class EventController {
         Event event = modelMapper.map(eventDto, Event.class);
         // 프로젝트구조가 간단하여 Controller 안에 있지만 이런 비즈니스 로직은 Service 로 위임해주는 것도 좋다.
         event.update();
+        event.setManager(currentUser);
         Event newEvent = eventRepository.save(event);
         WebMvcLinkBuilder selfLinkBuilder = linkTo(EventController.class).slash(newEvent.getId());
         URI createdUri = selfLinkBuilder.toUri();
@@ -73,33 +85,46 @@ public class EventController {
     }
 
     @GetMapping
-    public ResponseEntity queryEvents(Pageable pageable, PagedResourcesAssembler<Event> assembler) {
+    public ResponseEntity queryEvents(
+            Pageable pageable, PagedResourcesAssembler<Event> assembler,
+            @CurrentUser Account currentUser) {
+
         Page<Event> page = eventRepository.findAll(pageable);
         PagedModel<EntityModel<Event>> pagedModel = assembler.toModel(page, e ->
                 EntityModel.of(e, linkTo(EventController.class).slash(e.getId()).withSelfRel()));
         pagedModel.add(Link.of("/docs/index.html#resources-events-list").withRel("profile"));
+        if (Objects.nonNull(currentUser)) {
+            pagedModel.add(linkTo(EventController.class).withRel("create-event"));
+        }
         return ResponseEntity.ok(pagedModel);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity getEvent(@PathVariable long id) {
+    public ResponseEntity getEvent(
+            @PathVariable long id,
+            @CurrentUser Account currentUser) {
         Optional<Event> optionalEvent = eventRepository.findById(id);
         if (optionalEvent.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
         Event event = optionalEvent.get();
-        return ResponseEntity.ok(EntityModel.of(
+        EntityModel<Event> entityModel = EntityModel.of(
                 event,
                 linkTo(EventController.class).slash(event.getId()).withSelfRel(),
                 Link.of("/docs/index.html#resources-events-list").withRel("profile")
-        ));
+        );
+        if (event.getManager().equals(currentUser)) {
+            entityModel.add(linkTo(EventController.class).slash(event.getId()).withRel("update-event"));
+        }
+        return ResponseEntity.ok(entityModel);
     }
 
     @PutMapping("{id}")
     public ResponseEntity updateEvent(
             @PathVariable long id,
-            @RequestBody @Valid EventDto eventDto, Errors errors) {
+            @RequestBody @Valid EventDto eventDto, Errors errors,
+            @CurrentUser Account currentUser) {
         Optional<Event> optionalEvent = eventRepository.findById(id);
         if (optionalEvent.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -115,6 +140,10 @@ public class EventController {
         }
 
         Event existingEvent = optionalEvent.get();
+        if (!currentUser.equals(existingEvent.getManager())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
         modelMapper.map(eventDto, existingEvent);
         // Service 가 없어서 현재 트랜잭션 안에 있지 않으므로 이렇게 처리
         Event savedEvent = eventRepository.save(existingEvent);

@@ -1,7 +1,10 @@
 package me.study.restapistudy.event;
 
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
+import me.study.restapistudy.account.Account;
+import me.study.restapistudy.account.AccountSerializer;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -43,6 +46,10 @@ public class Event {
     private boolean offline;
 
     private boolean free;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonSerialize(using = AccountSerializer.class)
+    private Account manager;
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
