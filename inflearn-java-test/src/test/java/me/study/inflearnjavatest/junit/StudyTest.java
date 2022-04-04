@@ -1,7 +1,7 @@
 package me.study.inflearnjavatest.junit;
 
-import me.study.inflearnjavatest.Study;
-import me.study.inflearnjavatest.StudyStatus;
+import me.study.inflearnjavatest.domain.Study;
+import me.study.inflearnjavatest.study.StudyStatus;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.*;
