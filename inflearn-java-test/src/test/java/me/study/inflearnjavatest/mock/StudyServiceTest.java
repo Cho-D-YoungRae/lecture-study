@@ -87,12 +87,12 @@ class StudyServiceTest {
         when(memberService.findById(1L)).thenReturn(Optional.of(member));
 
         // TODO studyRepository 객체에 save 메소드를 study 객체로 호출하면 study 객체 그대로 리턴하도록 Stubbing
-        Study study = Study.builder().limit(10).name("test").build();
+        Study study = Study.builder().limitCount(10).name("test").build();
         when(studyRepository.save(study)).thenReturn(study);
 
         Study newStudy = studyService.createNewStudy(1L, study);
         assertThat(newStudy).isNotNull();
-        assertThat(newStudy.getOwner()).isEqualTo(member);
+        assertThat(newStudy.getOwnerId()).isEqualTo(member.getId());
 
         verify(memberService, times(1)).notify(study);
         verify(memberService, times(1)).notify(member);
@@ -115,7 +115,7 @@ class StudyServiceTest {
         member.setEmail("youngrae@email.com");
         given(memberService.findById(1L)).willReturn(Optional.of(member));
 
-        Study study = Study.builder().limit(10).name("test").build();
+        Study study = Study.builder().limitCount(10).name("test").build();
         given(studyRepository.save(study)).willReturn(study);
 
         // When
@@ -123,7 +123,7 @@ class StudyServiceTest {
 
         // Then
         assertThat(newStudy).isNotNull();
-        assertThat(newStudy.getOwner()).isEqualTo(member);
+        assertThat(newStudy.getOwnerId()).isEqualTo(member.getId());
 
         then(memberService).should(times(1)).notify(study);
         then(memberService).should(times(1)).notify(member);
@@ -141,7 +141,7 @@ class StudyServiceTest {
 
         // Given
         StudyService studyService = new StudyService(memberService, studyRepository);
-        Study study = Study.builder().limit(10).name("더 자바, 테스트").build();
+        Study study = Study.builder().limitCount(10).name("더 자바, 테스트").build();
 
         // TODO studyRepository Mock 객체의 save 메소드를호출 시 study를 리턴하도록 만들기.
         when(studyRepository.save(study)).thenReturn(study);
@@ -167,7 +167,7 @@ class StudyServiceTest {
 
         // Given
         StudyService studyService = new StudyService(memberService, studyRepository);
-        Study study = Study.builder().limit(10).name("더 자바, 테스트").build();
+        Study study = Study.builder().limitCount(10).name("더 자바, 테스트").build();
 
         // TODO studyRepository Mock 객체의 save 메소드를호출 시 study를 리턴하도록 만들기.
         given(studyRepository.save(study)).willReturn(study);

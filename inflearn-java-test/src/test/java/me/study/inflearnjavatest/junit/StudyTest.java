@@ -52,9 +52,7 @@ class StudyTest {
     void create() {
         System.out.println("StudyTest.create");
 
-        Study study = Study.builder()
-                .limit(10)
-                .build();
+        Study study = new Study(10);
 
         assertAll(
                 () -> assertNotNull(study),
@@ -64,15 +62,15 @@ class StudyTest {
                 // 문자열 연산을 필요한 시점에만 할 수 있게 한다. -> Test 가 실패했을 때만
                 () -> assertEquals(StudyStatus.DRAFT, study.getStatus(),
                         () -> "스터디를 처음 만들면 상태값이 " + StudyStatus.DRAFT + "여야 한다."),
-                () -> assertTrue(study.getLimit() > 0,
+                () -> assertTrue(study.getLimitCount() > 0,
                         "스터디 최대 가능 인원은 0명보다 커야한다.")
         );
 
         IllegalArgumentException exception =
-                assertThrows(IllegalArgumentException.class, () -> Study.builder().limit(0).build());
+                assertThrows(IllegalArgumentException.class, () -> new Study(0));
         assertEquals("limit은 0보다 커야한다.", exception.getMessage());
 
-        assertTimeout(Duration.ofSeconds(10), () -> Study.builder().limit(10).build());
+        assertTimeout(Duration.ofSeconds(10), () -> Study.builder().limitCount(10).build());
     }
 
     @Test
@@ -80,9 +78,7 @@ class StudyTest {
     void create_assertj() {
         System.out.println("StudyTest.create_assertj");
 
-        Study study = Study.builder()
-                .limit(10)
-                .build();
+        Study study = new Study(10);
 
         SoftAssertions.assertSoftly(softAssertions -> {
             softAssertions.assertThat(study).isNotNull();
@@ -92,21 +88,21 @@ class StudyTest {
             softAssertions.assertThat(study.getStatus())
                     .withFailMessage(()-> "스터디를 처음 만들면 상태값이 " + StudyStatus.DRAFT + "여야 한다.")
                     .isEqualTo(StudyStatus.DRAFT);
-            softAssertions.assertThat(study.getLimit() > 0)
+            softAssertions.assertThat(study.getLimitCount() > 0)
                     .withFailMessage("스터디 최대 가능 인원은 0명보다 커야한다.")
                     .isTrue();
         });
 
-        Assertions.assertThatThrownBy(() -> Study.builder().limit(0).build())
+        Assertions.assertThatThrownBy(() -> new Study(0))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("limit은 0보다 커야한다.");
 
         Assertions.assertThatIllegalArgumentException()
-                .isThrownBy(() -> Study.builder().limit(0).build())
+                .isThrownBy(() -> new Study(0))
                 .withMessageContaining("limit은 0보다 커야한다.");
 
         Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> Study.builder().limit(0).build())
+                .isThrownBy(() -> new Study(0))
                 .withMessageContaining("limit은 0보다 커야한다.");
     }
 
@@ -162,7 +158,7 @@ class StudyTest {
         @Override
         protected Object convert(Object source, Class<?> targetType) throws ArgumentConversionException {
             assertEquals(Study.class, targetType, "Can only convert to Study");
-            return Study.builder().limit(Integer.parseInt(source.toString())).build();
+            return Study.builder().limitCount(Integer.parseInt(source.toString())).build();
         }
     }
 
@@ -187,7 +183,7 @@ class StudyTest {
         @Override
         public Object aggregateArguments(ArgumentsAccessor accessor, ParameterContext context) throws ArgumentsAggregationException {
             return Study.builder()
-                    .limit(accessor.getInteger(0))
+                    .limitCount(accessor.getInteger(0))
                     .name(accessor.getString(1))
                     .build();
         }

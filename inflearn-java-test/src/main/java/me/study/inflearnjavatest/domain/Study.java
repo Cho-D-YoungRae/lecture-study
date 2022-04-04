@@ -3,45 +3,39 @@ package me.study.inflearnjavatest.domain;
 import lombok.*;
 import me.study.inflearnjavatest.study.StudyStatus;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
-@Getter
-@Setter
+@Entity
+@Getter @Setter
 @ToString
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Study {
 
+    @Id @GeneratedValue
     private Long id;
 
-    private StudyStatus status;
+    @Builder.Default
+    private StudyStatus status = StudyStatus.DRAFT;
 
-    private int limit;
+    private int limitCount;
 
     private String name;
 
     private LocalDateTime openDateTime;
 
-    private Member owner;
+    private Long ownerId;
 
-    @Builder
-    private Study(
-            Long id,
-            StudyStatus status,
-            int limit,
-            String name,
-            Member owner) {
-        this.id = id;
-
-        this.status = Optional.ofNullable(status).orElse(StudyStatus.DRAFT);
-
-        if (limit <= 0) {
+    public Study(int limitCount) {
+        if (limitCount <= 0) {
             throw new IllegalArgumentException("limit은 0보다 커야한다.");
         }
-        this.limit = limit;
-
-        this.name = name;
-
-        this.owner = owner;
+        this.limitCount = limitCount;
+        this.status = StudyStatus.DRAFT;
     }
 
     public void open() {
