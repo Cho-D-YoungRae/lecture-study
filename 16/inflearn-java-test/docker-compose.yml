@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  study-db:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: studytest
+      POSTGRES_PASSWORD: studytest
+      POSTGRES_DB: studytest
