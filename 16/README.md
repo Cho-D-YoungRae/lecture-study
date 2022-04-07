@@ -1,7 +1,7 @@
-# [더 자바, 애플리케이션을 테스트하는 다양한 방법](https://www.inflearn.com/course/the-java-application-test/dashboard)
+git # [더 자바, 애플리케이션을 테스트하는 다양한 방법](https://www.inflearn.com/course/the-java-application-test/dashboard)
 
 > `inflearn` - `백기선`
 
-- [ ] 2022/04/03 ~ ing
+- [x] 2022/04/03 ~ 2022/04/07
 
 - [github](https://github.com/keesun/inflearn-the-java-test)

@@ -30,6 +30,13 @@ dependencies {
     testImplementation 'org.testcontainers:junit-jupiter:1.16.3'
     testImplementation 'org.testcontainers:postgresql:1.16.3'
 
+
+    implementation 'de.codecentric:chaos-monkey-spring-boot:2.5.4'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    testImplementation 'com.tngtech.archunit:archunit-junit5-engine:0.23.1'
+    
+
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testCompileOnly 'org.projectlombok:lombok:1.18.22'
