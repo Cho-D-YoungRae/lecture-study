@@ -32,3 +32,5 @@ Lecture Study Log
     - `spring-security`, `jwt`
 15. [왕초보도 따라하는 도커 기초 강의](./15) - `youtube`, `재즐보프`
     - `docker`
+16. [더 자바, 애플리케이션을 테스트하는 다양한 방법](./16) - `inflearn`, `백기선`
+    - `junit`, `mockito`, `testcontainers`, `jmeter`, `chaos-monkey`, `archunit`
