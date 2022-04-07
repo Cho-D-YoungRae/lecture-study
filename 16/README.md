@@ -2,6 +2,6 @@
 
 > `inflearn` - `백기선`
 
-- [ ] 2022/04/03 ~ ing
+- [x] 2022/04/03 ~ 2022/04/07
 
 - [github](https://github.com/keesun/inflearn-the-java-test)
