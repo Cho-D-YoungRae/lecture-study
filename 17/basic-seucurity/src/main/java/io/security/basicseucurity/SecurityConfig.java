@@ -8,6 +8,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +25,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .anyRequest().authenticated();
+        http
+                .formLogin();
+        /*
         http    // 예제를 위해 default 와 다른 값을 구성
                 .formLogin()
 //                .loginPage("/loginPage")
@@ -50,5 +55,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     }
                 })
                 .permitAll();   // 로그인을 위해 loginPage 의 접근을 허용
+        */
+
+        http
+                .logout()
+                .logoutUrl("/logout")   // default
+//                .logoutSuccessUrl("/login")
+                .addLogoutHandler(new LogoutHandler() {
+                    @Override
+                    public void logout(
+                            HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+                        System.out.println("SecurityConfig.logout");
+                        request.getSession().invalidate();
+                    }
+                })
+                .logoutSuccessHandler(new LogoutSuccessHandler() {
+                    @Override
+                    public void onLogoutSuccess(
+                            HttpServletRequest request, HttpServletResponse response, Authentication authentication)
+                            throws IOException, ServletException {
+                        System.out.println("SecurityConfig.onLogoutSuccess");
+                        response.sendRedirect("/login");
+                    }
+                })
+                .deleteCookies("remember-me");
     }
 }
