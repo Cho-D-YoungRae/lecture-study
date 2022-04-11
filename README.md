@@ -34,3 +34,5 @@ Lecture Study Log
     - `docker`
 16. [더 자바, 애플리케이션을 테스트하는 다양한 방법](./16) - `inflearn`, `백기선`
     - `junit`, `mockito`, `testcontainers`, `jmeter`, `chaos-monkey`, `archunit`
+17. [스프링 시큐리티 - Spring Boot 기반으로 개발하는 Spring Security](./17) - `inflearn`, `정수원`
+    - `spring-security`
