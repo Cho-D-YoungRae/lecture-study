@@ -31,6 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .anyRequest().authenticated();
+
         http
                 .formLogin();
         /*
@@ -86,11 +87,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 })
                 .deleteCookies("remember-me");
         */
+        /*
         http
                 .rememberMe()
-//                .rememberMeParameter("remember")
-//                .tokenValiditySeconds(3600)
+                .rememberMeParameter("remember")
+                .tokenValiditySeconds(3600)
                 .userDetailsService(userDetailsService);
-
+        */
+        /*
+        http
+                .sessionManagement()
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(true);
+        */
+        /*
+        http
+                .sessionManagement()
+                .sessionFixation().changeSessionId();
+        */
     }
 }
