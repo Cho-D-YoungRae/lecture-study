@@ -35,12 +35,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-//        http
-//                .authorizeRequests()
-//                .anyRequest().authenticated();
+        http
+                .authorizeRequests()
+//                .anyRequest().authenticated()
+                .anyRequest().permitAll()
+        ;
 
-//        http
-//                .formLogin();
+        http
+                .formLogin();
 
         /*
         http    // 예제를 위해 default 와 다른 값을 구성
@@ -115,14 +117,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         */
 
         // 맨 위의 authorizeRequests 설정과 중복되면 오류 -> 둘 중하나는 주석처리
-        http
-                .authorizeRequests()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/user").hasRole("USER")
-                .antMatchers("/admin/pay").hasRole("ADMIN")
-                .antMatchers("/admin/**").access("hasRole('ADMIN') or hasRole('SYS')")
-                .anyRequest().authenticated();
-
+//        http
+//                .authorizeRequests()
+//                .antMatchers("/login").permitAll()
+//                .antMatchers("/user").hasRole("USER")
+//                .antMatchers("/admin/pay").hasRole("ADMIN")
+//                .antMatchers("/admin/**").access("hasRole('ADMIN') or hasRole('SYS')")
+//                .anyRequest().authenticated();
+        /*
         http
                 .formLogin()
                 .successHandler(new AuthenticationSuccessHandler() {
@@ -157,6 +159,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         response.sendRedirect("/denied");
                     }
                 });
+        */
     }
 
     @Override
