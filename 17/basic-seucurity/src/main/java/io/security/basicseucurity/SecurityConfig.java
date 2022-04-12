@@ -3,6 +3,7 @@ package io.security.basicseucurity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -10,10 +11,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.SavedRequest;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -34,8 +39,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .authorizeRequests()
 //                .anyRequest().authenticated();
 
-        http
-                .formLogin();
+//        http
+//                .formLogin();
+
         /*
         http    // 예제를 위해 default 와 다른 값을 구성
                 .formLogin()
@@ -111,10 +117,46 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // 맨 위의 authorizeRequests 설정과 중복되면 오류 -> 둘 중하나는 주석처리
         http
                 .authorizeRequests()
+                .antMatchers("/login").permitAll()
                 .antMatchers("/user").hasRole("USER")
                 .antMatchers("/admin/pay").hasRole("ADMIN")
                 .antMatchers("/admin/**").access("hasRole('ADMIN') or hasRole('SYS')")
                 .anyRequest().authenticated();
+
+        http
+                .formLogin()
+                .successHandler(new AuthenticationSuccessHandler() {
+                    @Override
+                    public void onAuthenticationSuccess(
+                            HttpServletRequest request, HttpServletResponse response,
+                            Authentication authentication) throws IOException, ServletException {
+                        System.out.println("SecurityConfig.onAuthenticationSuccess");
+                        HttpSessionRequestCache requestCache = new HttpSessionRequestCache();
+                        SavedRequest savedRequest = requestCache.getRequest(request, response);
+                        String redirectUrl = savedRequest.getRedirectUrl();
+                        response.sendRedirect(redirectUrl);
+                    }
+                })
+                .and()
+                .exceptionHandling()
+//                .authenticationEntryPoint(new AuthenticationEntryPoint() {
+//                    @Override
+//                    public void commence(
+//                            HttpServletRequest request, HttpServletResponse response,
+//                            AuthenticationException authException) throws IOException, ServletException {
+//                        System.out.println("SecurityConfig.commence");
+//                        response.sendRedirect("/login");  // spring security 가 제공해주는 로그인 페이지 X
+//                    }
+//                })
+                .accessDeniedHandler(new AccessDeniedHandler() {
+                    @Override
+                    public void handle(
+                            HttpServletRequest request, HttpServletResponse response,
+                            AccessDeniedException accessDeniedException) throws IOException, ServletException {
+                        System.out.println("SecurityConfig.handle");
+                        response.sendRedirect("/denied");
+                    }
+                });
     }
 
     @Override
