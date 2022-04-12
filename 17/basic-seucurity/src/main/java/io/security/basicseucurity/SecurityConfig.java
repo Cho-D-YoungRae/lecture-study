@@ -3,6 +3,7 @@ package io.security.basicseucurity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -25,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Order(0)
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -35,14 +37,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http
-                .authorizeRequests()
-//                .anyRequest().authenticated()
-                .anyRequest().permitAll()
-        ;
-
-        http
-                .formLogin();
+//        http
+//                .authorizeRequests()
+////                .anyRequest().authenticated()
+//                .anyRequest().permitAll()
+//        ;
+//
+//        http
+//                .formLogin();
 
         /*
         http    // 예제를 위해 default 와 다른 값을 구성
@@ -160,12 +162,38 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     }
                 });
         */
-    }
 
+        http
+                .antMatcher("/admin/**")
+                .authorizeRequests()
+                .anyRequest().authenticated()
+
+                .and()
+                .httpBasic();
+    }
+    /*
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().withUser("user").password("{noop}1111").roles("USER");
         auth.inMemoryAuthentication().withUser("sys").password("{noop}1111").roles("SYS", "USER");
         auth.inMemoryAuthentication().withUser("admin").password("{noop}1111").roles("ADMIN", "SYS", "USER");
+    }
+    */
+
+
+}
+
+@Configuration
+@Order(1)
+class SecurityConfig2 extends WebSecurityConfigurerAdapter {
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests()
+                .anyRequest().permitAll()
+
+                .and()
+                .formLogin();
     }
 }
