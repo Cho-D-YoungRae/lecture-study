@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -26,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Order(0)
+//@Order(0)
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -37,14 +38,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-//        http
-//                .authorizeRequests()
-////                .anyRequest().authenticated()
+        http
+                .authorizeRequests()
+                .anyRequest().authenticated()
 //                .anyRequest().permitAll()
-//        ;
-//
-//        http
-//                .formLogin();
+        ;
+
+        http
+                .formLogin();
 
         /*
         http    // 예제를 위해 default 와 다른 값을 구성
@@ -162,7 +163,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     }
                 });
         */
-
+        /*
         http
                 .antMatcher("/admin/**")
                 .authorizeRequests()
@@ -170,6 +171,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .httpBasic();
+        */
+
+        /*
+        SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
+        */
     }
     /*
     @Override
@@ -183,6 +189,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 }
 
+/*
 @Configuration
 @Order(1)
 class SecurityConfig2 extends WebSecurityConfigurerAdapter {
@@ -197,3 +204,4 @@ class SecurityConfig2 extends WebSecurityConfigurerAdapter {
                 .formLogin();
     }
 }
+*/
