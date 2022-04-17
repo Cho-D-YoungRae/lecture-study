@@ -6,7 +6,7 @@ import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
-// 스프링 부트 기본제공 에러 페이지 설정을 사용하기 위해
+// 스프링 부트 기본제공 에러 페이지 설정을 사용하기 위해 빈 등록 X
 //@Component
 public class WebServerCustomizer implements WebServerFactoryCustomizer<ConfigurableWebServerFactory> {
 
