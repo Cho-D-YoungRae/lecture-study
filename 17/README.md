@@ -5,3 +5,10 @@
 - [ ] 2022/04/11 ~ ing
 
 - [github](https://github.com/onjsdnjs/corespringsecurity)
+
+## 순서
+
+1. basic-security
+   - spring-security 구조
+2. core-spring-security
+   - 실전 프로젝트
