@@ -11,5 +11,8 @@
 
 1. basic-security
    - spring-security 구조
-2. core-spring-security
-   - 실전 프로젝트
+2. practice-project1
+   - 실전프로젝트 -인증 프로세스 Form 인증 구현
+   - 실전프로젝트 - 인증 프로세스 Ajax 인증 구현
+3. practice-project2
+   - 실전프로젝트 - 인증 프로세스 Ajax 인증 구현
