@@ -35,6 +35,7 @@ public class AjaxSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatcher("/api/**")
                 .authorizeRequests()
                 .antMatchers("/api/messages").hasRole("MANAGER")
+                .antMatchers("/api/login").permitAll()
                 .anyRequest().authenticated()
 
                 .and()
@@ -46,7 +47,7 @@ public class AjaxSecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDeniedHandler(ajaxAccessDeniedHandler())
         ;
 
-        http.csrf().disable();
+//        http.csrf().disable();
 
         // custom DSL 로 config 설정하기
         customConfigurerAjax(http);
