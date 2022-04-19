@@ -38,9 +38,10 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             throw new BadCredentialsException("Invalid password");
         }
 
+        // FormWebAuthenticationDetails (custom) 을 통한 secret key 검증
         FormWebAuthenticationDetails details = (FormWebAuthenticationDetails) authentication.getDetails();
         String secretKey = details.getSecretKey();
-        if (isNull(secretKey) || "secret".equals(secretKey)) {
+        if (isNull(secretKey) || !"secret".equals(secretKey)) {
             throw new InsufficientAuthenticationException("secretKey = " + secretKey);
         }
 
