@@ -38,13 +38,27 @@ public class AjaxSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
 
                 .and()
-                .addFilterBefore(ajaxAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                // custom DSL 로 config 설정하며 아래가 거기에 포함됨
+//                .addFilterBefore(ajaxAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
 
                 .exceptionHandling()
                 .authenticationEntryPoint(new AjaxLoginAuthenticationEntryPoint())
                 .accessDeniedHandler(ajaxAccessDeniedHandler())
         ;
+
         http.csrf().disable();
+
+        // custom DSL 로 config 설정하기
+        customConfigurerAjax(http);
+    }
+
+    private void customConfigurerAjax(HttpSecurity http) throws Exception {
+        http
+                .apply(new AjaxLoginConfigurer<>())
+                .successHandlerAjax(ajaxAuthenticationSuccessHandler())
+                .failureHandlerAjax(ajaxAuthenticationFailureHandler())
+                .setAuthenticationManager(authenticationManagerBean())
+                .loginProcessingUrl("/api/login");
     }
 
     @Override
@@ -53,6 +67,7 @@ public class AjaxSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationProvider(ajaxAuthenticationProvider());
     }
 
+    /*
     @Bean
     public AjaxAuthenticationFilter ajaxAuthenticationFilter() throws Exception {
         AjaxAuthenticationFilter ajaxAuthenticationFilter = new AjaxAuthenticationFilter();
@@ -61,6 +76,7 @@ public class AjaxSecurityConfig extends WebSecurityConfigurerAdapter {
         ajaxAuthenticationFilter.setAuthenticationFailureHandler(ajaxAuthenticationFailureHandler());
         return ajaxAuthenticationFilter;
     }
+    */
 
     @Bean
     public AjaxAuthenticationProvider ajaxAuthenticationProvider() {
