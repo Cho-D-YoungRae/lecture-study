@@ -55,7 +55,8 @@ public class UserController {
 	}
 
 	@GetMapping(value="/mypage")
-	public String myPage(@AuthenticationPrincipal Account account, Authentication authentication, Principal principal) throws Exception {
+	public String myPage(
+			@AuthenticationPrincipal Account account, Authentication authentication, Principal principal) throws Exception {
 
 
 		return "user/mypage";

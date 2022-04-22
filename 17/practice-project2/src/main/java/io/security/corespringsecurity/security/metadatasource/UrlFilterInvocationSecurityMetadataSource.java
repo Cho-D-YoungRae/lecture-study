@@ -10,10 +10,11 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
-public class UrlFilterInvocationSecurityMetadatsSource implements FilterInvocationSecurityMetadataSource {
+public class UrlFilterInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 
     private LinkedHashMap<RequestMatcher, List<ConfigAttribute>> requestMap = new LinkedHashMap<>();
 
+    // Filter 에서 호출할 때 Url 방식 혹은 메소드 방식 둘다 이용되므로
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
 
