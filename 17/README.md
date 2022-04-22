@@ -2,7 +2,8 @@
 
 > `inflearn` - `정수원`
 
-- [ ] 2022/04/11 ~ ing
+- [x] 2022/04/11 ~ 2022/04/22
+  - Chapter 4 까지 수강. 이후 내용은 나중에 2회독 하면서 진행.
 
 - [github](https://github.com/onjsdnjs/corespringsecurity)
 - [github 최종](https://github.com/onjsdnjs/corespringsecurityfinal)
