@@ -1,0 +1,9 @@
+GET http://localhost:8080/v4/request?itemId=hello
+Accept: application/json
+
+###
+
+GET http://localhost:8080/v4/request?itemId=ex
+Accept: application/json
+
+###

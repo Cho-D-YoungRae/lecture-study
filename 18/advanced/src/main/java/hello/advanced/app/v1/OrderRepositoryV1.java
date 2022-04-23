@@ -14,7 +14,7 @@ public class OrderRepositoryV1 {
     public void save(String itemId) {
         TraceStatus status = null;
         try {
-            status = trace.begin("OrderRepository.request()");
+            status = trace.begin("OrderRepository.save()");
 
             // 저장 로직
             if ("ex".equals(itemId)) {
