@@ -1,0 +1,9 @@
+GET http://localhost:8080/v2/request?itemId=99
+Accept: application/json
+
+###
+
+GET http://localhost:8080/v2/no-log
+Accept: application/json
+
+###
