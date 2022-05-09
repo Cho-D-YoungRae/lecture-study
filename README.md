@@ -36,5 +36,7 @@ Lecture Study Log
     - `junit`, `mockito`, `testcontainers`, `jmeter`, `chaos-monkey`, `archunit`
 17. [스프링 시큐리티 - Spring Boot 기반으로 개발하는 Spring Security](./17) - `inflearn`, `정수원`
     - `spring-security`
-18. [스프링 핵심 원리 - 고급편](./18) - `inflearn` - `김영한`
+18. [스프링 핵심 원리 - 고급편](./18) - `inflearn`, `김영한`
+    - `spring`
+19. [스프링 DB 1편 - 데이터 접근 핵심 원리](./19) - `inflearn`, `김영한`
     - `spring`
