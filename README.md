@@ -40,3 +40,5 @@ Lecture Study Log
     - `spring`
 19. [스프링 DB 1편 - 데이터 접근 핵심 원리](./19) - `inflearn`, `김영한`
     - `spring`
+20. [스프링 DB 2편 - 데이터 접근 활용 기술](./20) - `inflearn`, `김영한`
+    - `spring`
