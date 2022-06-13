@@ -20,7 +20,7 @@ import java.util.Optional;
 @Repository
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class JpaItemRepository implements ItemRepository {
+public class JpaItemRepositoryV1 implements ItemRepository {
 
     private final EntityManager em;
 
