@@ -42,3 +42,5 @@ Lecture Study Log
     - `spring`
 20. [스프링 DB 2편 - 데이터 접근 활용 기술](./20) - `inflearn`, `김영한`
     - `spring`
+21. [호돌맨의 요절복통 개발쇼 (SpringBoot, Vue.JS, AWS)](./21) - `inflearn`, `호돌맨`
+    - `spring`, `vue`, `aws`
