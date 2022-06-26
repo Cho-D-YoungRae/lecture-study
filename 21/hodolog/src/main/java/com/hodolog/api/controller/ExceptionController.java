@@ -17,8 +17,10 @@ public class ExceptionController {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ErrorResponse methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
         log.error("methodArgumentNotValidExceptionHandler error", e);
-        ErrorResponse errorResponse = new ErrorResponse(
-                String.valueOf(HttpStatus.BAD_REQUEST.value()), "잘못된 요청입니다.");
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .code(String.valueOf(HttpStatus.BAD_REQUEST.value()))
+                .message("잘못된 요청입니다.")
+                .build();
         for (FieldError fieldError : e.getFieldErrors()) {
             errorResponse.addValidation(fieldError.getField(), fieldError.getDefaultMessage());
         }
