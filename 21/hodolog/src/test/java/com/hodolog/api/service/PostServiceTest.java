@@ -1,6 +1,7 @@
 package com.hodolog.api.service;
 
 import com.hodolog.api.domain.Post;
+import com.hodolog.api.exception.PostNotFound;
 import com.hodolog.api.repository.PostRepository;
 import com.hodolog.api.request.PostCreate;
 import com.hodolog.api.request.PostEdit;
@@ -12,16 +13,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.data.domain.Sort.Direction.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @Slf4j
 @SpringBootTest
@@ -165,5 +163,55 @@ class PostServiceTest {
 
         // then
         assertThat(postRepository.count()).isZero();
+    }
+
+    @Test
+    @DisplayName("글 1개 조회 - 존재하지 않는 글")
+    void test7() {
+        // given
+        Post post = Post.builder()
+                .title("foo")
+                .content("bar")
+                .build();
+        postRepository.save(post);
+
+        // expected
+        assertThatThrownBy(() -> postService.get(post.getId() + 1))
+                .isInstanceOf(PostNotFound.class);
+    }
+
+    @Test
+    @DisplayName("글 삭제 - 존재하지 않는 글")
+    void test8() {
+        // given
+        Post post = Post.builder()
+                .title("호돌맨")
+                .content("반포자이")
+                .build();
+        postRepository.save(post);
+
+        // expected
+        assertThatThrownBy(() -> postService.delete(post.getId() + 1L))
+                .isInstanceOf(PostNotFound.class);
+    }
+
+    @Test
+    @DisplayName("글 내용 수정 - 존재하지 않는 글")
+    void test9() {
+        // given
+        Post post = Post.builder()
+                .title("호돌맨")
+                .content("반포자이")
+                .build();
+        postRepository.save(post);
+
+        PostEdit postEdit = PostEdit.builder()
+                .title(post.getTitle())
+                .content("초가집")
+                .build();
+
+        // expected
+        assertThatThrownBy(() -> postService.edit(post.getId() + 1L, postEdit))
+                .isInstanceOf(PostNotFound.class);
     }
 }
