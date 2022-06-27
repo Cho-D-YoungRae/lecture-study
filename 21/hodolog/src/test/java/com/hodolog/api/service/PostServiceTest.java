@@ -3,6 +3,8 @@ package com.hodolog.api.service;
 import com.hodolog.api.domain.Post;
 import com.hodolog.api.repository.PostRepository;
 import com.hodolog.api.request.PostCreate;
+import com.hodolog.api.request.PostEdit;
+import com.hodolog.api.request.PostSearch;
 import com.hodolog.api.response.PostResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -75,7 +77,7 @@ class PostServiceTest {
     }
 
     @Test
-    @DisplayName("글 1페이지 조회")
+    @DisplayName("글 여러개 조회")
     void test3() {
         // given
         List<Post> savedPosts = postRepository.saveAll(IntStream.range(1, 31)
@@ -86,14 +88,82 @@ class PostServiceTest {
                 .collect(Collectors.toList()));
 
         // when
-        Pageable pageable = PageRequest.of(0, 5, Sort.by(DESC, "id"));
-        List<PostResponse> posts = postService.getList(pageable);
+        PostSearch postSearch = PostSearch.builder()
+                .page(1)
+                .build();
+        List<PostResponse> posts = postService.getList(postSearch);
         IntStream.range(0, posts.size())
                 .forEach(i -> log.info("posts[{}] = {}", i, posts.get(i).getTitle()));
 
         // then
-        assertThat(posts).hasSize(5);
+        assertThat(posts).hasSize(10);
         assertThat(posts.get(0).getTitle()).isEqualTo(savedPosts.get(savedPosts.size() - 1).getTitle());
-        assertThat(posts.get(4).getTitle()).isEqualTo(savedPosts.get(savedPosts.size() - 5).getTitle());
+    }
+
+    @Test
+    @DisplayName("글 제목 수정")
+    void test4() {
+        // given
+        Post post = Post.builder()
+                .title("호돌맨")
+                .content("반포자이")
+                .build();
+        postRepository.save(post);
+
+        PostEdit postEdit = PostEdit.builder()
+                .title("호돌걸")
+                .content(post.getContent())
+                .build();
+
+        // when
+        postService.edit(post.getId(), postEdit);
+
+        // then
+        Post changedPost = postRepository.findById(post.getId())
+                .orElseThrow(() -> new RuntimeException("글이 존재하지 않습니다. id=" + post.getId()));
+        assertThat(changedPost.getTitle()).isEqualTo(postEdit.getTitle());
+        assertThat(changedPost.getContent()).isEqualTo(post.getContent());
+    }
+
+    @Test
+    @DisplayName("글 내용 수정")
+    void test5() {
+        // given
+        Post post = Post.builder()
+                .title("호돌맨")
+                .content("반포자이")
+                .build();
+        postRepository.save(post);
+
+        PostEdit postEdit = PostEdit.builder()
+                .title(post.getTitle())
+                .content("초가집")
+                .build();
+
+        // when
+        postService.edit(post.getId(), postEdit);
+
+        // then
+        Post changedPost = postRepository.findById(post.getId())
+                .orElseThrow(() -> new RuntimeException("글이 존재하지 않습니다. id=" + post.getId()));
+        assertThat(changedPost.getTitle()).isEqualTo(post.getTitle());
+        assertThat(changedPost.getContent()).isEqualTo(postEdit.getContent());
+    }
+
+    @Test
+    @DisplayName("글 삭제")
+    void test6() {
+        // given
+        Post post = Post.builder()
+                .title("호돌맨")
+                .content("반포자이")
+                .build();
+        postRepository.save(post);
+
+        // when
+        postService.delete(post.getId());
+
+        // then
+        assertThat(postRepository.count()).isZero();
     }
 }
