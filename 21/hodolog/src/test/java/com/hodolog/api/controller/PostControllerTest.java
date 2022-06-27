@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hodolog.api.domain.Post;
 import com.hodolog.api.repository.PostRepository;
 import com.hodolog.api.request.PostCreate;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -119,6 +120,32 @@ class PostControllerTest {
                 .andExpect(jsonPath("$.id").value(post.getId()))
                 .andExpect(jsonPath("$.title").value(post.getTitle().substring(0, 10)))
                 .andExpect(jsonPath("$.content").value(post.getContent()))
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("글 여러개 조회")
+    void test5() throws Exception {
+        // given
+        Post post1 = postRepository.save(Post.builder()
+                .title("title_1")
+                .content("content_1")
+                .build());
+
+        Post post2 = postRepository.save(Post.builder()
+                .title("title_2")
+                .content("content_2")
+                .build());
+
+        // expected
+        mockMvc.perform(get("/posts")
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$.length()", Matchers.is(2)))  // 위와 같음
+                .andExpect(jsonPath("$[0].id").value(post1.getId()))
+                .andExpect(jsonPath("$[0].title").value(post1.getTitle()))
+                .andExpect(jsonPath("$[0].content").value(post1.getContent()))
                 .andDo(print());
     }
 }

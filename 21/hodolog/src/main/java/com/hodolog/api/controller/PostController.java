@@ -1,5 +1,6 @@
 package com.hodolog.api.controller;
 
+import com.hodolog.api.domain.Post;
 import com.hodolog.api.request.PostCreate;
 import com.hodolog.api.response.PostResponse;
 import com.hodolog.api.service.PostService;
@@ -8,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @Slf4j
@@ -24,7 +26,11 @@ public class PostController {
 
     @GetMapping("/posts/{postId}")
     public PostResponse get(@PathVariable Long postId) {
-        PostResponse response = postService.get(postId);
-        return response;
+        return postService.get(postId);
+    }
+
+    @GetMapping("/posts")
+    public List<PostResponse> getList() {
+        return postService.getList();
     }
 }
