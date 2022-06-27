@@ -6,10 +6,16 @@ import com.hodolog.api.response.PostResponse;
 import com.hodolog.api.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+
+import static org.springframework.data.domain.Sort.Direction.*;
 
 
 @Slf4j
@@ -30,7 +36,7 @@ public class PostController {
     }
 
     @GetMapping("/posts")
-    public List<PostResponse> getList() {
-        return postService.getList();
+    public List<PostResponse> getList(@SortDefault(sort = "id", direction = DESC) Pageable pageable) {
+        return postService.getList(pageable);
     }
 }

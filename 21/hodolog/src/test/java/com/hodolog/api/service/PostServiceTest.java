@@ -4,16 +4,24 @@ import com.hodolog.api.domain.Post;
 import com.hodolog.api.repository.PostRepository;
 import com.hodolog.api.request.PostCreate;
 import com.hodolog.api.response.PostResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.data.domain.Sort.Direction.*;
 
+@Slf4j
 @SpringBootTest
 class PostServiceTest {
 
@@ -67,24 +75,25 @@ class PostServiceTest {
     }
 
     @Test
-    @DisplayName("글 여러개 조회")
+    @DisplayName("글 1페이지 조회")
     void test3() {
         // given
-        postRepository.saveAll(List.of(
-                Post.builder()
-                        .title("foo1")
-                        .content("bar1")
-                        .build(),
-                Post.builder()
-                        .title("foo2")
-                        .content("bar2")
+        List<Post> savedPosts = postRepository.saveAll(IntStream.range(1, 31)
+                .mapToObj(i -> Post.builder()
+                        .title("제목 - " + i)
+                        .content("내용 - " + i)
                         .build())
-        );
+                .collect(Collectors.toList()));
 
         // when
-        List<PostResponse> posts = postService.getList();
+        Pageable pageable = PageRequest.of(0, 5, Sort.by(DESC, "id"));
+        List<PostResponse> posts = postService.getList(pageable);
+        IntStream.range(0, posts.size())
+                .forEach(i -> log.info("posts[{}] = {}", i, posts.get(i).getTitle()));
 
         // then
-        assertThat(posts).hasSize(2);
+        assertThat(posts).hasSize(5);
+        assertThat(posts.get(0).getTitle()).isEqualTo(savedPosts.get(savedPosts.size() - 1).getTitle());
+        assertThat(posts.get(4).getTitle()).isEqualTo(savedPosts.get(savedPosts.size() - 5).getTitle());
     }
 }
