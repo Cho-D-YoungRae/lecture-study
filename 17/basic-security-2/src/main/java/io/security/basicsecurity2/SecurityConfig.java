@@ -14,6 +14,20 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http
+                .authorizeRequests()
+                .anyRequest().authenticated()
+
+                .and()
+                .formLogin()
+
+                .and()
+                .build();
+    }
+
+    /*
     // 1-3 Form Login 인증
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -42,4 +56,5 @@ public class SecurityConfig {
                 .and()
                 .build();
     }
+    */
 }
