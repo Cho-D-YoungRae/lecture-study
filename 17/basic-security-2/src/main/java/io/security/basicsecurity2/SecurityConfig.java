@@ -14,18 +14,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .authorizeRequests()
-                .anyRequest().authenticated()
-
-                .and()
-                .formLogin()
-
-                .and()
-                .build();
-    }
 
     /*
     // 1-3 Form Login 인증
@@ -57,4 +45,40 @@ public class SecurityConfig {
                 .build();
     }
     */
+    /*
+    // 1-4 Form Login 인증 필터 : UsernamePasswordAuthenticationFilter
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http
+                .authorizeRequests()
+                .anyRequest().authenticated()
+
+                .and()
+                .formLogin()
+
+                .and()
+                .build();
+    }
+    */
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http
+                .authorizeRequests()
+                .anyRequest().authenticated()
+
+                .and()
+                .formLogin()
+
+                .and()
+                .logout()
+                .logoutUrl("/logout")   // default
+                .logoutSuccessUrl("/login") // default : login?logout
+                .addLogoutHandler((request, response, authentication) -> request.getSession().invalidate())
+                .logoutSuccessHandler((request, response, authentication) -> response.sendRedirect("/login"))
+                .deleteCookies("remember-me")
+
+                .and()
+                .build();
+    }
 }
