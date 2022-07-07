@@ -77,6 +77,7 @@ public class SecurityConfig {
     }
 
     // 1-9) 동시 세션 제어, 세션 고정 보호, 세션 정책
+    // 1-10) 세션 제어 필터 : SessionManagementFilter, ConcurrentSessionFilter
     private HttpSecurity sessionManagement(HttpSecurity http) throws Exception {
         return http
                 .sessionManagement()
