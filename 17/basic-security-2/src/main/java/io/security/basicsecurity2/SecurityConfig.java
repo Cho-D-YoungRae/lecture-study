@@ -19,7 +19,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        rememberMe(http);
+        sessionManagement(http);
         return http
                 .authorizeRequests()
                 .anyRequest().authenticated()
@@ -29,29 +29,6 @@ public class SecurityConfig {
 
                 .and()
                 .build();
-    }
-
-    // 1-6) Remember Me 인증
-    // 1-7) Remember Me 인증 필터 : RememberMeAuthenticationFilter
-    private HttpSecurity rememberMe(HttpSecurity http) throws Exception {
-        return http
-                .rememberMe()
-//                .rememberMeParameter("remember")
-//                .tokenValiditySeconds(3600)
-                .userDetailsService(userDetailsService)
-                .and();
-    }
-
-    // 1-5) Logout 처리, LogoutFilter
-    private HttpSecurity logout(HttpSecurity http) throws Exception {
-        return http
-                .logout()
-                .logoutUrl("/logout")   // default
-                .logoutSuccessUrl("/login") // default : login?logout
-                .addLogoutHandler((request, response, authentication) -> request.getSession().invalidate())
-                .logoutSuccessHandler((request, response, authentication) -> response.sendRedirect("/login"))
-                .deleteCookies("remember-me")
-                .and();
     }
 
     // 1-3 Form Login 인증
@@ -73,6 +50,44 @@ public class SecurityConfig {
                     response.sendRedirect("/login");
                 })
                 .permitAll()    // 해당 로그인 페이지로는 접근이 가능하도록
+                .and();
+    }
+
+    // 1-5) Logout 처리, LogoutFilter
+    private HttpSecurity logout(HttpSecurity http) throws Exception {
+        return http
+                .logout()
+                .logoutUrl("/logout")   // default
+                .logoutSuccessUrl("/login") // default : login?logout
+                .addLogoutHandler((request, response, authentication) -> request.getSession().invalidate())
+                .logoutSuccessHandler((request, response, authentication) -> response.sendRedirect("/login"))
+                .deleteCookies("remember-me")
+                .and();
+    }
+
+    // 1-6) Remember Me 인증
+    // 1-7) Remember Me 인증 필터 : RememberMeAuthenticationFilter
+    private HttpSecurity rememberMe(HttpSecurity http) throws Exception {
+        return http
+                .rememberMe()
+//                .rememberMeParameter("remember")
+//                .tokenValiditySeconds(3600)
+                .userDetailsService(userDetailsService)
+                .and();
+    }
+
+    // 1-9) 동시 세션 제어, 세션 고정 보호, 세션 정책
+    private HttpSecurity sessionManagement(HttpSecurity http) throws Exception {
+        return http
+                .sessionManagement()
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(true)
+
+                .and()
+                .sessionFixation()
+//                .none()
+                .changeSessionId()  // default
+
                 .and();
     }
 }
