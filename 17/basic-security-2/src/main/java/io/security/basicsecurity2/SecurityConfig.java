@@ -6,7 +6,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Slf4j
@@ -15,16 +19,41 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final UserDetailsService userDetailsService;
+    // 1-6) Remember Me 인증
+    // 1-7) Remember Me 인증 필터 : RememberMeAuthenticationFilter
+//    private final UserDetailsService userDetailsService;
+
+    // 1-11) 권한설정과 표현식
+    @Bean
+    public UserDetailsManager defaultUser() {
+        UserDetails user = User.withDefaultPasswordEncoder()
+                .username("user")
+                .password("1111")
+                .roles("USER")
+                .build();
+
+        UserDetails sys = User.withDefaultPasswordEncoder()
+                .username("sys")
+                .password("1111")
+                .roles("SYS")
+                .build();
+
+        UserDetails admin = User.withDefaultPasswordEncoder()
+                .username("ADMIN")
+                .password("1111")
+                .roles("ADMIN")
+                .build();
+        return new InMemoryUserDetailsManager(user, sys, admin);
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        sessionManagement(http);
+        configureAccess(http);
         return http
-                .authorizeRequests()
-                .anyRequest().authenticated()
-
-                .and()
+//                .authorizeRequests()
+//                .anyRequest().authenticated()
+//
+//                .and()
                 .formLogin()
 
                 .and()
@@ -72,7 +101,7 @@ public class SecurityConfig {
                 .rememberMe()
 //                .rememberMeParameter("remember")
 //                .tokenValiditySeconds(3600)
-                .userDetailsService(userDetailsService)
+//                .userDetailsService(userDetailsService)
                 .and();
     }
 
@@ -89,6 +118,17 @@ public class SecurityConfig {
 //                .none()
                 .changeSessionId()  // default
 
+                .and();
+    }
+
+    // 1-11) 권한설정과 표현식
+    private HttpSecurity configureAccess(HttpSecurity http) throws Exception {
+        return http
+                .authorizeHttpRequests()
+                .antMatchers("/user").hasRole("USER")
+                .antMatchers("/admin/pay").hasRole("ADMIN")
+                .antMatchers("/admin/**").hasAnyRole("ADMIN", "SYS")
+                .anyRequest().authenticated()
                 .and();
     }
 }
