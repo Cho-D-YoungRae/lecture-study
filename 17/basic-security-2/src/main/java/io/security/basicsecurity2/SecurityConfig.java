@@ -12,6 +12,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.RequestCache;
+import org.springframework.security.web.savedrequest.SavedRequest;
 
 @Slf4j
 @Configuration
@@ -19,12 +22,33 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        exceptionHandling(http);
+        return http
+                .authorizeRequests()
+                .anyRequest().authenticated()
+
+                .and()
+                .formLogin()
+                // 1-12) 예외 처리 및 요청 캐시 필터 : ExceptionTranslationFilter, RequestCacheAwareFilter
+//                .successHandler((request, response, authentication) -> {
+//                    RequestCache requestCache = new HttpSessionRequestCache();
+//                    SavedRequest savedRequest = requestCache.getRequest(request, response);
+//                    String redirectUrl = savedRequest.getRedirectUrl();
+//                    response.sendRedirect(redirectUrl);
+//                })
+
+                .and()
+                .build();
+    }
+
     // 1-6) Remember Me 인증
     // 1-7) Remember Me 인증 필터 : RememberMeAuthenticationFilter
 //    private final UserDetailsService userDetailsService;
 
     // 1-11) 권한설정과 표현식
-    @Bean
+//    @Bean
     public UserDetailsManager defaultUser() {
         UserDetails user = User.withDefaultPasswordEncoder()
                 .username("user")
@@ -44,20 +68,6 @@ public class SecurityConfig {
                 .roles("ADMIN")
                 .build();
         return new InMemoryUserDetailsManager(user, sys, admin);
-    }
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        configureAccess(http);
-        return http
-//                .authorizeRequests()
-//                .anyRequest().authenticated()
-//
-//                .and()
-                .formLogin()
-
-                .and()
-                .build();
     }
 
     // 1-3 Form Login 인증
@@ -129,6 +139,20 @@ public class SecurityConfig {
                 .antMatchers("/admin/pay").hasRole("ADMIN")
                 .antMatchers("/admin/**").hasAnyRole("ADMIN", "SYS")
                 .anyRequest().authenticated()
+                .and();
+    }
+
+    // 1-12) 예외 처리 및 요청 캐시 필터 : ExceptionTranslationFilter, RequestCacheAwareFilter
+    private HttpSecurity exceptionHandling(HttpSecurity http) throws Exception {
+        return http.exceptionHandling()
+                .authenticationEntryPoint((request, response, authException) -> {
+                    log.info("authenticationEntryPoint");
+                    response.sendRedirect("/login");    // 기본 제공 페이지가 아닌 우리가 만든 페이지로 이동됨
+                })
+                .accessDeniedHandler((request, response, accessDeniedException) -> {
+                    log.info("accessDeniedHandler");
+                    response.sendRedirect("/denied");   // 기본 제공 페이지가 아닌 우리가 만든 페이지로 이동됨
+                })
                 .and();
     }
 }
