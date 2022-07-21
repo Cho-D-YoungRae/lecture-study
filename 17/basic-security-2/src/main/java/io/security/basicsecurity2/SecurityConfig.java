@@ -24,20 +24,12 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        exceptionHandling(http);
         return http
                 .authorizeRequests()
                 .anyRequest().authenticated()
 
                 .and()
                 .formLogin()
-                // 1-12) 예외 처리 및 요청 캐시 필터 : ExceptionTranslationFilter, RequestCacheAwareFilter
-//                .successHandler((request, response, authentication) -> {
-//                    RequestCache requestCache = new HttpSessionRequestCache();
-//                    SavedRequest savedRequest = requestCache.getRequest(request, response);
-//                    String redirectUrl = savedRequest.getRedirectUrl();
-//                    response.sendRedirect(redirectUrl);
-//                })
 
                 .and()
                 .build();
