@@ -2,4 +2,4 @@
 
 > `inflearn` - `최상용` [소스코드](https://github.com/sangyongchoi/stock-example)
 
-- [ ] 2022/08/29
+- [x] 2022/08/29
