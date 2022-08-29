@@ -44,3 +44,5 @@ Lecture Study Log
     - `spring`
 21. [호돌맨의 요절복통 개발쇼 (SpringBoot, Vue.JS, AWS)](./21) - `inflearn`, `호돌맨`
     - `spring`, `vue`, `aws`
+22. [재고시스템으로 알아보는 동시성이슈 해결방법](./22) - `inflearn`, `최상용`
+    - `spring`
