@@ -4,16 +4,13 @@ import com.example.stock.domain.Stock;
 import com.example.stock.repository.StockRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
-public class StockService {
+public class SynchronizedStockService {
 
     private final StockRepository stockRepository;
 
-    @Transactional
     public synchronized void decrease(Long id, Long quantity) {
         // get stock
         // 재고 감소
@@ -23,4 +20,5 @@ public class StockService {
         stock.decrease(quantity);
         stockRepository.saveAndFlush(stock);
     }
+
 }

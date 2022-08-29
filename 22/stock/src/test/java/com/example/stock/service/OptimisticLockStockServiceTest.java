@@ -1,6 +1,7 @@
 package com.example.stock.service;
 
 import com.example.stock.domain.Stock;
+import com.example.stock.facade.OptimisticLockStockFacade;
 import com.example.stock.repository.StockRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,13 +14,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class StockServiceTest {
+class OptimisticLockStockServiceTest {
 
     @Autowired
-    private StockService stockService;
+    private OptimisticLockStockFacade stockService;
 
     @Autowired
     private StockRepository stockRepository;
@@ -40,14 +40,6 @@ class StockServiceTest {
     }
 
     @Test
-    void stock_decrease() {
-        stockService.decrease(stock.getId(), 1L);
-
-        Stock stock = stockRepository.findById(this.stock.getId()).orElseThrow();
-        assertThat(stock.getQuantity()).isEqualTo(99L);
-    }
-
-    @Test
     void 동시에_100개의_요청() throws Exception {
         int threadCount = 100;
         // 멀티스레드 비동기로 실행하는 작업을 단순화하여 사용할 있도록 도와주는 JAVA API
@@ -60,6 +52,8 @@ class StockServiceTest {
             executorService.submit(() -> {
                 try {
                     stockService.decrease(this.stock.getId(), 1L);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 } finally {
                     latch.countDown();
                 }
