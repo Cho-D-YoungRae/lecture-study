@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/h2/db/core-spring-security
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+        jdbc.lob.non_contextual_creation: true
+
+  thymeleaf:
+    cache: false
+
+logging.level:
+  org.hibernate:
+    SQL: debug
+    type: trace

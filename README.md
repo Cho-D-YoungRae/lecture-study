@@ -46,3 +46,5 @@ Lecture Study Log
     - `spring`, `vue`, `aws`
 22. [재고시스템으로 알아보는 동시성이슈 해결방법](./22) - `inflearn`, `최상용`
     - `spring`
+23. [스프링 배치 - Spring Boot 기반으로 개발하는 Spring Batch](./23) - `inflearn`, `정수원`
+    - `spring-batch`
