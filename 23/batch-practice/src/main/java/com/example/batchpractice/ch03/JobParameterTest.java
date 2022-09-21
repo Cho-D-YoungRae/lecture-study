@@ -7,7 +7,6 @@ import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
@@ -15,7 +14,7 @@ import java.util.Date;
  * 3-4
  * spring.batch.job.enabled = false => Spring boot Job 자동 실행을 끄고 사용
  */
-@Component
+//@Component
 @RequiredArgsConstructor
 public class JobParameterTest implements ApplicationRunner {
 
