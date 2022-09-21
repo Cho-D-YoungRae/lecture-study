@@ -1,4 +1,4 @@
-package com.example.batchpractice;
+package com.example.batchpractice.ch03;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
@@ -9,11 +9,11 @@ import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 
 /**
- * ~ 2-5
+ * 3-2
  */
 //@Configuration
 @RequiredArgsConstructor
-public class DBJobConfiguration {
+public class JobConfiguration {
 
     private final JobBuilderFactory jobBuilderFactory;
 
@@ -46,4 +46,5 @@ public class DBJobConfiguration {
                 })
                 .build();
     }
+
 }
