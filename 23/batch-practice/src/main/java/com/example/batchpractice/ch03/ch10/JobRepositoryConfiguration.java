@@ -1,29 +1,33 @@
-package com.example.batchpractice.ch03;
+package com.example.batchpractice.ch03.ch10;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 
 /**
- * 3-5
+ * 3-10
  */
 //@Configuration
 @RequiredArgsConstructor
-public class JobExecutionConfiguration {
+public class JobRepositoryConfiguration {
 
     private final JobBuilderFactory jobBuilderFactory;
 
     private final StepBuilderFactory stepBuilderFactory;
 
+    private final JobRepository jobRepository;
+
     @Bean
     public Job batchJob() {
-        return jobBuilderFactory.get("job")
+        return jobBuilderFactory.get("batchJob")
                 .start(step1())
                 .next(step2())
+                .listener(new JobRepositoryListener(jobRepository))
                 .build();
     }
 
@@ -31,7 +35,7 @@ public class JobExecutionConfiguration {
     public Step step1() {
         return stepBuilderFactory.get("step1")
                 .tasklet((contribution, chunkContext) -> {
-                    System.out.println("step1 was executed");
+                    System.out.println(">> step1 was executed");
                     return RepeatStatus.FINISHED;
                 })
                 .build();
@@ -41,8 +45,8 @@ public class JobExecutionConfiguration {
     public Step step2() {
         return stepBuilderFactory.get("step2")
                 .tasklet((contribution, chunkContext) -> {
-                    System.out.println("step2 was executed");
-                    throw new RuntimeException("step2 has failed");
+                    System.out.println(">> step2 was executed");
+                    return RepeatStatus.FINISHED;
                 })
                 .build();
     }

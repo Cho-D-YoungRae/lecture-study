@@ -1,4 +1,4 @@
-package com.example.batchpractice.ch03;
+package com.example.batchpractice.ch03.ch09;
 
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;

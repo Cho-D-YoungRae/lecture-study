@@ -1,4 +1,4 @@
-package com.example.batchpractice.ch03;
+package com.example.batchpractice.ch03.ch04;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;

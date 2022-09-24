@@ -1,34 +1,31 @@
-package com.example.batchpractice.ch03;
+package com.example.batchpractice.ch03.ch11;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * 3-10
+ * 3-11
+ * spring.batch.job.enabled=false 후 실행
  */
 @Configuration
 @RequiredArgsConstructor
-public class JobRepositoryConfiguration {
+public class JobLauncherConfiguration {
 
     private final JobBuilderFactory jobBuilderFactory;
 
     private final StepBuilderFactory stepBuilderFactory;
-
-    private final JobRepository jobRepository;
 
     @Bean
     public Job batchJob() {
         return jobBuilderFactory.get("batchJob")
                 .start(step1())
                 .next(step2())
-                .listener(new JobRepositoryListener(jobRepository))
                 .build();
     }
 
@@ -37,6 +34,7 @@ public class JobRepositoryConfiguration {
         return stepBuilderFactory.get("step1")
                 .tasklet((contribution, chunkContext) -> {
                     System.out.println(">> step1 was executed");
+                    Thread.sleep(3000);
                     return RepeatStatus.FINISHED;
                 })
                 .build();

@@ -1,4 +1,4 @@
-package com.example.batchpractice.ch03;
+package com.example.batchpractice.ch03.ch02;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
@@ -7,21 +7,20 @@ import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
- * 3-8
+ * 3-2
  */
 //@Configuration
 @RequiredArgsConstructor
-public class StepContributionConfiguration {
+public class JobConfiguration {
 
     private final JobBuilderFactory jobBuilderFactory;
 
     private final StepBuilderFactory stepBuilderFactory;
 
     @Bean
-    public Job batchJob() {
+    public Job job() {
         return jobBuilderFactory.get("job")
                 .start(step1())
                 .next(step2())
@@ -32,7 +31,7 @@ public class StepContributionConfiguration {
     public Step step1() {
         return stepBuilderFactory.get("step1")
                 .tasklet((contribution, chunkContext) -> {
-                    System.out.println(">> step1 was executed");
+                    System.out.println("step1 was executed");
                     return RepeatStatus.FINISHED;
                 })
                 .build();
@@ -42,7 +41,7 @@ public class StepContributionConfiguration {
     public Step step2() {
         return stepBuilderFactory.get("step2")
                 .tasklet((contribution, chunkContext) -> {
-                    System.out.println(">> step2 was executed");
+                    System.out.println("step2 was executed");
                     return RepeatStatus.FINISHED;
                 })
                 .build();

@@ -1,4 +1,4 @@
-package com.example.batchpractice.ch03;
+package com.example.batchpractice.ch03.ch05;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
@@ -9,18 +9,18 @@ import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 
 /**
- * 3-3
+ * 3-5
  */
 //@Configuration
 @RequiredArgsConstructor
-public class JobInstanceConfiguration {
+public class JobExecutionConfiguration {
 
     private final JobBuilderFactory jobBuilderFactory;
 
     private final StepBuilderFactory stepBuilderFactory;
 
     @Bean
-    public Job job() {
+    public Job batchJob() {
         return jobBuilderFactory.get("job")
                 .start(step1())
                 .next(step2())
@@ -42,7 +42,7 @@ public class JobInstanceConfiguration {
         return stepBuilderFactory.get("step2")
                 .tasklet((contribution, chunkContext) -> {
                     System.out.println("step2 was executed");
-                    return RepeatStatus.FINISHED;
+                    throw new RuntimeException("step2 has failed");
                 })
                 .build();
     }
