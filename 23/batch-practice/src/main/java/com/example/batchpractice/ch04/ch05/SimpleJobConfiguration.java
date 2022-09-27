@@ -1,18 +1,17 @@
-package com.example.batchpractice.ch04.ch04;
+package com.example.batchpractice.ch04.ch05;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.batch.core.Job;
-import org.springframework.batch.core.Step;
+import org.springframework.batch.core.*;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.core.job.builder.FlowBuilder;
-import org.springframework.batch.core.job.flow.Flow;
+import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-//@Configuration
+@Configuration
 @RequiredArgsConstructor
-public class JobConfiguration {
+public class SimpleJobConfiguration {
 
     private final JobBuilderFactory jobBuilderFactory;
 
@@ -23,24 +22,22 @@ public class JobConfiguration {
         return jobBuilderFactory.get("batchJob1")
                 .start(step1())
                 .next(step2())
-                .build();
-    }
+                .next(step3())
+                .incrementer(new RunIdIncrementer())
+                .validator(parameters -> {})
+                .preventRestart()
+                .listener(new JobExecutionListener() {
+                    @Override
+                    public void beforeJob(JobExecution jobExecution) {
 
-    @Bean
-    public Job batchJob2() {
-        return jobBuilderFactory.get("batchJob2")
-                .start(flow())
-                .next(step5())
-                .end()
-                .build();
-    }
+                    }
 
-    @Bean
-    public Flow flow() {
-        return new FlowBuilder<Flow>("flow")
-                .start(step3())
-                .next(step4())
-                .end();
+                    @Override
+                    public void afterJob(JobExecution jobExecution) {
+
+                    }
+                })
+                .build();
     }
 
     @Bean
@@ -67,27 +64,10 @@ public class JobConfiguration {
     public Step step3() {
         return stepBuilderFactory.get("step3")
                 .tasklet((contribution, chunkContext) -> {
+                    // 맨 마지막에 실행한 Step 의 Status 가 최종 Status 가 된다
+                    chunkContext.getStepContext().getStepExecution().setStatus(BatchStatus.FAILED);
+                    contribution.setExitStatus(ExitStatus.STOPPED);
                     System.out.println("step3 was executed");
-                    return RepeatStatus.FINISHED;
-                })
-                .build();
-    }
-
-    @Bean
-    public Step step4() {
-        return stepBuilderFactory.get("step4")
-                .tasklet((contribution, chunkContext) -> {
-                    System.out.println("step4 was executed");
-                    return RepeatStatus.FINISHED;
-                })
-                .build();
-    }
-
-    @Bean
-    public Step step5() {
-        return stepBuilderFactory.get("step5")
-                .tasklet((contribution, chunkContext) -> {
-                    System.out.println("step5 was executed");
                     return RepeatStatus.FINISHED;
                 })
                 .build();
