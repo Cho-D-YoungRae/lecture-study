@@ -1,29 +1,31 @@
-package com.example.batchpractice.ch04.ch08;
+package com.example.batchpractice.ch04.ch09;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-//@Configuration
+@Configuration
 @RequiredArgsConstructor
-public class PreventRestartConfiguration {
+public class IncrementerConfiguration {
 
     private final JobBuilderFactory jobBuilderFactory;
 
     private final StepBuilderFactory stepBuilderFactory;
 
-    // 실패해도 재실행 X
     @Bean
     public Job batchJob() {
         return jobBuilderFactory.get("batchJob")
                 .start(step1())
                 .next(step2())
                 .next(step3())
-                .preventRestart()
+//                .incrementer(new CustomJobParametersIncrementer())
+                .incrementer(new RunIdIncrementer())
                 .build();
     }
 
