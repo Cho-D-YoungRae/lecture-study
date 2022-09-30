@@ -1,31 +1,30 @@
-package com.example.batchpractice.ch04.ch07;
+package com.example.batchpractice.ch04.ch08;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.core.job.DefaultJobParametersValidator;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-//@Configuration
+@Configuration
 @RequiredArgsConstructor
-public class ValidatorConfiguration {
+public class PreventRestartConfiguration {
 
     private final JobBuilderFactory jobBuilderFactory;
 
     private final StepBuilderFactory stepBuilderFactory;
 
+    // 실패해도 재실행 X
     @Bean
     public Job batchJob() {
         return jobBuilderFactory.get("batchJob")
                 .start(step1())
                 .next(step2())
                 .next(step3())
-//                .validator(new CustomJobParametersValidator())
-                .validator(new DefaultJobParametersValidator(
-                        new String[] {"name", "date"}, new String[]{"count"}))
+                .preventRestart()
                 .build();
     }
 
@@ -54,7 +53,7 @@ public class ValidatorConfiguration {
         return stepBuilderFactory.get("step3")
                 .tasklet((contribution, chunkContext) -> {
                     System.out.println("step3 was executed");
-                    return RepeatStatus.FINISHED;
+                    throw new RuntimeException("step2 was failed");
                 })
                 .build();
     }
