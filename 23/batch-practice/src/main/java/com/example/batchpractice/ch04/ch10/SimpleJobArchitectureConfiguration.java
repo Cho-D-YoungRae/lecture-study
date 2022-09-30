@@ -1,4 +1,4 @@
-package com.example.batchpractice.ch04.ch09;
+package com.example.batchpractice.ch04.ch10;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
@@ -8,10 +8,11 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-//@Configuration
+@Configuration
 @RequiredArgsConstructor
-public class IncrementerConfiguration {
+public class SimpleJobArchitectureConfiguration {
 
     private final JobBuilderFactory jobBuilderFactory;
 
@@ -23,7 +24,6 @@ public class IncrementerConfiguration {
                 .start(step1())
                 .next(step2())
                 .next(step3())
-//                .incrementer(new CustomJobParametersIncrementer())
                 .incrementer(new RunIdIncrementer())
                 .build();
     }
