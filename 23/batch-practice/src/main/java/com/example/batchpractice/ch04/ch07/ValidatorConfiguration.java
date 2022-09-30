@@ -1,29 +1,32 @@
-package com.example.batchpractice.ch04.ch06;
+package com.example.batchpractice.ch04.ch07;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.batch.core.BatchStatus;
-import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.job.DefaultJobParametersValidator;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-//@Configuration
+@Configuration
 @RequiredArgsConstructor
-public class StartNextConfiguration {
+public class ValidatorConfiguration {
 
     private final JobBuilderFactory jobBuilderFactory;
 
     private final StepBuilderFactory stepBuilderFactory;
 
     @Bean
-    public Job batchJob1() {
-        return jobBuilderFactory.get("batchJob1")
+    public Job batchJob() {
+        return jobBuilderFactory.get("batchJob")
                 .start(step1())
                 .next(step2())
                 .next(step3())
+//                .validator(new CustomJobParametersValidator())
+                .validator(new DefaultJobParametersValidator(
+                        new String[] {"name", "date"}, new String[]{"count"}))
                 .build();
     }
 
@@ -51,9 +54,6 @@ public class StartNextConfiguration {
     public Step step3() {
         return stepBuilderFactory.get("step3")
                 .tasklet((contribution, chunkContext) -> {
-                    // 맨 마지막에 실행한 Step 의 Status 가 최종 Status 가 된다
-                    chunkContext.getStepContext().getStepExecution().setStatus(BatchStatus.FAILED);
-                    contribution.setExitStatus(ExitStatus.STOPPED);
                     System.out.println("step3 was executed");
                     return RepeatStatus.FINISHED;
                 })
