@@ -1,4 +1,4 @@
-package com.example.batchpractice.ch05.ch03;
+package com.example.batchpractice.ch05.ch04;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
@@ -8,10 +8,11 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-//@Configuration
+@Configuration
 @RequiredArgsConstructor
-public class Taskletonfiguration {
+public class LimitAndAllowConfiguration {
 
     private final JobBuilderFactory jobBuilderFactory;
 
@@ -31,15 +32,25 @@ public class Taskletonfiguration {
         return stepBuilderFactory.get("step1")
                 .tasklet((contribution, chunkContext) -> {
                     System.out.println("step1 was executed");
+                    System.out.println("contribution = " + contribution);
+                    System.out.println("chunkContext = " + chunkContext);
                     return RepeatStatus.FINISHED;
                 })
+                .allowStartIfComplete(false)
                 .build();
     }
 
     @Bean
     public Step step2() {
         return stepBuilderFactory.get("step2")
-                .tasklet(new CustomTasklet())
+                .tasklet((contribution, chunkContext) -> {
+                    System.out.println("step2 was executed");
+                    System.out.println("contribution = " + contribution);
+                    System.out.println("chunkContext = " + chunkContext);
+                    throw new RuntimeException("step2 was failed");
+//                    return RepeatStatus.FINISHED;
+                })
+                .startLimit(3)
                 .build();
     }
 
