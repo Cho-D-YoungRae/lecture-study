@@ -1,16 +1,18 @@
-package com.example.batchpractice.ch05.ch04;
+package com.example.batchpractice.ch05.ch05;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-//@Configuration
+@Configuration
 @RequiredArgsConstructor
-public class LimitAndAllowConfiguration {
+public class TaskletStepArchitectureConfiguration {
 
     private final JobBuilderFactory jobBuilderFactory;
 
@@ -19,9 +21,9 @@ public class LimitAndAllowConfiguration {
     @Bean
     public Job batchJob() {
         return jobBuilderFactory.get("batchJob")
+                .incrementer(new RunIdIncrementer())
                 .start(step1())
                 .next(step2())
-//                .incrementer(new RunIdIncrementer())
                 .build();
     }
 
@@ -34,7 +36,6 @@ public class LimitAndAllowConfiguration {
                     System.out.println("chunkContext = " + chunkContext);
                     return RepeatStatus.FINISHED;
                 })
-                .allowStartIfComplete(false)
                 .build();
     }
 
@@ -45,10 +46,8 @@ public class LimitAndAllowConfiguration {
                     System.out.println("step2 was executed");
                     System.out.println("contribution = " + contribution);
                     System.out.println("chunkContext = " + chunkContext);
-                    throw new RuntimeException("step2 was failed");
-//                    return RepeatStatus.FINISHED;
+                    return RepeatStatus.FINISHED;
                 })
-                .startLimit(3)
                 .build();
     }
 
