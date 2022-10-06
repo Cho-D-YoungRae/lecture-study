@@ -10,9 +10,8 @@ import org.springframework.batch.core.step.job.DefaultJobParametersExtractor;
 import org.springframework.batch.core.step.job.JobParametersExtractor;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
-@Configuration
+//@Configuration
 @RequiredArgsConstructor
 public class JobStepConfiguration {
 
@@ -21,8 +20,7 @@ public class JobStepConfiguration {
     private final StepBuilderFactory stepBuilderFactory;
 
     @Bean
-    public Job parentJob
-            () {
+    public Job parentJob() {
         return jobBuilderFactory.get("parentJob")
                 .incrementer(new RunIdIncrementer())
                 .start(jobStep(null))
