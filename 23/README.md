@@ -2,4 +2,4 @@
 
 > `inflearn` - `정수원` [소스코드](https://github.com/onjsdnjs/spring-batch-lecture)
 
-- [ ] 2022/09/20 ~ ing
+- [x] 2022/09/20 ~ 2022/11/06
