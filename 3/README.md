@@ -9,3 +9,4 @@
 2. [URI와 웹 브라우저 요청 흐름](chapter02.md)
 3. [HTTP 메시지](chapter03.md)
 4. [HTTP 메서드](chapter04.md)
+5. [HTTP 메서드 활용](chapter05.md)
