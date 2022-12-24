@@ -31,7 +31,7 @@
 - HTML Form submit 시 `POST` 전송
   - 예) 회원 가입, 상품 주문, 데이터 변경
 - Content-Type: application/x-www-form-urlencoded 사용
-- form의 내용을 메시지 바디를 통해 전송(key=value, znjfl vkfkalxj gudtlr)
+- form의 내용을 메시지 바디를 통해 전송(key=value, 쿼리 파라미터 형식)
 - 전송 데이터를 url encoding 처리
   - 예) abc김 -> abc%EA%B9%80
 - HTML Form은 `GET` 전송도 가능

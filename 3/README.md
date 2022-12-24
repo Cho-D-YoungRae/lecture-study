@@ -10,3 +10,4 @@
 3. [HTTP 메시지](chapter03.md)
 4. [HTTP 메서드](chapter04.md)
 5. [HTTP 메서드 활용](chapter05.md)
+6. [HTTP 상태코드](chapter06.md)
