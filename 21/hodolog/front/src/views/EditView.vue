@@ -16,23 +16,35 @@ const post = ref({
   content: ""
 });
 
-const router = useRouter()
-
-const moveToEdit = () => {
-  router.push({name: "edit", params: {postId: props.postId}});
-}
+const router = useRouter();
 
 onMounted(() => {
   axios.get(`/api/posts/${props.postId}`).then(response => {
     post.value = response.data;
   });
-})
+});
+
+const edit = () => {
+  axios.patch(`/api/posts/${props.postId}`, post.value).then(() => {
+    router.replace({name: "home"});
+  });
+}
 </script>
 
 <template>
-  <h2>{{post.title}}</h2>
-  <div>{{post.content}}</div>
-  <el-button type="warning" @click="moveToEdit()">수정</el-button>
+
+  <div>
+    <el-input v-model="post.title" placeholder="제목을 입력해주세요"/>
+  </div>
+
+  <div class="mt-2">
+    <el-input v-model="post.content" type="textarea" rows="15"/>
+  </div>
+
+  <div class="mt-2">
+    <el-button @click="edit()" type="warning">수정완료</el-button>
+  </div>
+
 </template>
 
 <style scoped>
