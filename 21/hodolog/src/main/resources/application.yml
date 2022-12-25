@@ -14,3 +14,8 @@ spring:
     username: sa
     password:
     driver-class-name: org.h2.Driver
+
+logging.level:
+  org.hibernate:
+    SQL: DEBUG
+    type: trace
