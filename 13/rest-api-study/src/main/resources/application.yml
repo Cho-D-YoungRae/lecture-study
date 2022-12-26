@@ -18,10 +18,7 @@ spring:
     deserialization:
       fail-on-unknown-properties: true
 
-logging.level.org:
-      hibernate:
-        SQL: DEBUG
-        type: trace
+ㅇ
       springframework:
         security: DEBUG
 
