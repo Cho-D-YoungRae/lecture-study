@@ -47,4 +47,6 @@ Lecture Study Log
 22. [재고시스템으로 알아보는 동시성이슈 해결방법](./22) - `inflearn`, `최상용`
     - `spring`
 23. [스프링 배치 - Spring Boot 기반으로 개발하는 Spring Batch](./23) - `inflearn`, `정수원`
-    - `spring-batch`
+    - `Spring Batch`
+24. [Spring Cloud로 개발하는 마이크로서비스 애플리케이션(MSA)](./24)
+    - `Spring Cloud`
