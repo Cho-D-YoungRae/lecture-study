@@ -1,13 +1,13 @@
-package com.example.zuulservice;
+package com.example.apigatewayservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ZuulServiceApplication {
+public class ApigatewayServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ZuulServiceApplication.class, args);
+        SpringApplication.run(ApigatewayServiceApplication.class, args);
     }
 
 }

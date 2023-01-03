@@ -10,13 +10,21 @@
 
 - discovery-service - Discovery Service
   - Eureka Server
+- config-service - Configuration service
+- apigateway-service - Spring Cloud Gateway
+  - Spring Cloud Gateway
 
 ### Sample codes
 
-- user-service(./user-service)
-  - Eureka Client
+- first-service - example for apigateway service
+- second-service - example for apigateway service
 
 ### E-commerce codes
+
+- catalog-service
+- order-service
+- user-service(./user-service)
+  - Eureka Client
 
 ## Contents
 
