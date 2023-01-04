@@ -3,8 +3,8 @@ server:
 
 eureka:
   client:
-    fetch-registry: false
-    register-with-eureka: false
+    fetch-registry: true
+    register-with-eureka: true
     service-url:
       defaultZone: http://localhost:8761/eureka
 
@@ -12,12 +12,18 @@ spring:
   application:
     name: apigateway-service
 
-# 자바 코드로도 가능 (FilterConfig RouteLocator)
   cloud:
     gateway:
+      default-filters:
+        - name: GlobalFilter
+          args:
+            baseMessage: Spring Cloud Gateway Global Filter
+            preLogger: true
+            postLogger: true
+# 자바 코드로도 가능 (FilterConfig RouteLocator)
       routes:
         - id: first-service
-          uri: http://localhost:8081
+          uri: lb://FIRST-SERVICE
           predicates:
             - Path=/first-service/**
           filters:
@@ -25,10 +31,15 @@ spring:
             - AddResponseHeader=first-response, first-response-header2
             - CustomFilter
         - id: second-service
-          uri: http://localhost:8082
+          uri: lb://SECOND-SERVICE
           predicates:
             - Path=/second-service/**
           filters:
             - AddRequestHeader=second-request, second-request-header2
             - AddResponseHeader=second-response, second-response-header2
             - CustomFilter
+            - name: LoggingFilter # 추가적으로 전달할 파라미터가 필요하면 - name 붙여야함
+              args:
+                baseMessage: Hi, there.
+                preLogger: true
+                postLogger: true

@@ -6,7 +6,7 @@ spring:
     show-sql: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/stock_example
+    url: jdbc:mysql://127.0.0.1:3306/racecondition
     username: root
     password:
     hikari:
