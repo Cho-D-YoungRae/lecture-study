@@ -1,6 +1,7 @@
 package com.example.userservice.controller;
 
 import com.example.userservice.dto.UserDto;
+import com.example.userservice.entity.UserEntity;
 import com.example.userservice.service.UserService;
 import com.example.userservice.vo.RequestUser;
 import com.example.userservice.vo.ResponseUser;
@@ -12,9 +13,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/user-service")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -23,8 +26,8 @@ public class UserController {
     private final ModelMapper mapper;
 
     @GetMapping("/health-check")
-    public String status() {
-        return "It's Working in User Service";
+    public String status(@Value("${local.server.port}") int port) {
+        return "It's Working in User Service on PORT " + port;
     }
 
     @GetMapping("/welcome")
@@ -40,6 +43,25 @@ public class UserController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(responseUser);
+    }
+
+    @GetMapping("/users")
+    public ResponseEntity<List<ResponseUser>> getUsers() {
+        Iterable<UserEntity> userList = userService.getAllUser();
+
+        List<ResponseUser> result = new ArrayList<>();
+        userList.forEach(v -> {
+            result.add(mapper.map(v, ResponseUser.class));
+        });
+
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<ResponseUser> getUser(@PathVariable("userId") String userId) {
+        UserDto userDto = userService.getUserByUserId(userId);
+        ResponseUser returnValue = mapper.map(userDto, ResponseUser.class);
+        return ResponseEntity.ok(returnValue);
     }
 
 }
