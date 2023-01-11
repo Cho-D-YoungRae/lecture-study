@@ -41,7 +41,7 @@ Lecture Study Log
 19. [스프링 DB 1편 - 데이터 접근 핵심 원리](./19) - `inflearn`, `김영한`
     - `Spring`, `JDBC`, `DB Connection`, `DB Lock`, `DB Transaction`, `Exception`
 20. [스프링 DB 2편 - 데이터 접근 활용 기술](./20) - `inflearn`, `김영한`
-    - `Spring`
+    - `Spring`, `DB Transaction`, `Transaction Propagation`
 21. [호돌맨의 요절복통 개발쇼 (SpringBoot, Vue.JS, AWS)](./21) - `inflearn`, `호돌맨`
     - `Spring`, `Vue`, `AWS`
 22. [재고시스템으로 알아보는 동시성이슈 해결방법](./22) - `inflearn`, `최상용`
