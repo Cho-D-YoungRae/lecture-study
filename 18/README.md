@@ -1,8 +1,9 @@
 # [스프링 핵심 원리 - 고급편](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-%ED%95%B5%EC%8B%AC-%EC%9B%90%EB%A6%AC-%EA%B3%A0%EA%B8%89%ED%8E%B8/dashboard)
 
-> `inflearn` - `김영한`
+> `inflearn` - `김영한`, `템플릿 메소드 패턴`, `전략 패턴`, `프록시 패턴`, `데코레이터 패턴`
 
 - [x] 2022/04/22 ~ 2022/05/03
+- [x] 2022/01/12 ~ 2022/01/13 - PDF 복습
 
 ## 순서
 
