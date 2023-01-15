@@ -3,3 +3,4 @@
 > `inflearn` - `정수원` [소스코드](https://github.com/onjsdnjs/spring-batch-lecture)
 
 - [x] 2022/09/20 ~ 2022/11/06
+- [x] 2022/01/14 ~ 2022/01/15 - PDF 복습
