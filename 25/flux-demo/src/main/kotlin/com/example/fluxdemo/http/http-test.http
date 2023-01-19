@@ -1,0 +1,17 @@
+### GET customers
+GET http://localhost:8080/customers
+
+### GET customers SSE
+GET http://localhost:8080/customers/sse
+
+### GET flux
+GET http://localhost:8080/flux
+
+### GET fluxstream
+GET http://localhost:8080/fluxstream
+
+### GET customer
+GET http://localhost:8080/customers/2
+
+### POST customers
+POST http://localhost:8080/customers
