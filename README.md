@@ -48,6 +48,9 @@
     - `Spring`
 23. [스프링 배치 - Spring Boot 기반으로 개발하는 Spring Batch](./23) - `inflearn`, `정수원`
     - `Spring Batch`
-24. [Spring Cloud로 개발하는 마이크로서비스 애플리케이션(MSA)](./24)
+24. [Spring Cloud로 개발하는 마이크로서비스 애플리케이션(MSA)](./24) - `inflearn`, `이도원`
     - `Spring Cloud`
-25. [Springboot WebFlux 강좌](./25)
+25. [Springboot WebFlux 강좌](./25) - `YouTube`, `메타코딩`
+    - `Spring WebFlux`
+26. [Jenkins를 이용한 CI/CD Pipeline 구축](./26) - `inflearn`, `이도원`
+    - `jenkins`, `kubernetes(k8s)`, `CI/CD`
