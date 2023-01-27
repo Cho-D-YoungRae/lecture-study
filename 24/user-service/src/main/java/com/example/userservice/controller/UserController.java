@@ -16,8 +16,8 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
+//@RequestMapping("/user-service")  // API Gateway 에 RewritePath filter 추가함으로써 제거 가능
 @RestController
-@RequestMapping("/user-service")
 @RequiredArgsConstructor
 public class UserController {
 

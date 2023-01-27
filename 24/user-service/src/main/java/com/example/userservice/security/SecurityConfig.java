@@ -1,5 +1,7 @@
 package com.example.userservice.security;
 
+import com.example.userservice.service.UserService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,12 +19,16 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(
-            HttpSecurity http, AuthenticationFilter authenticationFilter) throws Exception {
+            HttpSecurity http,
+            AuthenticationFilter authenticationFilter)
+            throws Exception {
         return http
                 .csrf().disable()
 
-                .authorizeRequests().antMatchers("/**")
-                .hasIpAddress("127.0.0.1")
+                .authorizeRequests()
+                .antMatchers("/health-check/**", "/welcome").permitAll()
+                .antMatchers("/actuator/**").permitAll()
+                .anyRequest().hasIpAddress("172.30.1.21")
 
                 .and()
                 .addFilter(authenticationFilter)
@@ -33,24 +39,28 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationFilter authenticationFilter(AuthenticationManager authenticationManager) {
-        AuthenticationFilter authenticationFilter = new AuthenticationFilter();
+    public AuthenticationFilter authenticationFilter(
+            AuthenticationManager authenticationManager,
+            UserService userService,
+            @Value("${token.expiration-time}") long tokenExpirationTime,
+            @Value("${token.secret}") String tokenSecret
+    ) {
+        AuthenticationFilter authenticationFilter = new AuthenticationFilter(
+                userService, tokenExpirationTime, tokenSecret);
         authenticationFilter.setAuthenticationManager(authenticationManager);
         return authenticationFilter;
     }
 
     @Bean
     public AuthenticationManager authenticationManager(
-            AuthenticationManagerBuilder builder,
+            HttpSecurity http,
             UserDetailsService userDetailsService,
             PasswordEncoder passwordEncoder)
             throws Exception {
-        return builder
+        return http.getSharedObject(AuthenticationManagerBuilder.class)
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder)
-
-                .and()
-                .build();
+                .and().build();
     }
 
     @Bean
