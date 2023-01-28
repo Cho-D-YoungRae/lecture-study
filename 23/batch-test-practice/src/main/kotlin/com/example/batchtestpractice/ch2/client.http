@@ -1,0 +1,13 @@
+### POST start job
+POST http://localhost:8080/batch/start
+Content-Type: application/json
+
+{
+  "id": "leaven"
+}
+
+### POST stop job
+POST http://localhost:8080/batch/stop
+
+### POST restart job
+POST http://localhost:8080/batch/restart
