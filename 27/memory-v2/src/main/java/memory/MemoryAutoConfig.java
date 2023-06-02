@@ -1,15 +1,12 @@
-package hello.config;
+package memory;
 
-import memory.MemoryController;
-import memory.MemoryFinder;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
-@Configuration
-//@Conditional(MemoryCondition.class)
+@AutoConfiguration
 @ConditionalOnProperty(name = "memory", havingValue = "on")
-public class MemoryConfig {
+public class MemoryAutoConfig {
 
     @Bean
     public MemoryController memoryController() {
