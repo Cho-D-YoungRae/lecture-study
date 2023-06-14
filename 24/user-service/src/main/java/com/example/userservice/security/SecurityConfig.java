@@ -28,7 +28,7 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/health-check/**", "/welcome").permitAll()
                 .antMatchers("/actuator/**").permitAll()
-                .anyRequest().hasIpAddress("172.30.1.21")
+                .anyRequest().hasIpAddress("172.30.2.189")
 
                 .and()
                 .addFilter(authenticationFilter)
