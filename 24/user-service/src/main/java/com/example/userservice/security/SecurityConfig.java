@@ -20,15 +20,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(
             HttpSecurity http,
-            AuthenticationFilter authenticationFilter)
-            throws Exception {
+            AuthenticationFilter authenticationFilter,
+            @Value("${gateway.ip}") String gatewayIp
+    ) throws Exception {
         return http
                 .csrf().disable()
 
                 .authorizeRequests()
-                .antMatchers("/health-check/**", "/welcome").permitAll()
                 .antMatchers("/actuator/**").permitAll()
-                .anyRequest().hasIpAddress("172.30.2.189")
+                .anyRequest().hasIpAddress(gatewayIp)
 
                 .and()
                 .addFilter(authenticationFilter)

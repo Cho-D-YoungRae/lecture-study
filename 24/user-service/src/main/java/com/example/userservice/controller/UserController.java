@@ -26,8 +26,18 @@ public class UserController {
     private final ModelMapper mapper;
 
     @GetMapping("/health-check")
-    public String status(@Value("${local.server.port}") int port) {
-        return "It's Working in User Service on PORT " + port;
+    public String status(
+            @Value("${local.server.port}") int localServerPort,
+            @Value("${server.port}") int serverPort,
+            @Value("${token.secret}") String tokenSecret,
+            @Value("${token.expiration-time}") long tokenExpirationTime
+    ) {
+        return "It's Working in User Service"
+                + ", port(local.server.port)=" + localServerPort
+                + ", port(server.port)=" + serverPort
+                + ", token secret=" + tokenSecret
+                + ", token time=" + tokenExpirationTime
+                ;
     }
 
     @GetMapping("/welcome")

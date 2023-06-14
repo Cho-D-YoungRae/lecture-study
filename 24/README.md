@@ -54,3 +54,18 @@
   - 로깅, 추적, 상관 관계
   - 헤더, 쿼리 문자열 및 청구 변환
   - IP 허용 목록에 추가
+
+### Configuration Service
+
+- 분산 시스템에서 서버, 클라이언트 구성에 필요한 설정 정보(application.yml)를 외부 시스템에서 관리
+- 하나의 중앙화된 저장소에서 구성요소 관리 가능
+- 각 서비스를 다시 빌드하지 않고 바로 적응 가능
+- 애플리케이션 배포 파이프라인을 통해 DEV-UAT-PROD 환경에 맞는 구성 정보 사용
+
+#### 각 서비스에서 변경된 설정 정보 가져오기
+
+- 서버 재기동
+  - 설정 정보 변경시 서비스(ex. user-service) 재기동
+  - config server 를 사용하는 의미 X
+- Actuator refresh
+- Spring cloud bus 사용

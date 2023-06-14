@@ -1,0 +1,23 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-server
+
+  profiles:
+    active: native
+
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: file://${user.home}/Desktop/lecture-study/24/config-service/native-file-repo
+#        git:
+#          local git repository
+#          uri: file://경로
+
+#          remote git repository
+#          uri: [깃 주소]
+#          username: [username]
+#          password: [password]

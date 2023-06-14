@@ -29,9 +29,18 @@ eureka:
 greeting:
   message: Welcome to the Simple E-Commerce.
 
-token:
-  expiration-time: 864000000 # 10 days
-  secret: user_token
+#token:
+#  expiration-time: 864000000 # 10 days
+#  secret: user_token
+
+#gateway:
+#  ip: 172.30.2.189
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, beans
 
 logging.level:
   com.example.userservice: debug
