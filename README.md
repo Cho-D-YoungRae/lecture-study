@@ -56,3 +56,5 @@
     - `jenkins`, `kubernetes(k8s)`, `CI/CD`
 27. [스프링 부트 - 핵심 원리와 활용](./27) - `inflearn`, `김영한`
     - `Spring Boot`
+28. [스프링 시큐리티 OAuth2 - Spring Boot 기반으로 개발하는 Spring Security OAuth2](./28) - `inflearn`, `정수원`
+    - `Spring Security`, `Oauth2`
