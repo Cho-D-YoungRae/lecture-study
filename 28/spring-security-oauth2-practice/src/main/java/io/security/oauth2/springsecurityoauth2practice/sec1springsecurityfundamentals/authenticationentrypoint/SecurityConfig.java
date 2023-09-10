@@ -2,13 +2,12 @@ package io.security.oauth2.springsecurityoauth2practice.sec1springsecurityfundam
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Slf4j
-@Configuration
+//@Configuration
 public class SecurityConfig {
 
     @Bean
