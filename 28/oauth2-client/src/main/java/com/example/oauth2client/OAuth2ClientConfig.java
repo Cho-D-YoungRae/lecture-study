@@ -1,5 +1,6 @@
 package com.example.oauth2client;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -12,12 +13,14 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class OAuth2ClientConfig {
+
+    private final ClientRegistrationRepository clientRegistrationRepository;
 
     @Bean
     public SecurityFilterChain securityFilterChain(
-            HttpSecurity http,
-            OidcClientInitiatedLogoutSuccessHandler oidcLogoutSuccessHandler
+            HttpSecurity http
 
     ) throws Exception {
         http.authorizeHttpRequests(config -> config
@@ -25,12 +28,12 @@ public class OAuth2ClientConfig {
                 .anyRequest().authenticated()
         );
         http.oauth2Login(Customizer.withDefaults());
-        http.logout(config -> config
-                .logoutSuccessHandler(oidcLogoutSuccessHandler)
-                .invalidateHttpSession(true)
-                .clearAuthentication(true)
-                .deleteCookies("JSESSIONID")
-        );
+//        http.logout(config -> config
+//                .logoutSuccessHandler(oidcLogoutSuccessHandler(clientRegistrationRepository))
+//                .invalidateHttpSession(true)
+//                .clearAuthentication(true)
+//                .deleteCookies("JSESSIONID")
+//        );
         return http.build();
     }
 
