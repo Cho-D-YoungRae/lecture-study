@@ -2,13 +2,17 @@ package com.example.resourceserver.config;
 
 import com.example.resourceserver.filter.authentication.JwtAuthenticationFilter;
 import com.example.resourceserver.filter.authorization.JwtAuthorizationMacFilter;
-import com.example.resourceserver.signature.MacSecuritySigner;
+import com.example.resourceserver.filter.authorization.JwtAuthorizationRsaFilter;
+import com.example.resourceserver.signature.RsaSecuritySigner;
+import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.crypto.MACVerifier;
+import com.nimbusds.jose.crypto.RSASSAVerifier;
 import com.nimbusds.jose.jwk.OctetSequenceKey;
+import com.nimbusds.jose.jwk.RSAKey;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -38,23 +42,38 @@ public class OAuth2ResourceServerConfig {
         http.userDetailsService(userDetailsService());
         http.addFilterBefore(jwtAuthenticationFilter(null, null), UsernamePasswordAuthenticationFilter.class);
 //        http.addFilterBefore(jwtAuthorizationMacFilter(null), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtAuthorizationRsaFilter(null), UsernamePasswordAuthenticationFilter.class);
         // JwtDecoder 사용
-        http.oauth2ResourceServer(config -> config
-                .jwt(Customizer.withDefaults())
-        );
+//        http.oauth2ResourceServer(config -> config
+//                .jwt(Customizer.withDefaults())
+//        );
         return http.build();
     }
 
-//    @Bean
-    public JwtAuthorizationMacFilter jwtAuthorizationMacFilter(OctetSequenceKey octetSequenceKey) {
-        return new JwtAuthorizationMacFilter(octetSequenceKey);
+    @Bean
+    public JwtAuthorizationRsaFilter jwtAuthorizationRsaFilter(RSAKey rsaKey) throws JOSEException {
+        return new JwtAuthorizationRsaFilter(new RSASSAVerifier(rsaKey.toRSAPublicKey()));
     }
+
+//    @Bean
+    public JwtAuthorizationMacFilter jwtAuthorizationMacFilter(OctetSequenceKey octetSequenceKey) throws JOSEException {
+        return new JwtAuthorizationMacFilter(new MACVerifier(octetSequenceKey.toSecretKey()));
+    }
+
+//    @Bean
+//    public JwtAuthenticationFilter jwtAuthenticationFilter(
+//            MacSecuritySigner macSecuritySigner, OctetSequenceKey octetSequenceKey
+//    ) throws Exception {
+//        JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(macSecuritySigner, octetSequenceKey);
+//        jwtAuthenticationFilter.setAuthenticationManager(authenticationManager(null));
+//        return jwtAuthenticationFilter;
+//    }
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter(
-            MacSecuritySigner macSecuritySigner, OctetSequenceKey octetSequenceKey
+            RsaSecuritySigner rsaSecuritySigner, RSAKey rsaKey
     ) throws Exception {
-        JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(macSecuritySigner, octetSequenceKey);
+        JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(rsaSecuritySigner, rsaKey);
         jwtAuthenticationFilter.setAuthenticationManager(authenticationManager(null));
         return jwtAuthenticationFilter;
     }

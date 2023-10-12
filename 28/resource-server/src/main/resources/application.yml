@@ -5,7 +5,8 @@ spring:
         jwt:
 #          issuer-uri: http://localhost:8080/realms/oauth2
 #          jwk-set-uri: http://localhost:8080/realms/oauth2/protocol/openid-connect/certs
-          jws-algorithms: HS256
+#          jws-algorithms: HS256
+          jws-algorithms: RS256
 
 server:
   port: 8082

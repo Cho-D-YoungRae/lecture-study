@@ -3,7 +3,7 @@ package com.example.resourceserver.signature;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
-import com.nimbusds.jose.crypto.MACSigner;
+import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
@@ -17,7 +17,7 @@ public abstract class SecuritySigner {
 
     public abstract String getJwtToken(UserDetails user, JWK jwk) throws JOSEException;
 
-    protected String getJwtTokenInternal(MACSigner jwsSigner, UserDetails user, JWK jwk) throws JOSEException {
+    protected String getJwtTokenInternal(JWSSigner jwsSigner, UserDetails user, JWK jwk) throws JOSEException {
         JWSHeader header = new JWSHeader.Builder((JWSAlgorithm) jwk.getAlgorithm())
                 .keyID(jwk.getKeyID())
                 .build();
