@@ -1,6 +1,7 @@
 package com.example.resourceserver.config;
 
 import com.example.resourceserver.signature.MacSecuritySigner;
+import com.example.resourceserver.signature.RsaPublicKeySecuritySigner;
 import com.example.resourceserver.signature.RsaSecuritySigner;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
@@ -40,5 +41,10 @@ public class SignatureConfig {
                 .algorithm(JWSAlgorithm.RS512)
                 .generate();
         return rsaKey;
+    }
+
+    @Bean
+    public RsaPublicKeySecuritySigner rsaPublicKeySecuritySigner() {
+        return new RsaPublicKeySecuritySigner();
     }
 }

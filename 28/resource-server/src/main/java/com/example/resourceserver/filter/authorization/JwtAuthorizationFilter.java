@@ -1,15 +1,12 @@
 package com.example.resourceserver.filter.authorization;
 
-import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSVerifier;
-import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,9 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.List;
-import java.util.UUID;
 
 
 @RequiredArgsConstructor
@@ -29,42 +24,45 @@ public abstract class JwtAuthorizationFilter extends OncePerRequestFilter {
     private final JWSVerifier jwsVerifier;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
-        String header = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (header == null || !header.startsWith("Bearer ")) {
-            // 헤더에 값이 없는 경우 여기 필터에서는 처리할게 없으므로 다음으로 넘어감
-            filterChain.doFilter(request, response);
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
+
+        if (tokenResolve(request)){
+            filterChain.doFilter(request,response);
             return;
         }
+        String token = getToken(request);
 
-        String token = header.replace("Bearer ", "");
         SignedJWT signedJWT;
-
         try {
             signedJWT = SignedJWT.parse(token);
-            boolean verify = signedJWT.verify(jwsVerifier);
 
-            if (verify) {
-                JWTClaimsSet jwtClaimsSet = signedJWT.getJWTClaimsSet();
-                String username = jwtClaimsSet.getClaim("username").toString();
-                List<String> authority = (List) jwtClaimsSet.getClaim("authority");
+            signedJWT.verify(jwsVerifier);
 
-                if (username != null) {
-                    UserDetails user = User.withUsername(username)
-                            .password(UUID.randomUUID().toString())
-                            .authorities(authority.get(0))
-                            .build();
+            String username = signedJWT.getJWTClaimsSet().getClaim("username").toString();
+            List<String> authority = (List)signedJWT.getJWTClaimsSet().getClaim("authority");
 
-                    Authentication authentication = UsernamePasswordAuthenticationToken.authenticated(
-                            user, null, user.getAuthorities());
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
-                }
+            if (username != null) {
+                UserDetails user = User.builder().username(username)
+                        .password("")
+                        .authorities(authority.get(0))
+                        .build();
+                Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(authentication);
             }
-        } catch (ParseException | JOSEException e) {
-            throw new RuntimeException(e);
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    protected String getToken(HttpServletRequest request) {
+        return request.getHeader("Authorization").replace("Bearer ", "");
+    }
+
+    protected boolean tokenResolve(HttpServletRequest request) throws IOException, ServletException {
+        String header = request.getHeader("Authorization");
+        return header == null || !header.startsWith("Bearer ");
     }
 }
