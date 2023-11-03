@@ -3,4 +3,5 @@
 > `inflearn` - `정수원`  
 > [github](https://github.com/onjsdnjs/spring-security-oauth2)
 
-- [ ] 2023/06/25 ~ ing
+- [x] 2023/06/25 ~ 2023/11/03
+
