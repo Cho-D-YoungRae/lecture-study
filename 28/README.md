@@ -4,4 +4,4 @@
 > [github](https://github.com/onjsdnjs/spring-security-oauth2)
 
 - [x] 2023/06/25 ~ 2023/11/03
-
+- [ ] 2023/11/05 ~ ing : 복습
