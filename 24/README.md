@@ -2,7 +2,8 @@
 
 > `inflearn` - `이도원` [소스코드](https://github.com/joneconsulting/msa_with_spring_cloud)
 
-- [ ] 2022/12/27 ~ ing
+- [x] 2022/12/27 ~ 2023/12/19: stop
+  - 스프링 마이크로서비스 공작소 교재로 대체
 
 ## Projects
 
