@@ -58,3 +58,5 @@
     - `Spring Boot`
 28. [스프링 시큐리티 OAuth2 - Spring Boot 기반으로 개발하는 Spring Security OAuth2](./28) - `inflearn`, `정수원`
     - `Spring Security`, `Oauth2`
+29. [React 2022 개정판](./29) - `youtube`, `생활코딩`
+    - `React`
