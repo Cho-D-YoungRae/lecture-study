@@ -60,3 +60,5 @@
     - `Spring Security`, `Oauth2`
 29. [React 2022 개정판](./29) - `youtube`, `생활코딩`
     - `React`
+30. [Next.js 13](./30) - `youtube`, `생활코딩`
+    - `React`, `Next`
