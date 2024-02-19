@@ -62,3 +62,7 @@
     - `React`
 30. [Next.js 13](./30) - `youtube`, `생활코딩`
     - `React`, `Next`
+31. [Next + React Query로 SNS 서비스 만들기](./31) - `inflearn`, `조현영`
+    - `React`, `Next`
+32. [웹 게임을 만들며 배우는 React](./32) - `inflearn`, `조현영`
+    - `React`, `Next`
