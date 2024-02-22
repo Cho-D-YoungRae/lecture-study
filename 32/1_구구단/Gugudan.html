@@ -1,0 +1,61 @@
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>구구단</title>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+  <script type="text/babel">
+    'use strict';
+
+    const GuGuDan = () => {
+      // 아래는 클래스로 묶을 수도 있음. 그렇지만 리액트는 Hooks 를 권장하므로 아래 방식 사용
+      const [first, setFirst] = React.useState(Math.ceil(Math.random() * 9));
+      const [second, setSecond] = React.useState(Math.ceil(Math.random() * 9));
+      const [value, setValue] = React.useState('');
+      const [result, setResult] = React.useState('');
+      const inputRef = React.useRef(null);
+
+      const onChangeInput = (e) => {
+        setValue(e.target.value);
+      }
+
+      const onSubmitForm = (e) => {
+        e.preventDefault();
+        if (parseInt(value) === first * second) {
+          setFirst(Math.ceil(Math.random() * 9));
+          setSecond(Math.ceil(Math.random() * 9));
+          setValue('');
+          setResult('정답: ' + value);
+        } else {
+          setResult('땡');
+          setValue('');
+        }
+        inputRef.current.focus();
+      }
+
+      return (
+        <React.Fragment>
+          <div>{first} 곱하기 {second} 는?</div>
+          <form onSubmit={onSubmitForm}>
+            <input ref={inputRef} onChange={onChangeInput} />
+            <button>입력!</button>
+          </form>
+          <div id="result">{result}</div>
+        </React.Fragment>
+      )
+    }
+
+  </script>
+  <script type="text/babel">
+    ReactDOM.createRoot(document.querySelector('#root')).render(<GuGuDan />);
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,84 @@
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>구구단</title>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+
+<body>
+  <div id="root"></div> <!-- 결과: <div id="root"><button>Like</button></div> -->
+  <script type="text/babel">
+    class GuGuDan extends React.Component {
+      // 실무에서는 constructor 안쓰고 state 바로 선언 하는 방식을 더 많이 사용
+      constructor(props) {
+        super(props);
+        this.state = {
+          first: Math.ceil(Math.random() * 9),
+          second: Math.ceil(Math.random() * 9),
+          value: '',
+          result: ''
+        }
+
+        this.input;
+      }
+
+      // 함수를 따로 뻈을 때 화살표 함수로 만들어야 this 가 제대로 작동함
+      // function 으로 사용하면 this 가 달라짐
+      // -> fucntion 사용 X
+      onSubmit = (e) => {
+        e.preventDefault();
+        if (parseInt(this.state.value) === this.state.first * this.state.second) {
+          // 아래와 같이 하면 이전 상태와 다음 상태가 구분하기 어려움
+          // this.setState({
+          //   result: `정답 ${this.state.value}`,
+          //   first: Math.ceil(Math.random() * 9),
+          //   second: Math.ceil(Math.random() * 9),
+          //   value: '',
+          // });
+
+          // 이전 상태를 사용하기 좋음
+          // setState 는 비동기로 작동하기 때문에 이전 상태를 사용할 때는 함수로 사용하는 것이 좋음
+          this.setState((prev) => {
+            return {
+              result: `정답 ${prev.value}`,
+              first: Math.ceil(Math.random() * 9),
+              second: Math.ceil(Math.random() * 9),
+              value: '',
+            };
+          });
+        } else {
+          this.setState({
+            result: "땡",
+            value: '',
+          });
+        }
+        this.input.focus();
+      };
+
+      onChange = (e) => this.setState({ value: e.target.value });
+
+      render() {
+        // 되도록 jsx 와 js 를 같이 사용하지 않는 것이 좋음
+        // React.Fragment 는 빈 태그로 사용 가능 -> 현재 버전에서는 사용이 안됨
+        return (
+          <React.Fragment>
+            <div>{this.state.first} 곱하기 {this.state.second} 는?</div>
+            <form onSubmit={this.onSubmit}>
+              <input ref={(c) => { this.input = c; }} type="number" value={this.state.value} onChange={this.onChange} />
+              <button type="submit">입력!</button>
+            </form>
+            <div>{this.state.result}</div>
+          </React.Fragment>
+        );
+      }
+    }
+  </script>
+  <script type="text/babel">
+    ReactDOM.render(<GuGuDan />, document.querySelector('#root'));
+  </script>
+</body>
+
+</html>

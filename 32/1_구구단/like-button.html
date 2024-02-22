@@ -1,0 +1,43 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>웹게임</title>
+</head>
+<body>
+<div id="root"></div>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<!-- 실무에서는 밑에거 사용, 위에거는 개발용 -->
+<!-- 하지만 실무에서는 실제로 웹팩을 사용할거라 아래를 사용할 일 없음 -->
+<!--<script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>-->
+<!--<script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>-->
+<script>
+  'use strict';
+
+  // class 는 요즘 잘 안쓰임
+  //   -> ErrorBoundary 라는 곳에서
+  //   -> 옛날 코드 중 사용되는 곳 있을 수 있음
+  class LikeButton extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = { liked: false };
+    }
+
+    render() {
+      if (this.state.liked) {
+        return 'You liked this.';
+      }
+
+      return React.createElement(
+        'button',
+        { onClick: () => this.setState({ liked: true }) },
+        'Like'
+      );
+    }
+  }
+</script>
+<script>
+  ReactDOM.render(React.createElement(LikeButton), document.querySelector('#root'));
+</script>
+</body>
+</html>
