@@ -14,6 +14,9 @@
   <script type="text/babel">
     'use strict';
 
+    // state 가 변경되면 이 함수 자체가 변경되기 때문에 조금 더 느릴 수 있음
+    // -> class 컴포넌트는 render 만 실행
+    // 최적화 할 때 고려해야 함
     const GuGuDan = () => {
       // 아래는 클래스로 묶을 수도 있음. 그렇지만 리액트는 Hooks 를 권장하므로 아래 방식 사용
       const [first, setFirst] = React.useState(Math.ceil(Math.random() * 9));
@@ -28,6 +31,9 @@
 
       const onSubmitForm = (e) => {
         e.preventDefault();
+        // 클래스 컴포넌트에서 state 가 변경되면 render 가 발생된다고 해서
+        // 아래 상태 변경이 될 때마다 렌더링이 발생하는 것을 우려할 수 있으나 렌더링은 한번만 발생
+        // -> setState 가 비동기로 작동하기 때문에 setState 를 모아서 한번에 처리
         if (parseInt(value) === first * second) {
           setFirst(Math.ceil(Math.random() * 9));
           setSecond(Math.ceil(Math.random() * 9));
@@ -40,12 +46,15 @@
         inputRef.current.focus();
       }
 
+      // html 태그 속성중 react 에서 못 쓰는 속성
+      // -> class -> className
+      // -> for -> htmlFor
       return (
         <React.Fragment>
           <div>{first} 곱하기 {second} 는?</div>
           <form onSubmit={onSubmitForm}>
             <input ref={inputRef} onChange={onChangeInput} />
-            <button>입력!</button>
+            <button id="button">입력!</button>
           </form>
           <div id="result">{result}</div>
         </React.Fragment>
