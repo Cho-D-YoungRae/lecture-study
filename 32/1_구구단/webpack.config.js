@@ -1,36 +1,35 @@
-const path = require('path');
-const webpack = require('webpack');
+const path = require("path");
 
 module.exports = {
-  mode: 'development',
-  devtool: 'inline-source-map', // hidden-source-map
+  mode: "development",
+  devtool: "eval",
   resolve: {
-    extensions: ['.jsx', '.js'],
+    extensions: [".js", ".jsx"],
   },
 
   entry: {
-    app: './client',
+    app: [
+      "./client"
+    ],
   },
+
   module: {
-    rules: [{
-      test: /\.jsx?$/,
-      loader: 'babel-loader',
-      options: {
-        presets: [
-          ['@babel/preset-env', {
-            targets: {
-              browsers: ['> 1% in KR'], // browserslist
-            },
-            debug: true,
-          }],
-          '@babel/preset-react',
-        ],
-        plugins: [],
-      },
-    }],
+    rules: [
+      {
+        test: /\.jsx?/,
+        loader: "babel-loader",
+        options: {
+          presets: [
+            "@babel/preset-env",
+            "@babel/preset-react"
+          ]
+        }
+      }
+    ]
   },
+
   output: {
-    filename: 'app.js',
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, "dist"),
+    filename: "app.js"
   },
-};
+}

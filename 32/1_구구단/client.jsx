@@ -3,4 +3,4 @@ const ReactDOM = require('react-dom');
 
 const GuGuDan = require('./GuGuDan');
 
-ReactDOM.render(<GuGuDan />, document.querySelector('#root'));
+ReactDOM.createRoot(document.querySelector('#root')).render(<GuGuDan />);
