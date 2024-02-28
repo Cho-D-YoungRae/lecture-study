@@ -14,7 +14,7 @@ class ResponseCheck extends Component {
   endTime;
 
   onClickScreen = () => {
-    const { state, message, result } = this.state;
+    const {state, message, result} = this.state;
     if (state === "waiting") {
       this.setState({
         state: "ready",
@@ -42,40 +42,50 @@ class ResponseCheck extends Component {
         return {
           state: "waiting",
           message: "클릭해서 시작하세요.",
-          result: [...prevState.result, this.endTime - prevState.startTime],
+          result: [...prevState.result, this.endTime - this.startTime],
         }
       });
     }
 
   }
 
+  onReset = () => {
+    this.setState({
+      result: [],
+    });
+  }
+
   renderAverage = () => {
     return this.state.result.length === 0
       ? null
-      : <div>평균 시간: {this.state.result.reduce((a, c) => a + c) / this.state.result.length}ms</div>
+      : <>
+        <div>평균 시간: {this.state.result.reduce((a, c) => a + c) / this.state.result.length}ms</div>
+        <button onClick={this.onReset}>리셋</button>
+      </>
   }
 
   render() {
     const {state, message} = this.state;
     return (<>
-      <div
-        id="screen"
-        className={state}
-        onClick={this.onClickScreen}
-      >
-        {message}
-      </div>
-      {/*false, undefined, null 은 jsx 에서 태그 없음을 의미*/}
-      {/*React 에서 조건문 사용하는 방법*/}
-      {/*{this.state.result.length === 0*/}
-      {/*    ? null*/}
-      {/*    : <div>평균 시간: {this.state.result.reduce((a, c) => a + c) / this.state.result.length}ms</div>*/}
-      {/*}*/}
-      {/*{this.state.result.length !== 0*/}
-      {/*    && <div>평균 시간: {this.state.result.reduce((a, c) => a + c) / this.state.result.length}ms</div>*/}
-      {/*}*/}
-      {this.renderAverage()}
-    </>)
+        <div
+          id="screen"
+          className={state}
+          onClick={this.onClickScreen}
+        >
+          {message}
+        </div>
+        {/*false, undefined, null 은 jsx 에서 태그 없음을 의미*/}
+        {/*React 에서 조건문 사용하는 방법*/}
+        {/*{this.state.result.length === 0*/}
+        {/*    ? null*/}
+        {/*    : <div>평균 시간: {this.state.result.reduce((a, c) => a + c) / this.state.result.length}ms</div>*/}
+        {/*}*/}
+        {/*{this.state.result.length !== 0*/}
+        {/*    && <div>평균 시간: {this.state.result.reduce((a, c) => a + c) / this.state.result.length}ms</div>*/}
+        {/*}*/}
+        {this.renderAverage()}
+      </>
+    );
   }
 }
 
