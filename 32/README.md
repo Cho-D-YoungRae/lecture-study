@@ -1,8 +1,9 @@
 # [웹 게임을 만들며 배우는 React](https://www.inflearn.com/course/web-game-react/dashboard)
 
-> [github](https://github.com/ZeroCho/react-webgame)
+> [github](https://github.com/ZeroCho/react-webgame)  
+> [youtube](https://www.youtube.com/playlist?list=PLcqDmjxt30RtqbStQqk-eYMK8N-1SYIFn)
 
-- [ ] 2024/02/20 ~ ing
+- [x] 2024/02/20 ~ 2024/03/03
 
 ## React 18
 
