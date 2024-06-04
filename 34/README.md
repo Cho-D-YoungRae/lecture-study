@@ -3,6 +3,7 @@
 > [github](https://github.com/kok202/test-code-with-architecture)
 
 - [x] 2024/05/11 ~ 2024/05/15
+- [x] 2024/06/04 - pdf 복습
 
 ## 정리
 
