@@ -70,5 +70,7 @@
     - `Spring`
 34. [Java/Spring 테스트를 추가하고 싶은 개발자들의 오답노트](./34) - `inflearn`, `김우근`
     - `Spring`, `Test`
-35. [자바 동시성 프로그래밍 [리액티브 프로그래밍 Part.1]](/35) - `inflearn`, `정수원`
+35. [자바 동시성 프로그래밍 [리액티브 프로그래밍 Part.1]](./35) - `inflearn`, `정수원`
     - `Java`
+36. [MySQL 성능 최적화](./36) - `inflearn`, `여정민`
+    - `MySQL`
