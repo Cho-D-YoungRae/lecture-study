@@ -7,4 +7,5 @@ pluginManagement {
 
 rootProject.name = 'payment-system-lecture'
 
+include 'common'
 include 'payment'
