@@ -1,0 +1,16 @@
+services:
+  mysql:
+    container_name: payment-lecture-mysql
+    image: mysql:8.2.0
+    ports:
+      - "3306:3306"
+    environment:
+        MYSQL_DATABASE: payment
+        TZ: Asia/Seoul
+        MYSQL_ALLOW_EMPTY_PASSWORD: yes
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+        - ./docker/mysql/var/lib/mysql:/var/lib/mysql
+
