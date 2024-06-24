@@ -8,6 +8,11 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+  sql:
+    init:
+      mode: never
+      schema-locations: schema.sql
+
   thymeleaf:
     cache: false
 
