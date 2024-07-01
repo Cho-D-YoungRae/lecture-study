@@ -1,4 +1,4 @@
-package org.example.payment.adapter.out.web.executor;
+package org.example.payment.adapter.out.web.toss.executor;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

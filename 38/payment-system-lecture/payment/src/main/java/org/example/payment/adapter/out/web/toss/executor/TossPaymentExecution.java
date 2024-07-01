@@ -1,4 +1,4 @@
-package org.example.payment.adapter.out.web.executor;
+package org.example.payment.adapter.out.web.toss.executor;
 
 public record TossPaymentExecution(
         String paymentKey,

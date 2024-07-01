@@ -1,3 +1,5 @@
+-- Payment
+
 create table payment_events
 (
     id              bigint auto_increment primary key,
