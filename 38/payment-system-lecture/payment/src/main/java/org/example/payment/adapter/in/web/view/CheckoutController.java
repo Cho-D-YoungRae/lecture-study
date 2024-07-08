@@ -5,10 +5,10 @@ import org.example.common.IdempotencyCreator;
 import org.example.common.WebAdapter;
 import org.example.payment.application.port.in.CheckoutCommand;
 import org.example.payment.application.port.in.CheckoutUseCase;
+import org.example.payment.domain.CheckoutResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import reactor.core.publisher.Mono;
 
 @WebAdapter
 @Controller
@@ -18,7 +18,7 @@ public class CheckoutController {
     private final CheckoutUseCase checkoutUseCase;
 
     @GetMapping("/")
-    public Mono<String> checkoutPage(CheckoutRequest checkoutRequest, Model model) {
+    public String checkoutPage(CheckoutRequest checkoutRequest, Model model) {
         final CheckoutCommand checkoutCommand = new CheckoutCommand(
                 checkoutRequest.cartId(),
                 checkoutRequest.buyerId(),
@@ -26,12 +26,10 @@ public class CheckoutController {
                 IdempotencyCreator.create(checkoutRequest)
         );
 
-        return checkoutUseCase.checkout(checkoutCommand)
-                .map(it -> {
-                    model.addAttribute("orderId", it.orderId());
-                    model.addAttribute("orderName", it.orderName());
-                    model.addAttribute("amount", it.amount());
-                    return "checkout";
-                });
+        final CheckoutResult checkoutResult = checkoutUseCase.checkout(checkoutCommand);
+        model.addAttribute("orderId", checkoutResult.orderId());
+        model.addAttribute("orderName", checkoutResult.orderName());
+        model.addAttribute("amount", checkoutResult.amount());
+        return "checkout";
     }
 }

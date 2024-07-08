@@ -2,8 +2,7 @@ package org.example.payment.adapter.out.web.toss.executor;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
+import org.springframework.web.client.RestClient;
 
 @Component
 @RequiredArgsConstructor
@@ -11,13 +10,13 @@ public class TossPaymentExecutor {
 
     private static final String URI = "/v1/payments/confirm";
 
-    private final WebClient tossPaymentWebClient;
+    private final RestClient tossPaymentRestClient;
 
-    public Mono<String> execute(final TossPaymentExecution execution) {
-        return tossPaymentWebClient.post()
+    public String execute(final TossPaymentExecution execution) {
+        return tossPaymentRestClient.post()
                 .uri(URI)
-                .bodyValue(execution)
+                .body(execution)
                 .retrieve()
-                .bodyToMono(String.class);
+                .body(String.class);
     }
 }

@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Mono;
 
 @WebAdapter
 @RestController
@@ -18,13 +17,13 @@ public class TossPaymentController {
     private final TossPaymentExecutor tossPaymentExecutor;
 
     @PostMapping("/v1/toss/confirm")
-    public Mono<ResponseEntity<ApiResponse<String>>> confirm(@RequestBody final TossPaymentConfirmRequest request) {
-        return tossPaymentExecutor.execute(new TossPaymentExecution(
-                request.paymentKey(),
-                request.orderId(),
-                request.amount()
-        ))
-                .map( ApiResponse::success)
-                .map(ResponseEntity::ok);
+    public ResponseEntity<ApiResponse<String>> confirm(@RequestBody final TossPaymentConfirmRequest request) {
+        return ResponseEntity.ok(ApiResponse.success(
+                tossPaymentExecutor.execute(new TossPaymentExecution(
+                        request.paymentKey(),
+                        request.orderId(),
+                        request.amount()
+                ))
+        ));
     }
 }

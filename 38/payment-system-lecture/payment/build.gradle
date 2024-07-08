@@ -4,18 +4,15 @@ jar.enabled = false
 dependencies {
     implementation(project(":common"))
 
-    implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
+    implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
-    implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.apache.kafka:kafka-streams")
     implementation("org.springframework.cloud:spring-cloud-stream")
-    implementation("org.springframework.cloud:spring-cloud-stream-binder-kafka-reactive")
-
-    implementation("io.netty:netty-resolver-dns-native-macos:4.1.95.Final:osx-aarch_64")
+    implementation("org.springframework.cloud:spring-cloud-stream-binder-kafka-streams")
 
     runtimeOnly("com.mysql:mysql-connector-j")
-    runtimeOnly("io.asyncer:r2dbc-mysql")
 
     testImplementation("org.springframework.cloud:spring-cloud-stream-test-binder")
-    testImplementation("io.projectreactor:reactor-test")
 }

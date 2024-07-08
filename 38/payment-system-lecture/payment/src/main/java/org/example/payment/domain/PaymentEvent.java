@@ -12,8 +12,8 @@ public record PaymentEvent(
         String orderName,
         String orderId,
         @Nullable String paymentKey,
-        @Nullable PaymentType paymentType,
-        @Nullable PaymentMethod paymentMethod,
+        PaymentType paymentType,
+        PaymentMethod paymentMethod,
         @Nullable LocalDateTime approvedAt,
         List<PaymentOrder> paymentOrders,
         boolean paymentDone
@@ -30,7 +30,7 @@ public record PaymentEvent(
             @Nullable final PaymentMethod paymentMethod,
             @Nullable final LocalDateTime approvedAt,
             @Nullable final List<PaymentOrder> paymentOrders,
-            final Boolean paymentDone
+            @Nullable final Boolean paymentDone
     ) {
         this(
                 id,
@@ -38,31 +38,11 @@ public record PaymentEvent(
                 orderName,
                 orderId,
                 paymentKey,
-                paymentType,
-                paymentMethod,
+                paymentType == null ? PaymentType.NORMAL : paymentType,
+                paymentMethod == null ? PaymentMethod.EAZY_PAY : paymentMethod,
                 approvedAt,
                 paymentOrders != null ? paymentOrders : List.of(),
                 paymentDone == null ? false : paymentDone
-        );
-    }
-
-    public PaymentEvent(
-            final long buyerId,
-            final String orderName,
-            final String orderId,
-            @Nullable List<PaymentOrder> paymentOrders
-    ) {
-        this(
-                null,
-                buyerId,
-                orderName,
-                orderId,
-                null,
-                null,
-                null,
-                null,
-                paymentOrders != null ? paymentOrders : List.of(),
-                false
         );
     }
 

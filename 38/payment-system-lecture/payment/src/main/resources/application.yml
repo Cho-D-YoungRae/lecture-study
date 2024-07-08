@@ -1,20 +1,24 @@
 spring:
 
-  r2dbc:
-    url: r2dbc:mysql://localhost:3306/payment
-    username: root
-    password:
-
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/payment
+    username: root
+    password:
 
   sql:
     init:
       mode: never
-      schema-locations: schema.sql
 
   thymeleaf:
     cache: false
+
+
+logging:
+  level:
+    org.apache.coyote.http11: trace
+    org.hibernate.sq;: debug
+    org.hibernate.orm.jdbc.bind: trace
 
 psp:
   toss:
