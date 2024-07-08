@@ -9,6 +9,7 @@ public final class IdempotencyCreator {
     }
 
     public static String create(Object data) {
-        return UUID.nameUUIDFromBytes(data.toString().getBytes()).toString();
+//        return UUID.nameUUIDFromBytes(data.toString().getBytes()).toString();
+        return UUID.randomUUID().toString();
     }
 }

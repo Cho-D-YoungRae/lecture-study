@@ -5,9 +5,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,8 +29,9 @@ public class PaymentOrderEntity extends BaseTimeEntity {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "payment_event_id", nullable = false)
-    private Long paymentEventId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "payment_event_id")
+    private PaymentEventEntity paymentEvent;
 
     @Column(name = "seller_id", nullable = false)
     private Long sellerId;
@@ -59,7 +63,7 @@ public class PaymentOrderEntity extends BaseTimeEntity {
 
     public PaymentOrderEntity(
             @Nullable final Long id,
-            final Long paymentEventId,
+            final PaymentEventEntity paymentEvent,
             final Long sellerId,
             final Long productId,
             final String orderId,
@@ -71,7 +75,7 @@ public class PaymentOrderEntity extends BaseTimeEntity {
             @Nullable final Integer thresholdCount
     ) {
         this.id = id;
-        this.paymentEventId = paymentEventId;
+        this.paymentEvent = paymentEvent;
         this.sellerId = sellerId;
         this.productId = productId;
         this.orderId = orderId;
