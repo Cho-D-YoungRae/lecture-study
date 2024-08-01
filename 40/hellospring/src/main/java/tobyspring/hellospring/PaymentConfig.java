@@ -1,10 +1,13 @@
 package tobyspring.hellospring;
 
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
+import tobyspring.hellospring.api.ApiTemplate;
 import tobyspring.hellospring.exrate.CachedExRateProvider;
-import tobyspring.hellospring.exrate.WebApiExRateProvider;
+import tobyspring.hellospring.exrate.RestTemplateExRateProvider;
 import tobyspring.hellospring.payment.ExRateProvider;
 import tobyspring.hellospring.payment.PaymentService;
 
@@ -21,7 +24,7 @@ public class PaymentConfig {
 
     @Bean
     public ExRateProvider exRateProvider() {
-        return new WebApiExRateProvider() ;
+        return new RestTemplateExRateProvider(restTemplate());
     }
 
     @Bean
@@ -32,5 +35,15 @@ public class PaymentConfig {
     @Bean
     public Clock clock() {
         return Clock.systemDefaultZone();
+    }
+
+    @Bean
+    public ApiTemplate apiTemplate() {
+        return new ApiTemplate();
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplateBuilder().build();
     }
 }

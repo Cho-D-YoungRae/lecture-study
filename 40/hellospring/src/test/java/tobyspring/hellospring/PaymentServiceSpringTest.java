@@ -9,7 +9,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import tobyspring.hellospring.payment.Payment;
 import tobyspring.hellospring.payment.PaymentService;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.Clock;
 import java.time.LocalDateTime;
@@ -27,7 +26,7 @@ class PaymentServiceSpringTest {
     private Clock clock;
 
     @Test
-    void prepare() throws IOException {
+    void prepare() {
 
         Payment payment = paymentService.prepare(1L, "USD", BigDecimal.TEN);
 
@@ -36,7 +35,7 @@ class PaymentServiceSpringTest {
     }
 
     @Test
-    void validUntil() throws IOException {
+    void validUntil() {
         Payment payment = paymentService.prepare(1L, "USD", BigDecimal.TEN);
 
         // valid untile 이 prepare() 30분 뒤로 설정됐는가?

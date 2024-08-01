@@ -6,7 +6,6 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import tobyspring.hellospring.payment.PaymentService;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.concurrent.TimeUnit;
 
@@ -14,7 +13,7 @@ public class Client {
 
     private static final Logger log = LoggerFactory.getLogger(Client.class);
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws InterruptedException {
         BeanFactory beanFactory = new AnnotationConfigApplicationContext(PaymentConfig.class);
         PaymentService paymentService = beanFactory.getBean(PaymentService.class);
 

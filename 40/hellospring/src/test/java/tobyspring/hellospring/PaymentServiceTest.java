@@ -24,7 +24,7 @@ class PaymentServiceTest {
         clock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
     }
     @Test
-    void convertedAmount() throws IOException {
+    void convertedAmount() {
 
         testAmount(BigDecimal.valueOf(500), BigDecimal.valueOf(5000));
         testAmount(BigDecimal.valueOf(1_000), BigDecimal.valueOf(10_000));
@@ -32,7 +32,7 @@ class PaymentServiceTest {
     }
 
     @Test
-    void validUntil() throws IOException {
+    void validUntil() {
         PaymentService paymentService = new PaymentService(new ExRateProviderStub(BigDecimal.valueOf(1_000)), this.clock);
 
         Payment payment = paymentService.prepare(1L, "USD", BigDecimal.TEN);
@@ -44,7 +44,7 @@ class PaymentServiceTest {
     }
 
 
-    private void testAmount(BigDecimal exRate, BigDecimal convertedAmount) throws IOException {
+    private void testAmount(BigDecimal exRate, BigDecimal convertedAmount) {
         PaymentService paymentService = new PaymentService(new ExRateProviderStub(exRate), this.clock);
 
         Payment payment = paymentService.prepare(1L, "USD", BigDecimal.TEN);
