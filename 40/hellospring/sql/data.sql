@@ -1,0 +1,1 @@
+insert into orders (no,total,id) values (?,?,?);
