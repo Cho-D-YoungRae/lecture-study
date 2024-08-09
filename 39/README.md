@@ -4,3 +4,4 @@
 > [시즌1 Part2](https://www.inflearn.com/course/real-mysql-part-2)
 
 - [x] 2024/07/08 ~ 2024/08/07
+- [x] 2024/08/09 - 내용 정리 복습
