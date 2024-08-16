@@ -9,7 +9,7 @@ import java.util.List;
 public class MockProductClient implements ProductClient {
 
     @Override
-    public List<Product> getProducts(final long cartId, final List<Long> productIds) {
+    public List<Product> getProducts(long cartId, List<Long> productIds) {
         return productIds.stream()
                 .map(id -> new Product(
                         id,

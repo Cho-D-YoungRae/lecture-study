@@ -62,17 +62,17 @@ public class PaymentOrderEntity extends BaseTimeEntity {
     private Integer thresholdCount;
 
     public PaymentOrderEntity(
-            @Nullable final Long id,
-            final PaymentEventEntity paymentEvent,
-            final Long sellerId,
-            final Long productId,
-            final String orderId,
-            final Long amount,
-            @Nullable final PaymentStatus paymentOrderStatus,
-            @Nullable final Boolean ledgerUpdated,
-            @Nullable final Boolean walletUpdated,
-            @Nullable final Integer failedCount,
-            @Nullable final Integer thresholdCount
+            @Nullable Long id,
+            PaymentEventEntity paymentEvent,
+            Long sellerId,
+            Long productId,
+            String orderId,
+            Long amount,
+            @Nullable PaymentStatus paymentOrderStatus,
+            @Nullable Boolean ledgerUpdated,
+            @Nullable Boolean walletUpdated,
+            @Nullable Integer failedCount,
+            @Nullable Integer thresholdCount
     ) {
         this.id = id;
         this.paymentEvent = paymentEvent;

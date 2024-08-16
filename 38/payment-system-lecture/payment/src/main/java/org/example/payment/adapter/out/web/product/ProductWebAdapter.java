@@ -15,7 +15,7 @@ public class ProductWebAdapter implements LoadProductPort {
     private final ProductClient productClient;
 
     @Override
-    public List<Product> getProducts(final long cartId, final List<Long> productIds) {
+    public List<Product> getProducts(long cartId, List<Long> productIds) {
         return productClient.getProducts(cartId, productIds);
     }
 }

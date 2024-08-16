@@ -74,16 +74,16 @@ public class PaymentEventEntity extends BaseTimeEntity {
 
     @Builder
     public PaymentEventEntity(
-            @Nullable final Long id,
-            final Long buyerId,
-            @Nullable final Boolean paymentDone,
-            @Nullable final String paymentKey,
-            @Nullable final String orderId,
-            final PaymentType type,
-            final String orderName,
-            @Nullable final PaymentMethod method,
-            @Nullable final String pspRawData,
-            @Nullable final LocalDateTime approvedAt
+            @Nullable Long id,
+            Long buyerId,
+            @Nullable Boolean paymentDone,
+            @Nullable String paymentKey,
+            @Nullable String orderId,
+            PaymentType type,
+            String orderName,
+            @Nullable PaymentMethod method,
+            @Nullable String pspRawData,
+            @Nullable LocalDateTime approvedAt
     ) {
         this.id = id;
         this.buyerId = buyerId;
@@ -97,7 +97,7 @@ public class PaymentEventEntity extends BaseTimeEntity {
         this.approvedAt = approvedAt;
     }
 
-    public static PaymentEventEntity from(final PaymentEvent paymentEvent) {
+    public static PaymentEventEntity from(PaymentEvent paymentEvent) {
         return new PaymentEventEntity(
                 paymentEvent.id(),
                 paymentEvent.buyerId(),

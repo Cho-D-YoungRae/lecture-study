@@ -17,7 +17,7 @@ public class TossPaymentController {
     private final TossPaymentExecutor tossPaymentExecutor;
 
     @PostMapping("/v1/toss/confirm")
-    public ResponseEntity<ApiResponse<String>> confirm(@RequestBody final TossPaymentConfirmRequest request) {
+    public ResponseEntity<ApiResponse<String>> confirm(@RequestBody TossPaymentConfirmRequest request) {
         return ResponseEntity.ok(ApiResponse.success(
                 tossPaymentExecutor.execute(new TossPaymentExecution(
                         request.paymentKey(),

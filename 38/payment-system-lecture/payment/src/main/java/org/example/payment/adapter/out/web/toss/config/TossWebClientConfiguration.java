@@ -14,11 +14,11 @@ public class TossWebClientConfiguration {
 
     @Bean
     public RestClient tossPaymentRestClient(
-            final RestClient.Builder restClientBuilder,
-            @Value("${psp.toss.url}") final String baseUrl,
-            @Value("${psp.toss.secret-key}") final String secretKey
+            RestClient.Builder restClientBuilder,
+            @Value("${psp.toss.url}") String baseUrl,
+            @Value("${psp.toss.secret-key}") String secretKey
     ) {
-        final String encodedSecretKey = Base64.getEncoder()
+        String encodedSecretKey = Base64.getEncoder()
                 .encodeToString((secretKey + ":").getBytes());
         return restClientBuilder
                 .baseUrl(baseUrl)

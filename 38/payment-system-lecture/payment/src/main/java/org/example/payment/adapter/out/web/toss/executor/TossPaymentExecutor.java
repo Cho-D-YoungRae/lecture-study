@@ -12,7 +12,7 @@ public class TossPaymentExecutor {
 
     private final RestClient tossPaymentRestClient;
 
-    public String execute(final TossPaymentExecution execution) {
+    public String execute(TossPaymentExecution execution) {
         return tossPaymentRestClient.post()
                 .uri(URI)
                 .body(execution)

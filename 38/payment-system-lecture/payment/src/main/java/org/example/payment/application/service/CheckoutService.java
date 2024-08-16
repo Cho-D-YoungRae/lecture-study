@@ -24,14 +24,14 @@ public class CheckoutService implements CheckoutUseCase {
     private final SavePaymentPort savePaymentPort;
 
     @Override
-    public CheckoutResult checkout(final CheckoutCommand command) {
-        final List<Product> products = loadProductPort.getProducts(command.cartId(), command.productIds());
-        final PaymentEvent paymentEvent = createPaymentEvent(command, products);
+    public CheckoutResult checkout(CheckoutCommand command) {
+        List<Product> products = loadProductPort.getProducts(command.cartId(), command.productIds());
+        PaymentEvent paymentEvent = createPaymentEvent(command, products);
         savePaymentPort.save(paymentEvent);
         return new CheckoutResult(paymentEvent.totalAmount(), paymentEvent.orderId(), paymentEvent.orderName());
     }
 
-    private PaymentEvent createPaymentEvent(final CheckoutCommand command, List<Product> products) {
+    private PaymentEvent createPaymentEvent(CheckoutCommand command, List<Product> products) {
         return PaymentEvent.builder()
                 .buyerId(command.buyerId())
                 .orderId(command.idempotencyKey())

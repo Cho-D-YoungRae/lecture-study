@@ -20,8 +20,8 @@ public class PaymentPersistentAdapter implements SavePaymentPort {
 
     @Override
     @Transactional
-    public long save(final PaymentEvent paymentEvent) {
-        final PaymentEventEntity paymentEventEntity = paymentRepository.save(PaymentEventEntity.from(paymentEvent));
+    public long save(PaymentEvent paymentEvent) {
+        PaymentEventEntity paymentEventEntity = paymentRepository.save(PaymentEventEntity.from(paymentEvent));
         paymentOrderRepository.saveAll(
                 paymentEvent.paymentOrders().stream()
                         .map(order -> new PaymentOrderEntity(

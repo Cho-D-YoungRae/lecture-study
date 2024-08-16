@@ -21,16 +21,16 @@ public record PaymentEvent(
 
     @Builder
     public PaymentEvent(
-            @Nullable final Long id,
-            final long buyerId,
-            final String orderName,
-            final String orderId,
-            @Nullable final String paymentKey,
-            @Nullable final PaymentType paymentType,
-            @Nullable final PaymentMethod paymentMethod,
-            @Nullable final LocalDateTime approvedAt,
-            @Nullable final List<PaymentOrder> paymentOrders,
-            @Nullable final Boolean paymentDone
+            @Nullable Long id,
+            long buyerId,
+            String orderName,
+            String orderId,
+            @Nullable String paymentKey,
+            @Nullable PaymentType paymentType,
+            @Nullable PaymentMethod paymentMethod,
+            @Nullable LocalDateTime approvedAt,
+            @Nullable List<PaymentOrder> paymentOrders,
+            @Nullable Boolean paymentDone
     ) {
         this(
                 id,

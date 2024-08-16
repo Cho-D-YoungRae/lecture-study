@@ -32,24 +32,24 @@ class CheckoutServiceTest {
 
     @Test
     void should_save_PaymentEvent_and_PaymentOrder_successfully() {
-        final String orderId = UUID.randomUUID().toString();
-        final CheckoutCommand checkoutCommand = CheckoutCommand.builder()
+        String orderId = UUID.randomUUID().toString();
+        CheckoutCommand checkoutCommand = CheckoutCommand.builder()
                 .cartId(1L)
                 .buyerId(1L)
                 .productIds(List.of(1L, 2L, 3L))
                 .idempotencyKey(orderId)
                 .build();
 
-        final CheckoutResult checkoutResult = checkoutUseCase.checkout(checkoutCommand);
+        CheckoutResult checkoutResult = checkoutUseCase.checkout(checkoutCommand);
 
         assertThat(checkoutResult.amount()).isEqualTo(60000);
         assertThat(checkoutResult.orderId()).isEqualTo(orderId);
 
-        final PaymentEventEntity paymentEventEntity = paymentEventJpaRepository.findByOrderId(orderId).get();
+        PaymentEventEntity paymentEventEntity = paymentEventJpaRepository.findByOrderId(orderId).get();
         assertThat(paymentEventEntity.getOrderId()).isEqualTo(orderId);
         assertThat(paymentEventEntity.getPaymentDone()).isFalse();
 
-        final List<PaymentOrderEntity> paymentOrderEntityList = paymentOrderJpaRepository
+        List<PaymentOrderEntity> paymentOrderEntityList = paymentOrderJpaRepository
                 .findAllByPaymentEvent(paymentEventEntity);
         assertThat(paymentOrderEntityList).hasSize(checkoutCommand.productIds().size());
         assertThat(paymentOrderEntityList).allMatch(entity -> entity.getLedgerUpdated() == false);
@@ -58,8 +58,8 @@ class CheckoutServiceTest {
 
     @Test
     void show_fail_to_save_PaymentEvent_and_PaymentOrder_when_trying_to_save_for_the_second_time() {
-        final String orderId = UUID.randomUUID().toString();
-        final CheckoutCommand checkoutCommand = CheckoutCommand.builder()
+        String orderId = UUID.randomUUID().toString();
+        CheckoutCommand checkoutCommand = CheckoutCommand.builder()
                 .cartId(1L)
                 .buyerId(1L)
                 .productIds(List.of(1L, 2L, 3L))

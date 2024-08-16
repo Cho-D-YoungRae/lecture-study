@@ -47,12 +47,12 @@ public class PaymentOrderHistoryEntity {
     private String reason;
 
     public PaymentOrderHistoryEntity(
-            @Nullable final String changedBy,
-            @Nullable final Long id,
-            @Nullable final PaymentStatus newStatus,
-            final Long paymentOrderId,
-            @Nullable final PaymentStatus previousStatus,
-            @Nullable final String reason
+            @Nullable String changedBy,
+            @Nullable Long id,
+            @Nullable PaymentStatus newStatus,
+            Long paymentOrderId,
+            @Nullable PaymentStatus previousStatus,
+            @Nullable String reason
     ) {
         this.changedBy = changedBy;
         this.id = id;

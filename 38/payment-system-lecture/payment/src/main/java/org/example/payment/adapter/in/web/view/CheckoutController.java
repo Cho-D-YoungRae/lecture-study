@@ -19,14 +19,14 @@ public class CheckoutController {
 
     @GetMapping("/")
     public String checkoutPage(CheckoutRequest checkoutRequest, Model model) {
-        final CheckoutCommand checkoutCommand = new CheckoutCommand(
+        CheckoutCommand checkoutCommand = new CheckoutCommand(
                 checkoutRequest.cartId(),
                 checkoutRequest.buyerId(),
                 checkoutRequest.productIds(),
                 IdempotencyCreator.create(checkoutRequest)
         );
 
-        final CheckoutResult checkoutResult = checkoutUseCase.checkout(checkoutCommand);
+        CheckoutResult checkoutResult = checkoutUseCase.checkout(checkoutCommand);
         model.addAttribute("orderId", checkoutResult.orderId());
         model.addAttribute("orderName", checkoutResult.orderName());
         model.addAttribute("amount", checkoutResult.amount());

@@ -17,15 +17,15 @@ public record PaymentOrder(
 
     @Builder
     public PaymentOrder(
-            @Nullable final Long id,
-            @Nullable final Long paymentEventId,
-            final long sellerId,
-            final long productId,
-            final String orderId,
-            final long amount,
-            @Nullable final PaymentStatus paymentStatus,
-            @Nullable final Boolean ledgerUpdated,
-            @Nullable final Boolean walletUpdated
+            @Nullable Long id,
+            @Nullable Long paymentEventId,
+            long sellerId,
+            long productId,
+            String orderId,
+            long amount,
+            @Nullable PaymentStatus paymentStatus,
+            @Nullable Boolean ledgerUpdated,
+            @Nullable Boolean walletUpdated
     ) {
         this(
                 id,
@@ -41,10 +41,10 @@ public record PaymentOrder(
     }
 
     public PaymentOrder(
-            final long sellerId,
-            final long productId,
-            final String orderId,
-            final long amount
+            long sellerId,
+            long productId,
+            String orderId,
+            long amount
     ) {
         this(
                 null,

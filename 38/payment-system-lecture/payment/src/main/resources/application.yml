@@ -30,6 +30,7 @@ psp:
 logging:
   level:
     org.apache.coyote.http11: trace
-    org.hibernate.sq;: debug
-    org.hibernate.orm.jdbc.bind: trace
+    org.hibernate:
+      sql: debug
+      orm.jdbc.bind: trace
 
