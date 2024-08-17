@@ -9,7 +9,7 @@ public record PaymentExecutionResult(
         String paymentKey,
         String orderId,
         @Nullable PaymentExtraDetails extraDetails,
-        @Nullable PaymentExecutionFailure failure,
+        @Nullable PaymentFailure failure,
         boolean isSuccess,
         boolean isFailure,
         boolean isUnknown,
@@ -58,7 +58,7 @@ public record PaymentExecutionResult(
     ) {
     }
 
-    public record PaymentExecutionFailure(
+    public record PaymentFailure(
             String errorCode,
             String message
     ) {

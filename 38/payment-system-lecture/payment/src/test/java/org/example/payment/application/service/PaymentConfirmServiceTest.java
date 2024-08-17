@@ -147,7 +147,7 @@ class PaymentConfirmServiceTest {
                 paymentConfirmCommand.paymentKey(),
                 paymentConfirmCommand.orderId(),
                 null,
-                new PaymentExecutionResult.PaymentExecutionFailure(
+                new PaymentExecutionResult.PaymentFailure(
                         "ERROR",
                         "test error message"
                 ),
@@ -198,7 +198,7 @@ class PaymentConfirmServiceTest {
                 paymentConfirmCommand.paymentKey(),
                 paymentConfirmCommand.orderId(),
                 null,
-                new PaymentExecutionResult.PaymentExecutionFailure(
+                new PaymentExecutionResult.PaymentFailure(
                         "ERROR",
                         "test error message"
                 ),

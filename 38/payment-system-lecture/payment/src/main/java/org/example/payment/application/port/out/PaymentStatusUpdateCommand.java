@@ -9,7 +9,7 @@ public record PaymentStatusUpdateCommand(
         String orderId,
         PaymentStatus status,
         @Nullable PaymentExecutionResult.PaymentExtraDetails extraDetails,
-        @Nullable PaymentExecutionResult.PaymentExecutionFailure failure
+        @Nullable PaymentExecutionResult.PaymentFailure failure
 ) {
 
     public PaymentStatusUpdateCommand {

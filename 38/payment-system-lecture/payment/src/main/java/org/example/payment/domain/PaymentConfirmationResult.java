@@ -4,7 +4,7 @@ import jakarta.annotation.Nullable;
 
 public record PaymentConfirmationResult(
         PaymentStatus status,
-        @Nullable PaymentExecutionResult.PaymentExecutionFailure failure
+        @Nullable PaymentExecutionResult.PaymentFailure failure
 ) {
 
     public PaymentConfirmationResult {

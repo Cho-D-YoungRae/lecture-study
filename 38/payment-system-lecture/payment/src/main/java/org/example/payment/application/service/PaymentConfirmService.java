@@ -19,6 +19,10 @@ public class PaymentConfirmService implements PaymentConfirmUseCase {
     private final PaymentValidationPort paymentValidationPort;
     private final PaymentExecutorPort paymentExecutorPort;
 
+    /**
+     * 강의와 다름 -> 에러 핸들링 로직 추가해야함.
+     * 에러 발생시 UNKNOWN 처리
+     */
     @Override
     public PaymentConfirmationResult confirm(PaymentConfirmCommand command) {
         paymentStatusUpdatePort.updatePaymentStatusToExecuting(command.orderId(), command.paymentKey());
