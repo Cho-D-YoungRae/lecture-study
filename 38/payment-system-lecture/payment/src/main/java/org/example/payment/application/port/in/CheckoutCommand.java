@@ -1,10 +1,8 @@
 package org.example.payment.application.port.in;
 
-import lombok.Builder;
-
 import java.util.List;
 
-@Builder
+
 public record CheckoutCommand(
         long cartId,
         long buyerId,

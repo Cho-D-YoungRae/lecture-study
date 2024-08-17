@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.payment.domain.PaymentStatus;
@@ -46,19 +47,20 @@ public class PaymentOrderHistoryEntity {
     @Column(name = "reason")
     private String reason;
 
+    @Builder
     public PaymentOrderHistoryEntity(
-            @Nullable String changedBy,
             @Nullable Long id,
-            @Nullable PaymentStatus newStatus,
             Long paymentOrderId,
             @Nullable PaymentStatus previousStatus,
+            @Nullable PaymentStatus newStatus,
+            @Nullable String changedBy,
             @Nullable String reason
     ) {
-        this.changedBy = changedBy;
         this.id = id;
-        this.newStatus = newStatus;
         this.paymentOrderId = paymentOrderId;
         this.previousStatus = previousStatus;
+        this.newStatus = newStatus;
+        this.changedBy = changedBy;
         this.reason = reason;
     }
 }

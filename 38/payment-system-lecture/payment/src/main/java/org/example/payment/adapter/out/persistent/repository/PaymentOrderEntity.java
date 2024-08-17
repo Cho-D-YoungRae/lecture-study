@@ -14,6 +14,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.example.payment.domain.PaymentStatus;
 
 import static lombok.AccessLevel.PROTECTED;
@@ -22,6 +23,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Table(name = "payment_orders")
 @NoArgsConstructor(access = PROTECTED)
 @Getter
+@Setter
 public class PaymentOrderEntity extends BaseTimeEntity {
 
     @Id

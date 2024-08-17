@@ -17,7 +17,8 @@ spring:
 
   sql:
     init:
-      mode: never
+      mode: always
+      schema-locations: classpath:payment-schema.sql
 
   thymeleaf:
     cache: false

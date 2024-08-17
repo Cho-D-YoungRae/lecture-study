@@ -1,5 +1,9 @@
 -- Payment
 
+drop table if exists payment_order_histories;
+drop table if exists payment_orders;
+drop table if exists payment_events;
+
 create table payment_events
 (
     id              bigint auto_increment primary key,

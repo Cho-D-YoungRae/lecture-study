@@ -10,13 +10,11 @@ import org.example.payment.domain.CheckoutResult;
 import org.example.payment.domain.PaymentEvent;
 import org.example.payment.domain.PaymentOrder;
 import org.example.payment.domain.Product;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @UseCase
-@Service
 @RequiredArgsConstructor
 public class CheckoutService implements CheckoutUseCase {
 

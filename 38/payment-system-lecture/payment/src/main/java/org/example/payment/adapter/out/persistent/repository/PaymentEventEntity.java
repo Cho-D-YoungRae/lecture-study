@@ -13,6 +13,7 @@ import jakarta.persistence.UniqueConstraint;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.example.payment.domain.PaymentEvent;
 import org.example.payment.domain.PaymentMethod;
 import org.example.payment.domain.PaymentType;
@@ -31,6 +32,7 @@ import static lombok.AccessLevel.PROTECTED;
 )
 @NoArgsConstructor(access = PROTECTED)
 @Getter
+@Setter
 public class PaymentEventEntity extends BaseTimeEntity {
 
     @Id
