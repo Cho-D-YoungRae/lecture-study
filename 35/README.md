@@ -2,4 +2,6 @@
 
 > [깃허브](https://github.com/onjsdnjs/Java-Concurrency-Programming)
 
-- [ ] 2024/06/10 ~ ing
+- [x] 2024/06/10 ~ 2024/10/22 STOP
+  - ~ 8-3 까지 수강
+  - 김영한 강의로 대체
