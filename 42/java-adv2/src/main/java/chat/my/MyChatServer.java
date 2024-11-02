@@ -1,11 +1,11 @@
 package chat.my;
 
-import network.tcp.v6.SessionManagerV6;
-import network.tcp.v6.SessionV6;
-
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.regex.Pattern;
 
 import static util.MyLogger.log;
 
@@ -15,7 +15,7 @@ public class MyChatServer {
 
     public static void main(String[] args) throws IOException {
         log("서버 시작");
-        SessionManagerV6 sessionManager = new SessionManagerV6();
+        MyChatSessionManager sessionManager = new MyChatSessionManager();
         ServerSocket serverSocket = new ServerSocket(PORT);
         log("서버 소캣 시작 - 리스닝 포트: " + PORT);
 
@@ -23,14 +23,29 @@ public class MyChatServer {
         ShutdownHook shutdownHook = new ShutdownHook(serverSocket, sessionManager);
         Runtime.getRuntime().addShutdownHook(new Thread(shutdownHook, "shutdown"));
 
+        Pattern joinCommandPattern = Pattern.compile("/join\\|[A-Za-z0-9]+");
+
         try {
             while (true) {
                 Socket socket = serverSocket.accept();
                 log("소캣 연결: " + socket);
 
-                SessionV6 session = new SessionV6(socket, sessionManager);
-                Thread thread = new Thread(session);
-                thread.start();
+                try (BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+                    String command = br.readLine();
+                    if (!joinCommandPattern.matcher(command).matches()) {
+                        throw new IllegalArgumentException("[" + socket + "] 올바르지 않은 명령어: " + command);
+                    }
+
+                    String name = command.substring(6);
+                    MyChatSession session = new MyChatSession(socket, sessionManager, name);
+                    session.start();
+
+                } catch (IllegalArgumentException e) {
+                    log(e);
+                    socket.close();
+                    log("소캣 종료: " + socket);
+                }
+
             }
         } catch (IOException e) {
             log("서버 소캣 종료: " + e);
@@ -41,9 +56,9 @@ public class MyChatServer {
     static class ShutdownHook implements Runnable {
 
         private final ServerSocket serverSocket;
-        private final SessionManagerV6 sessionManager;
+        private final MyChatSessionManager sessionManager;
 
-        public ShutdownHook(ServerSocket serverSocket, SessionManagerV6 sessionManager) {
+        public ShutdownHook(ServerSocket serverSocket, MyChatSessionManager sessionManager) {
             this.serverSocket = serverSocket;
             this.sessionManager = sessionManager;
         }

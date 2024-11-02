@@ -1,26 +1,34 @@
 package chat.my;
 
-import network.tcp.v6.SessionV6;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class MyChatSessionManager {
 
-    private final List<SessionV6> sessions = new ArrayList<>();
+    private final List<MyChatSession> sessions = new ArrayList<>();
 
-    public synchronized void add(SessionV6 session) {
+    public synchronized void add(MyChatSession session) {
         sessions.add(session);
     }
 
-    public synchronized void remove(SessionV6 session) {
+    public synchronized void remove(MyChatSession session) {
         sessions.remove(session);
     }
 
     public synchronized void closeAll() {
-        for (SessionV6 session : sessions) {
+        for (MyChatSession session : sessions) {
             session.close();
         }
         sessions.clear();
+    }
+
+    public List<String> getAllNames() {
+        return sessions.stream().map(MyChatSession::getName).toList();
+    }
+
+    public void broadcast(String message) {
+        for (MyChatSession session : sessions) {
+            session.sendMessage(message);
+        }
     }
 }
