@@ -32,6 +32,7 @@ public class MyChatServer {
 
                 try (BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
                     String command = br.readLine();
+                    log("client -> server: " + command);
                     if (!joinCommandPattern.matcher(command).matches()) {
                         throw new IllegalArgumentException("[" + socket + "] 올바르지 않은 명령어: " + command);
                     }
@@ -39,6 +40,7 @@ public class MyChatServer {
                     String name = command.substring(6);
                     MyChatSession session = new MyChatSession(socket, sessionManager, name);
                     session.start();
+                    log("세션 생성: " + session.getName());
 
                 } catch (IllegalArgumentException e) {
                     log(e);

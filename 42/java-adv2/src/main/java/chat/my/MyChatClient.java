@@ -35,6 +35,10 @@ public class MyChatClient {
             try(socket;BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
                 while (!exit.get()) {
                     String received = br.readLine();
+                    if (received == null) {
+                        exit.set(true);
+                        break;
+                    }
                     System.out.println(received);
                 }
             } catch (IOException e) {

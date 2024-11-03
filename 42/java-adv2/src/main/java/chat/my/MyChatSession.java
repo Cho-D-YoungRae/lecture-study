@@ -50,7 +50,7 @@ public class MyChatSession {
                 try {
                     String received = reader.readLine();
                     log("client -> server: " + received);
-                    if ("/exit".equals(received)) {
+                    if (received == null || "/exit".equals(received)) {
                         close();
                     } else if (received.startsWith("/message|")) {
                         String message = received.substring(9);
@@ -62,8 +62,7 @@ public class MyChatSession {
                         sendMessage("현재 접속자: " + sessionManager.getAllNames());
                     } else if (received.startsWith("/exit")) {
                         close();
-                    }
-                    else {
+                    } else {
                         sendMessage("잘못된 명령어입니다.");
                     }
                 } catch (IOException e) {
