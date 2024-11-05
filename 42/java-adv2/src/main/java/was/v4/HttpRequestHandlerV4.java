@@ -80,7 +80,7 @@ public class HttpRequestHandlerV4 implements Runnable {
     }
 
     private void search(HttpResponse response, HttpRequest request) {
-        String query = request.getQueryParameter("q");
+        String query = request.getParameter("q");
 
         response.writeBody("<h1>Search</h1>");
         response.writeBody("<ul>");
