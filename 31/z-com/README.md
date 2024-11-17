@@ -52,3 +52,10 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 그렇다고 모드 클라이언트 컴포넌트로 하냐? -> 그럼 서버 컴포넌트 장점 사용 못함
 
 서버 컴포넌트는 데이터를 다룰 때 유용함
+
+### 2.7 default.tsx
+
+패러랠 라우트에 대한 기본 값
+
+없을 경우 null 반환
+
