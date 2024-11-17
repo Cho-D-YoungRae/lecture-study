@@ -34,3 +34,21 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+---
+
+## 학습
+
+### 2.6 클라이언트 컴포넌트로 전환하기
+
+모든 컴포넌트는 서버 컴포넌트 -> 넥스트 서버에서 돈다
+
+원래 리액트는 클라이언트에서 돌아야함
+
+서버 컴포넌트이면 async 로 비동기로 컴포넌트 만들 수도 있음
+
+대신에 서버 컴포넌트는 훅 사용 못함 => "use client"
+
+그렇다고 모드 클라이언트 컴포넌트로 하냐? -> 그럼 서버 컴포넌트 장점 사용 못함
+
+서버 컴포넌트는 데이터를 다룰 때 유용함
