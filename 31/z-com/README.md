@@ -59,3 +59,16 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 없을 경우 null 반환
 
+### 2.8 인터셉팅 라우트
+
+레이아웃에서 기본 폴더의 페이지들은 children으로 받고 @modal 폴더의 페이지들은 modal로 받음
+
+인터셉팅 라우트는 기본 폴더의 페이지와 @modal 폴더의 페이지가 다르도록 하는 것
+
+> children 은 app/(beforeLogin)/page.tsx, modal 은 app/@modal/i/flow/login/page.tsx
+
+클라이언트에서 라우팅할 때만 인터셉팅 라우트가 적용
+
+패러랠 라우트와 인터셉팅 라우트를 활용하면 기존 화면에서 url 이 바뀐 채 모달을 띄울 수 있다.
+
+그러면 기본 폴더의 페이지는 필요없나? -> 새로고침 했을 때 사용됨, 혹은 브라우저 통해서 처음 접속했을 때
