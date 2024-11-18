@@ -2,7 +2,7 @@
 export default function Home() {
   return (
     <main>
-      홈페이지
+      홈 페이지
     </main>
   );
 }
