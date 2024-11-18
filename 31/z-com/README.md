@@ -39,7 +39,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ## 학습
 
-### 2.6 클라이언트 컴포넌트로 전환하기
+### 클라이언트 컴포넌트로 전환하기
 
 모든 컴포넌트는 서버 컴포넌트 -> 넥스트 서버에서 돈다
 
@@ -53,13 +53,13 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 서버 컴포넌트는 데이터를 다룰 때 유용함
 
-### 2.7 default.tsx
+### default.tsx
 
 패러랠 라우트에 대한 기본 값
 
 없을 경우 null 반환
 
-### 2.8 인터셉팅 라우트
+### 인터셉팅 라우트
 
 레이아웃에서 기본 폴더의 페이지들은 children으로 받고 @modal 폴더의 페이지들은 modal로 받음
 
@@ -73,7 +73,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 그러면 기본 폴더의 페이지는 필요없나? -> 새로고침 했을 때 사용됨, 혹은 브라우저 통해서 처음 접속했을 때
 
-### 2.9 private folder
+### private folder
 
 주소 창에 안 뜸
 
@@ -81,3 +81,16 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 > 서버 컴포넌트가 클라이언트 컴포넌트가 됨
 
+### 로그인 모달에서 발생하는 문제 해결하기(router.replace)
+
+서버에서 리다이렉트하면 인터셉팅이 제대로 되지 않음
+
+클라이언트에서 링크를 통해서 이동해야 인터셉팅이 제대로 됨
+
+useRouter 사용
+
+router.replace (/login -> /i/flow/login): 뒤로 가기 시에 /login 이전으로 이동
+
+router.push (/login -> /i/flow/login): 뒤로 가기 시에 /login
+
+모달이 여러개이면 모달 디렉토리를 추가하고 레이아웃에 추가하면 됨
