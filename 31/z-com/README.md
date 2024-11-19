@@ -94,3 +94,9 @@ router.replace (/login -> /i/flow/login): 뒤로 가기 시에 /login 이전으�
 router.push (/login -> /i/flow/login): 뒤로 가기 시에 /login
 
 모달이 여러개이면 모달 디렉토리를 추가하고 레이아웃에 추가하면 됨
+
+### useSelectedLayoutSegment로 ActiveLink 만들기
+
+useSelectedLayoutSegment 현재 선택된 레이아웃 세그먼트를 가져옴
+
+하위 세그먼트까지 모두 가져오고 싶으면 useSelectedLayoutSegments()를 사용
