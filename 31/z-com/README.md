@@ -100,3 +100,17 @@ router.push (/login -> /i/flow/login): 뒤로 가기 시에 /login
 useSelectedLayoutSegment 현재 선택된 레이아웃 세그먼트를 가져옴
 
 하위 세그먼트까지 모두 가져오고 싶으면 useSelectedLayoutSegments()를 사용
+
+## 홈탭 만들면서 Context API 적용해보기
+
+처음에 css 할 때 background-color 주면 영역을 보기 쉬워서 좋음. 개발 완료 후 뺴면 됨.
+
+css 에서도 변수 사용 가능
+
+css 모듈 더 사용하고 싶다면 sass 사용
+
+컨텍스트 API는 최적화가 필요할 수 있음 -> 사용해보다가 필요가 생기면
+
+컨텍스트 API 사용하려면 영향을 미치려는 컴포넌트들의 부모여야 함
+
+컨텍스트 API 는 클라이언트 컴포넌트
