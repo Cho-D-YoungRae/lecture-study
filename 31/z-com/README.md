@@ -171,3 +171,9 @@ page.tsx 에는 searchParams 프롭스가 기본적으로 들어있음
 onClickCapture 이벤트 캡처링
 
 클릭 이벤트와 a 태그 등 이벤트가 겹칠 때 이벤트 캡처링을 사용
+
+## faker.js와 /photo/[photoId]
+
+searchParams 와 달리 params 를 사용하면 주소의 slug 를 가져올 수 있음
+
+패러랠 라우트할 때는 페이지가 있는데 모달 사용하지 않는곳 default.tsx 를 잊지 말자
