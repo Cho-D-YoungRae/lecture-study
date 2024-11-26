@@ -165,3 +165,9 @@ page.tsx 에는 searchParams 프롭스가 기본적으로 들어있음
 - 클라이언트 컴포넌트라면 useSearchParams 사용
 
 마우스 얹었는데 주소가 안뜨면 a태그가 아닐 수 있음 -> 클라이언트 라우팅
+
+## 이벤트 캡처링과 /status/[id] 페이지
+
+onClickCapture 이벤트 캡처링
+
+클릭 이벤트와 a 태그 등 이벤트가 겹칠 때 이벤트 캡처링을 사용
