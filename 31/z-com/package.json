@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "mock": "npx tsx watch ./src/mocks/http.ts"
   },
   "dependencies": {
     "@faker-js/faker": "^9.2.0",
@@ -17,11 +18,22 @@
     "react-dom": "19.0.0-rc-66855b96-20241106"
   },
   "devDependencies": {
+    "@mswjs/http-middleware": "^0.10.2",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "cors": "^2.8.5",
     "eslint": "^8",
     "eslint-config-next": "15.0.3",
+    "express": "^4.21.1",
+    "msw": "^2.6.6",
     "typescript": "^5"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
   }
 }

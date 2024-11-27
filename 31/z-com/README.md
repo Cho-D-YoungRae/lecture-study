@@ -177,3 +177,27 @@ onClickCapture 이벤트 캡처링
 searchParams 와 달리 params 를 사용하면 주소의 slug 를 가져올 수 있음
 
 패러랠 라우트할 때는 페이지가 있는데 모달 사용하지 않는곳 default.tsx 를 잊지 말자
+
+## msw 세팅과 버전 업그레이드
+
+package.json 의 devDependencies 에도 기록해주는 것이 좋음
+
+msw 가 자동으로 mockServiceWorker.js 을 브라우저에 설치
+
+mockServiceWorker.js 는 실제 서버 주소로 보내는 주소를 가로채서 가짜 응답을 보내줌
+
+개발 환경용 주소, 배포 환경용 주소 분기처리를 하지 않아도 됨
+- 실제 주소로만 요청을 보내고 개발 환경에서는 mockServiceWorker.js 가 가짜 응답을 보내줌
+
+개발환경에서 에러를 발생시켜보거나, 로그인을 안하고 접근하도록 하거나 등을 테스트할 수 있음
+
+넥스트에서는 mockServiceWorker 사용이 살짝 애매함
+
+- 넥스트는 서버에서도 돌고 클라이언트에서 돔
+- 서버사이드렌더링 할 때도 mockServiceWorker 가 동작해야함
+- 넥스트에서 서버쪽에서 mockServiceWorker 를 자연스럽게 사용할 방식이 나오지 않음
+- 여기서는 임시로 노드서버를 활용
+
+`npm i -D @mswjs/http-middleware express cors` ` npm i --save-dev @types/express @types/cors` msw 가짜 목 서버 만들때 필요한 라이브러리(서버에서 돌릴때)
+
+`"mock": "npx tsx watch ./src/mocks/http.ts"` package.json scripts 에 추가
