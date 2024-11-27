@@ -201,3 +201,14 @@ mockServiceWorker.js 는 실제 서버 주소로 보내는 주소를 가로채�
 `npm i -D @mswjs/http-middleware express cors` ` npm i --save-dev @types/express @types/cors` msw 가짜 목 서버 만들때 필요한 라이브러리(서버에서 돌릴때)
 
 `"mock": "npx tsx watch ./src/mocks/http.ts"` package.json scripts 에 추가
+
+## next용 msw 컴포넌트와 .env
+
+MSW 사용하기 위해 컴포넌트를 생성해야 함
+
+NEXT_PUBLIC 이 붙은 값은 브라우저에서 접근 가능한 환경 변수
+
+NEXT_PUBLIC 없으면 서버에서만 사용가능한 환경 변수
+
+`typeof window !== undefined` 를 msw 컴포넌트에 추가해야 함
+- 브라우저에서만 동작하도록 보장하는 것
