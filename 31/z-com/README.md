@@ -234,3 +234,14 @@ credentials: 'include' 을 fetch 에 포함하면 쿠키를 함께 사용
 
 redirect 는 try 안에서 사용하면 안됨
 
+## 클라이언트 컴포넌트에서 Server Actions 사용하기
+
+useFormState
+- 실험적인 기능
+- 폼에서 스태이트 사용가능
+
+useFormStatus
+- 실험적인 기능
+- 폼에서 처리하고 있는 데이터 정보
+  - 처리중인지
+  - 등등...
