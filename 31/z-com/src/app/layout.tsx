@@ -4,6 +4,7 @@ import "./globals.css";
 import styles from "./(beforeLogin)/_component/main.module.css";
 import React from "react";
 import {MSWComponent} from "@/app/_component/MSWComponent";
+import AuthSession from "@/app/_component/AuthSession";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,7 +31,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <MSWComponent/>
-        {children}
+        <AuthSession>
+          {children}
+        </AuthSession>
       </body>
     </html>
   );

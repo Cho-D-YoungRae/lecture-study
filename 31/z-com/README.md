@@ -249,3 +249,5 @@ useFormStatus
 ## next-auth로 로그인하기
 
 signIn 서버일 때는 @/auth, 클라이언트일 때는 next-auth/react 안에 있는 것 사용
+
+useSession 사용하려면 AuthSession 으로 감싸야 함
