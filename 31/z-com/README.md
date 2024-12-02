@@ -245,3 +245,7 @@ useFormStatus
 - 폼에서 처리하고 있는 데이터 정보
   - 처리중인지
   - 등등...
+
+## next-auth로 로그인하기
+
+signIn 서버일 때는 @/auth, 클라이언트일 때는 next-auth/react 안에 있는 것 사용
