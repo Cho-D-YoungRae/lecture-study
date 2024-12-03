@@ -15,6 +15,9 @@ const User = [
   {id: 'leoturtle', nickname: '레오', image: faker.image.avatar()},
 ]
 const Posts = [];
+const delay = (ms: number) => new Promise((res) => {
+  setTimeout(res, ms);
+})
 
 export const handlers = [
   http.post('/api/login', () => {
@@ -44,7 +47,10 @@ export const handlers = [
       }
     })
   }),
-  http.get('/api/postRecommends', ({ request }) => {
+  http.get('/api/postRecommends', async ({ request }) => {
+    console.log('추천게시글');
+    await delay(3000);
+    console.log('딜레이 종료');
     const url = new URL(request.url)
     const cursor = parseInt(url.searchParams.get('cursor') as string) || 0
     return HttpResponse.json(
@@ -99,7 +105,8 @@ export const handlers = [
       ]
     )
   }),
-  http.get('/api/followingPosts', ({ request }) => {
+  http.get('/api/followingPosts', async ({ request }) => {
+    await delay(3000);
     return HttpResponse.json(
       [
         {
