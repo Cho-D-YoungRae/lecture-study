@@ -251,3 +251,12 @@ useFormStatus
 signIn 서버일 때는 @/auth, 클라이언트일 때는 next-auth/react 안에 있는 것 사용
 
 useSession 사용하려면 AuthSession 으로 감싸야 함
+
+## react-query SSR 설정하기
+
+React Query 프로바이더 하위에서는 데이터를 공유 가능
+
+hydrate 란 서버에서 온 데이터를 클라이언트에서 사용할 수 있도록 하는 것
+
+next 에서는 태그가 있음 -> 서버 캐싱 업데이트를 위해 사용
+- 캐싱을 사용하지 않으려면 cache: no-store
