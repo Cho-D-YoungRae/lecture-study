@@ -288,3 +288,13 @@ gcTime 은 staleTime보다 길어야 함
 fetching 데이터를 가져오는 중
 
 paused 데이터 가져오는 것을 멈춤 -> 오프라인 이거나, 다른 이유로 데이터를 가져오지 않을 때
+
+## refetch, invalidate, reset의 차이
+
+react query devtools 기능
+
+refetch: 데이터를 새로 가져옴. 무조건 새로 가져옴
+
+invalidate: refetch 와 유사 -> 유효하지 않다는 뜻으로 데이터를 새로 가져옴. observer(해당 데이터를 사용하는 컴포넌트 수) 가 0일 경우는 바로 안가져옴
+
+reset: 초기데이터가 있으면 초기데이터로, 없으면 데이터 불러옴
