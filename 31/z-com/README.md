@@ -260,3 +260,31 @@ hydrate 란 서버에서 온 데이터를 클라이언트에서 사용할 수 �
 
 next 에서는 태그가 있음 -> 서버 캐싱 업데이트를 위해 사용
 - 캐싱을 사용하지 않으려면 cache: no-store
+
+## react-query를 쓰는 이유와 fresh, stale, inactive
+
+react-query 는 서버에서 데이터를 가져오는 것
+
+redux 는 데이터를 컴포넌트간 공유하기 위해 사용
+
+react-query 는 캐싱을 잘해줌
+
+react-query 자체도 데이터 공유 가능, 리덕스랑 섞어서 사용도 가능 필요에 의해. 혹은 zustand, contextAPI 등
+
+로딩, 성공, 실패 표준화
+
+fresh: 서버에서 데이터 가져옴. 최신 상태
+- 언제까지 fresh? -> 설정하는 것
+- 기본은 모든 데이터가 stale 상태 -> 서버에서 가져오도록
+
+stale: 캐시된 데이터. 최신 상태가 아닐 수 있음 -> 새로운 데이터를 가져옴
+
+inactive: 현재 화면에서 사용하지 않음
+
+gcTime: 사용하지 않은 데이터를 지우는 시간. inactive 상태일때 돌아가기 시작
+
+gcTime 은 staleTime보다 길어야 함
+
+fetching 데이터를 가져오는 중
+
+paused 데이터 가져오는 것을 멈춤 -> 오프라인 이거나, 다른 이유로 데이터를 가져오지 않을 때
