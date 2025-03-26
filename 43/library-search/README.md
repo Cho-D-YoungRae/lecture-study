@@ -96,3 +96,12 @@ Circuit Breaker
 
 > 과제에서는 이벤트 기반 시스템을 구현하기 어려우므로 어플리케이션 레벨에서 구현
 
+executor 설정
+
+- 작업이 cpu intensive -> maxPoolSize 를 core 와 같게
+- 작업이 io intensive -> maxPoolSize 를 core 보다 크게 2배, 4배
+- AsyncUncaughtExceptionHandler
+  - 비동기 메서드를 실행할 때 발생하는 예외를 처리
+- RejectedExecutionHandler
+  - 스레드 풀이 작업 거부할 때 발생하는 예외 처리
+  - 작업 큐 가득 차거나 스레드 풀 최대 용량 초과 시 발생
