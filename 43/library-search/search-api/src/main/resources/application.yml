@@ -15,3 +15,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create # TODO 추후 옵션 변경
+    properties:
+      hibernate:
+        format_sql: true
