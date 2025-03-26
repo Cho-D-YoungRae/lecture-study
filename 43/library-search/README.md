@@ -35,3 +35,41 @@ JpaRepository.saveAndFlush DataJpaTest 시
   - 명시적으로 쿼리 날리기 위해
 - 저장하면 기본적으로 영속성 컨텍스트에 저장되고 그냥 조회하면 쿼리가 날아가지 않고 컨텍스트 안의 엔티티가 조회될 수 있음
   - EntityManager.clear() 를 해서 영속성 컨텍스트를 비워주면 쿼리가 날아감
+
+Circuit Breaker
+
+- 예를 들어 A, B, C 에서 데이터를 조회해서 취합해 보여줄 경우
+  - B를 제외한 A, C 라도 보여주는게 더 나을 수 있음
+  - B가 정상으로 돌아올 때까지 호출하지 않음
+- 일부 시스템의 장애가 전체 시스템에 영향을 주지 않도록
+- Sliding window
+  - count based, time based
+  - 대표적으로 3가지 상태 존재
+    - CLOSED
+      - 평상시, 정상 
+    - OPEN
+      - 장애 발생
+      - 실패율이 임계값 넘으면 OPEN 상태로 전환
+    - HALF_OPEN
+      - OPEN 상태에서 일정 시간 지나면 HALF_OPEN 상태로 전환. 바로 CLOSED로 전환 X
+      - 설정된 수의 요청을 허용을 해서 외부 시스템이 사용 가능한지 확인
+      - 정상으로 돌아오면 CLOSED로 전환
+      - 장애가 발생하면 OPEN으로 전환
+- 대표적인 설정
+  - slidingWindowType
+    - count based, time based
+    - 기본: count based
+  - slidingWindowSize
+    - default: 100
+  - minimumNumberOfCalls
+    - 오류를 확인하기 위한 최소 호출 수
+  - waitDurationOpenState
+    - open -> half open 상태로 전환되기까지 대기 시간
+  - permittedNumberOfCallsInHalfOpenState
+    - half open 상태에서 허용되는 요청 수
+    - default: 10
+  - maxWaitDurationInHalfOpenState
+    - half open 상태에서 대기하는 시간
+  - ignoreExceptions
+    - 기본 적으로 모든 예외를 실패로 간주하는데, 특정 예외는 무시할 수 있음
+
