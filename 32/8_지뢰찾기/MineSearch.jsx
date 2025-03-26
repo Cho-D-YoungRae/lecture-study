@@ -235,7 +235,7 @@ const MineSearch = () => {
 
   // dispatch 는 바뀌지 않으므로 배열인자에 state.tableData 만 넣어줌
   const {tableData, halted} = state;
-  const value = useMemo(() => ({
+  const value useMemo(() => ({
     tableData: state.tableData,
     halted: state.halted,
     dispatch,
