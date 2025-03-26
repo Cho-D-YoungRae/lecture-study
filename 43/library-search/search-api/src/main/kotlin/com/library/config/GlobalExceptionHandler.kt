@@ -8,6 +8,9 @@ import org.springframework.http.ResponseEntity
 import org.springframework.validation.BindException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
+import org.springframework.web.multipart.support.MissingServletRequestPartException
+import org.springframework.web.servlet.resource.NoResourceFoundException
 
 @RestControllerAdvice
 class GlobalExceptionHandler {
@@ -26,6 +29,27 @@ class GlobalExceptionHandler {
         log.error("Exception occurred. message={}, className={}", exception.message, exception.javaClass.name)
         return ResponseEntity.internalServerError()
             .body(ErrorResponse(ErrorType.UNKNOWN.description, ErrorType.UNKNOWN))
+    }
+
+    @ExceptionHandler(NoResourceFoundException::class)
+    fun handleNoResourceFoundException(exception: NoResourceFoundException): ResponseEntity<ErrorResponse> {
+        log.error("No Resource Found Exception occurred. message={}, className={}", exception.message, exception.javaClass.name)
+        return ResponseEntity.badRequest()
+            .body(ErrorResponse(ErrorType.NO_RESOURCE.description, ErrorType.NO_RESOURCE))
+    }
+
+    @ExceptionHandler(MissingServletRequestPartException::class)
+    fun handleMissingServletRequestPartException(exception: MissingServletRequestPartException): ResponseEntity<ErrorResponse> {
+        log.error("Missing Servlet Request Part Exception occurred. message={}, className={}", exception.message, exception.javaClass.name)
+        return ResponseEntity.badRequest()
+            .body(ErrorResponse(ErrorType.INVALID_PARAMETER.description, ErrorType.INVALID_PARAMETER))
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException::class)
+    fun handleMethodArgumentTypeMismatchException(exception: MethodArgumentTypeMismatchException): ResponseEntity<ErrorResponse> {
+        log.error("Method Argument Type Mismatch Exception occurred. message={}, className={}", exception.message, exception.javaClass.name)
+        return ResponseEntity.badRequest()
+            .body(ErrorResponse(ErrorType.INVALID_PARAMETER.description, ErrorType.INVALID_PARAMETER))
     }
 
     @ExceptionHandler(BindException::class)

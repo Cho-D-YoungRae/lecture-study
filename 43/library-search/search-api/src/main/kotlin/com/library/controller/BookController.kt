@@ -35,4 +35,10 @@ class BookController(
         log.info("find stats query={}, date={}", query, date)
         return bookApplicationService.findQueryCount(query, date)
     }
+
+    @GetMapping("/stats/ranking")
+    fun findTop5Stats(): List<StatResponse> {
+        log.info("find top 5 stats")
+        return bookApplicationService.findTop5Query()
+    }
 }
