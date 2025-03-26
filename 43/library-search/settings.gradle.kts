@@ -4,7 +4,8 @@ plugins {
 
 rootProject.name = "library-search"
 
-include("search-api")
-include("common")
-include("external:naver-cilent")
-findProject(":external:naver-cilent")?.name = "naver-cilent"
+include(
+    "search-api",
+    "common",
+    "external:naver-client"
+)

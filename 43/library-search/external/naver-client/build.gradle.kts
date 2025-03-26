@@ -1,7 +1,3 @@
-tasks.getByName("jar") {
-    enabled = true
-}
-
 dependencies {
     implementation(project(":common"))
 

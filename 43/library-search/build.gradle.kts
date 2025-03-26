@@ -5,6 +5,15 @@ plugins {
     id("io.spring.dependency-management") version "1.1.7"
 }
 
+allprojects {
+
+    group = "com.lecture"
+    version = "0.0.1-SNAPSHOT"
+
+    repositories {
+        mavenCentral()
+    }
+}
 
 subprojects {
     apply(plugin = "org.jetbrains.kotlin.jvm")
@@ -12,19 +21,12 @@ subprojects {
     apply(plugin = "org.springframework.boot")
     apply(plugin = "io.spring.dependency-management")
 
-    group = "com.lecture"
-    version = "0.0.1-SNAPSHOT"
 
     java {
         toolchain {
             languageVersion = JavaLanguageVersion.of(21)
         }
     }
-
-    repositories {
-        mavenCentral()
-    }
-
 
     kotlin {
         compilerOptions {
@@ -60,7 +62,7 @@ subprojects {
     }
 
     tasks.getByName("jar") {
-        enabled = false
+        enabled = true
     }
 }
 
