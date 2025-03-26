@@ -1,0 +1,17 @@
+spring:
+  profiles:
+    active: local
+  config:
+    import: application-naver-client.yml
+
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:lsdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create # TODO 추후 옵션 변경

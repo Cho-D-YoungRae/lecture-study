@@ -4,7 +4,9 @@ import com.library.controller.response.PageResult
 import com.library.controller.response.SearchResponse
 import com.library.feign.NaverClient
 import com.library.util.parse
+import org.springframework.stereotype.Repository
 
+@Repository
 class NaverBookRepository(
     private val naverClient: NaverClient,
 ): BookRepository {

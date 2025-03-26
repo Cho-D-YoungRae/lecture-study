@@ -25,6 +25,13 @@
 
 ## 강의 정리
 
-### FeignClient
+FeignClient 사용
 
 - 시간이 부족하기 때문에 빠르게 사용할 수 있는 것으로
+
+JpaRepository.saveAndFlush DataJpaTest 시
+
+- saveAndFlush 사용
+  - 명시적으로 쿼리 날리기 위해
+- 저장하면 기본적으로 영속성 컨텍스트에 저장되고 그냥 조회하면 쿼리가 날아가지 않고 컨텍스트 안의 엔티티가 조회될 수 있음
+  - EntityManager.clear() 를 해서 영속성 컨텍스트를 비워주면 쿼리가 날아감

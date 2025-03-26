@@ -1,13 +1,12 @@
 package com.library.controller
 
-import com.library.service.BookQueryService
+import com.library.service.BookApplicationService
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.BDDMockito.then
 import org.mockito.Mock
-import org.mockito.Mockito.verify
 import org.mockito.junit.jupiter.MockitoExtension
 import org.springframework.http.HttpStatus
 import org.springframework.test.web.servlet.MockMvc
@@ -18,14 +17,14 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 class BookControllerTest {
 
     @Mock
-    lateinit var bookQueryService: BookQueryService
+    lateinit var bookApplicationService: BookApplicationService
 
     lateinit var bookController: BookController
     lateinit var mockMvc: MockMvc
 
     @BeforeEach
     fun setUp() {
-        bookController = BookController(bookQueryService)
+        bookController = BookController(bookApplicationService)
         mockMvc = MockMvcBuilders.standaloneSetup(bookController).build()
     }
 
@@ -46,6 +45,6 @@ class BookControllerTest {
 
         // then
         assertThat(response.status).isEqualTo(HttpStatus.OK.value())
-        then(bookQueryService).should().search(query, page, size)
+        then(bookApplicationService).should().search(query, page, size)
     }
 }

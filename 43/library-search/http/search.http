@@ -1,0 +1,2 @@
+### GET search
+GET http://localhost:8080/v1/books?query=java&page=1&size=50
