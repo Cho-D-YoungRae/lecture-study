@@ -1,4 +1,4 @@
-package com.library
+package com.library.exception
 
 enum class ErrorType(
     val description: String

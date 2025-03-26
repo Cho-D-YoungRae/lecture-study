@@ -1,7 +1,7 @@
 package com.library.config
 
-import com.library.ApiException
-import com.library.ErrorType
+import com.library.exception.ApiException
+import com.library.exception.ErrorType
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity

@@ -1,6 +1,6 @@
 package com.library.config
 
-import com.library.ErrorType
+import com.library.exception.ErrorType
 
 data class ErrorResponse(
     val errorMessage: String,
