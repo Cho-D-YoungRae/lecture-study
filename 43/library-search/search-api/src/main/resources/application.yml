@@ -1,8 +1,6 @@
 spring:
   profiles:
-    active: local
-  config:
-    import: application-naver-client.yml
+    active: local, naver-client
 
   h2:
     console:

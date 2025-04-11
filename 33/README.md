@@ -2,7 +2,7 @@
 
 > [github](https://github.com/ZeroCho/next-app-router-z)
 
--[ ] 2024/05/10 ~ ing
+-[x] 2024/05/10 ~ 2024/05/10
 
 ## Redis 를 활용하여 문제 해결하기
 
