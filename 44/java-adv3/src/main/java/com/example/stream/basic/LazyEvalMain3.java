@@ -1,8 +1,8 @@
-package com.example.stream;
+package com.example.stream.basic;
 
 import java.util.List;
 
-public class LazyEvalMain2 {
+public class LazyEvalMain3 {
 
     public static void main(String[] args) {
         List<Integer> data = List.of(1, 2, 3, 4, 5, 6);
@@ -10,7 +10,7 @@ public class LazyEvalMain2 {
     }
 
     private static void ex2(List<Integer> data) {
-        data.stream()
+        Integer result = data.stream()
                 .filter(i -> {
                     boolean even = i % 2 == 0;
                     System.out.println("filter(): " + i + ", even = " + even);
@@ -20,6 +20,8 @@ public class LazyEvalMain2 {
                     int mapped = i * 10;
                     System.out.println("map(): " + i + ", mapped = " + mapped);
                     return mapped;
-                });
+                })
+                .findFirst().get();
+        System.out.println("result = " + result);
     }
 }

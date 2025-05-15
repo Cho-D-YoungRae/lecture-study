@@ -1,4 +1,4 @@
-package com.example.stream;
+package com.example.stream.basic;
 
 import java.util.List;
 import java.util.stream.Stream;
