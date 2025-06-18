@@ -6,6 +6,7 @@ import Button from "./components/Button.jsx";
 import Counter from "./components/Counter.jsx";
 import Bulb from "./components/Bulb.jsx";
 import Register from "./components/Register.jsx";
+import Register2 from "./components/Register2.jsx";
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
       <Counter/>
       <Bulb/>
       <Register/>
+      <Register2/>
     </>
   )
 }
