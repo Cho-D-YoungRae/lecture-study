@@ -3,8 +3,8 @@ import Header from "./components/Header";
 import Main from "./components/Main.jsx";
 import Footer from "./components/Footer.jsx";
 import Button from "./components/Button.jsx";
-import {useState} from "react";
-import StateComponent from "./components/StateComponent.jsx";
+import Counter from "./components/Counter.jsx";
+import Bulb from "./components/Bulb.jsx";
 
 function App() {
 
@@ -26,7 +26,8 @@ function App() {
         <div>자식 요소</div>
       </Button>
       <Footer/>
-      <StateComponent/>
+      <Counter/>
+      <Bulb/>
     </>
   )
 }
