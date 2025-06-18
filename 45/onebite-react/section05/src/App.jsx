@@ -5,6 +5,7 @@ import Footer from "./components/Footer.jsx";
 import Button from "./components/Button.jsx";
 import Counter from "./components/Counter.jsx";
 import Bulb from "./components/Bulb.jsx";
+import Register from "./components/Register.jsx";
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
       <Footer/>
       <Counter/>
       <Bulb/>
+      <Register/>
     </>
   )
 }
