@@ -1,5 +1,9 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 
+/**
+ * ref 를 사용하지 않고 let 으로 변수를 사용하면 리렌더링 될 때마다 초기화된다.
+ * let 을 통해 전역 변수로 사용한다면 해당 컴포넌트가 여러개일 때 값을 공유한다.
+ */
 function Register(props) {
   const [input, setInput] = useState({
     name: "",
@@ -8,13 +12,24 @@ function Register(props) {
     bio: ""
   });
 
+  const countRef = useRef(0);
+  const inputRef = useRef();
+
 
   const onChange = (e) => {
     console.log(e.target.name, e.target.value);
+    countRef.current += 1;
+    console.log("변경 횟수:", countRef.current);
     setInput({
       ...input,
       [e.target.name]: e.target.value
     })
+  };
+
+  const onSubmit = (e) => {
+    if (input.name === "") {
+      inputRef.current.focus();
+    }
   }
 
   return (
@@ -25,6 +40,7 @@ function Register(props) {
           onChange={onChange}
           name="name"
           placeholder={"이름"}
+          ref={inputRef}
         />
       </div>
       <div>
@@ -53,7 +69,9 @@ function Register(props) {
           name="bio"
         />
       </div>
+      <button onClick={onSubmit}>제출</button>
     </div>
+
   );
 }
 
