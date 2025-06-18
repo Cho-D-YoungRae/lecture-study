@@ -7,6 +7,7 @@ import Counter from "./components/Counter.jsx";
 import Bulb from "./components/Bulb.jsx";
 import Register from "./components/Register.jsx";
 import Register2 from "./components/Register2.jsx";
+import HookExam from "./components/HookExam.jsx";
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
       <Bulb/>
       <Register/>
       <Register2/>
+      <HookExam/>
     </>
   )
 }
