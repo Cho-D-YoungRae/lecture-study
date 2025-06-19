@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Viewer(props) {
+function Viewer({ count }) {
   return (
     <div>
       <div>현재 카운트 :</div>

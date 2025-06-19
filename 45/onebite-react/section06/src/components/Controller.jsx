@@ -1,13 +1,13 @@
 import React from 'react';
 
-function Controller(props) {
+function Controller({ onClickButton }) {
   return (<div>
-    <button>-1</button>
-    <button>-10</button>
-    <button>-100</button>
-    <button>+100</button>
-    <button>+10</button>
-    <button>+1</button>
+    <button onClick={() => onClickButton(-1)}>-1</button>
+    <button onClick={() => onClickButton(-10)}>-10</button>
+    <button onClick={() => onClickButton(-100)}>-100</button>
+    <button onClick={() => onClickButton(100)}>+100</button>
+    <button onClick={() => onClickButton(10)}>+10</button>
+    <button onClick={() => onClickButton(1)}>+1</button>
   </div>);
 }
 
