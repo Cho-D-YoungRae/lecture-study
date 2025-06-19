@@ -1,0 +1,19 @@
+body {
+  padding: 20px;
+}
+
+/*
+margin 0 auto 하면 컴포넌트 가운데로 둘 수 있음
+*/
+.App {
+  margin: 0 auto;
+  width: 400px;
+}
+
+.App > section {
+  background-color: rgb(245, 245, 245);
+  border: 1px solid rgb(240, 240, 240);
+  border-radius: 5px;
+  padding: 20px;
+  margin: 10px;
+}
