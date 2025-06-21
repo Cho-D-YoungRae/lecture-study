@@ -23,9 +23,15 @@ class MemberTest {
 
     @BeforeEach
     void setUp() {
-        member = Member.create("cho@splearn.app", "cho", "secret", passwordEncoder);
+        member = Member.create(
+                new MemberCreateRequest(
+                        "cho@splearn.app",
+                        "cho",
+                        "secret"
+                ),
+                passwordEncoder
+        );
     }
-
 
     /**
      * 테스트에서는 var 를 많이 사용하기도 함.
@@ -47,7 +53,7 @@ class MemberTest {
      * 커스텀 예외 VS 기본 예외
      * - 의미있는 비즈니스 예외가 있는 경우는 커스텀 예외를 사용하는 것이 좋다.
      * - 단순히 버그인 경우는 자바 기본 예외를 사용해도 좋다.
-     *
+     * <p>
      * 무의미한 코드(등록 대기가 아닐 때 등록을 하는 경우)여서 그냥 놔두어도 되지 않을까?
      * -> 버그가 될 수 있음
      */
@@ -58,7 +64,7 @@ class MemberTest {
         assertThatThrownBy(() -> member.activate())
                 .isInstanceOf(IllegalStateException.class);
     }
-    
+
     @Test
     void deactivate() {
         member.activate();
@@ -96,11 +102,24 @@ class MemberTest {
 
         assertThat(member.getNickname()).isEqualTo("charlie");
     }
-    
+
     @Test
     void changePassword() {
         member.changePassword("verysecret", passwordEncoder);
 
         assertThat(member.verifyPassword("verysecret", passwordEncoder)).isTrue();
+    }
+
+    @Test
+    void isActive() {
+        assertThat(member.isActive()).isFalse();
+
+        member.activate();
+
+        assertThat(member.isActive()).isTrue();
+
+        member.deactivate();
+
+        assertThat(member.isActive()).isFalse();
     }
 }
