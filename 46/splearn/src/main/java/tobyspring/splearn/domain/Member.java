@@ -5,25 +5,13 @@ import static org.springframework.util.Assert.state;
 
 public class Member {
 
-    private String email;
+    private Email email;
 
     private String nickname;
 
     private String passwordHash;
 
     private MemberStatus status;
-
-    private Member(
-            String email,
-            String nickname,
-            String passwordHash
-    ) {
-        this.email = requireNonNull(email);
-        this.nickname = requireNonNull(nickname);
-        this.passwordHash = requireNonNull(passwordHash);
-
-        this.status = MemberStatus.PENDING;
-    }
 
     private Member() {
     }
@@ -48,7 +36,7 @@ public class Member {
             PasswordEncoder passwordEncoder
     ) {
         Member member = new Member();
-        member.email = requireNonNull(createRequest.email());
+        member.email = new Email(createRequest.email());
         member.nickname = requireNonNull(createRequest.nickname());
         member.passwordHash = passwordEncoder.encode(requireNonNull(createRequest.password()));
 
@@ -81,7 +69,7 @@ public class Member {
         this.passwordHash = passwordEncoder.encode(requireNonNull(newPassword));
     }
 
-    public String getEmail() {
+    public Email getEmail() {
         return email;
     }
 

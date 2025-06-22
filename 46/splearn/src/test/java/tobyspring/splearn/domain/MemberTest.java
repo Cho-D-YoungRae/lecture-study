@@ -122,4 +122,16 @@ class MemberTest {
 
         assertThat(member.isActive()).isFalse();
     }
+
+    /**
+     * 이메일 검증이 필요 -> 이 로직은 다양한 곳에서 사용될 수 있다.
+     * 응집도를 높이기 위해서 이메일을 클래스로 옮길 수 있다.
+     */
+    @Test
+    void invalidEmail() {
+        assertThatThrownBy(() -> Member.create(
+                new MemberCreateRequest("invalid-email", "nickname", "password"),
+                passwordEncoder
+        )).isInstanceOf(IllegalArgumentException.class);
+    }
 }
