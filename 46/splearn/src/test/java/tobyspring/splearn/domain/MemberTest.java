@@ -23,8 +23,8 @@ class MemberTest {
 
     @BeforeEach
     void setUp() {
-        member = Member.create(
-                new MemberCreateRequest(
+        member = Member.register(
+                new MemberRegisterRequest(
                         "cho@splearn.app",
                         "cho",
                         "secret"
@@ -33,12 +33,8 @@ class MemberTest {
         );
     }
 
-    /**
-     * 테스트에서는 var 를 많이 사용하기도 함.
-     * 코드를 간결하게 하여 다른 중요한 것들에 더 시선이 갈 수 있도록
-     */
     @Test
-    void createMember() {
+    void registerMember() {
         assertThat(member.getStatus()).isEqualTo(MemberStatus.PENDING);
     }
 
@@ -74,10 +70,6 @@ class MemberTest {
         assertThat(member.getStatus()).isEqualTo(MemberStatus.DEACTIVATED);
     }
 
-    /**
-     * 원래는 2개의 테스트로 보고 쪼개는 것이 맞긴함.
-     * 하지만 간단한 것은 한 개에 넣기도함.
-     */
     @Test
     void deactivateFail() {
         assertThatThrownBy(member::deactivate)
@@ -123,14 +115,10 @@ class MemberTest {
         assertThat(member.isActive()).isFalse();
     }
 
-    /**
-     * 이메일 검증이 필요 -> 이 로직은 다양한 곳에서 사용될 수 있다.
-     * 응집도를 높이기 위해서 이메일을 클래스로 옮길 수 있다.
-     */
     @Test
     void invalidEmail() {
-        assertThatThrownBy(() -> Member.create(
-                new MemberCreateRequest("invalid-email", "nickname", "password"),
+        assertThatThrownBy(() -> Member.register(
+                new MemberRegisterRequest("invalid-email", "nickname", "password"),
                 passwordEncoder
         )).isInstanceOf(IllegalArgumentException.class);
     }
