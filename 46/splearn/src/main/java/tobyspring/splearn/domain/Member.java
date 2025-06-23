@@ -1,9 +1,21 @@
 package tobyspring.splearn.domain;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 import static java.util.Objects.requireNonNull;
 import static org.springframework.util.Assert.state;
 
+@Entity
 public class Member {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private Email email;
 
@@ -11,9 +23,10 @@ public class Member {
 
     private String passwordHash;
 
+    @Enumerated(EnumType.STRING)
     private MemberStatus status;
 
-    private Member() {
+    protected Member() {
     }
 
     public static Member register(
@@ -52,6 +65,10 @@ public class Member {
 
     public void changePassword(String newPassword, PasswordEncoder passwordEncoder) {
         this.passwordHash = passwordEncoder.encode(requireNonNull(newPassword));
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public Email getEmail() {
