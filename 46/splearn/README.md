@@ -73,3 +73,7 @@ spring data 의 repository save 를 호출하면 Event Publication, Auditing 발
 스프링 코드를 보면 커밋 중 중간중간 Polishing 이라는 것이 등장한다.
 
 `@Fallback` 빈을 찾다가 다른 빈이 없으면 사용한다. spring 6.2 에서 들어감
+
+orm.xml 을 사용하면 엔티티에서 도메인과 관련없는 jpa 어노테이션을 제거할 수 있다.
+
+jpa 엔티티는 equals, hashcode 를 생성할 때 jpa buddy 플러그인이 생성해주는 방식을 사용하는 것이 좋다.
