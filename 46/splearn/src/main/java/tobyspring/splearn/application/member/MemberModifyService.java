@@ -8,11 +8,15 @@ import tobyspring.splearn.application.member.provided.MemberRegister;
 import tobyspring.splearn.application.member.required.EmailSender;
 import tobyspring.splearn.application.member.required.MemberRepository;
 import tobyspring.splearn.domain.member.DuplicateEmilException;
+import tobyspring.splearn.domain.member.DuplicateProfileException;
 import tobyspring.splearn.domain.member.Member;
 import tobyspring.splearn.domain.member.MemberInfoUpdateRequest;
 import tobyspring.splearn.domain.member.MemberRegisterRequest;
 import tobyspring.splearn.domain.member.PasswordEncoder;
+import tobyspring.splearn.domain.member.Profile;
 import tobyspring.splearn.domain.shared.Email;
+
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -71,9 +75,25 @@ public class MemberModifyService implements MemberRegister {
     public Member updateInfo(Long memberId, MemberInfoUpdateRequest updateRequest) {
         Member member = memberFinder.find(memberId);
 
+        checkDuplicateProfile(member, updateRequest.profileAddress());
+
         member.updateInfo(updateRequest);
 
         return memberRepository.save(member);
+    }
+
+    private void checkDuplicateProfile(Member member, String profileAddress) {
+        if (profileAddress.isEmpty()) {
+            return;
+        }
+        if (Optional.ofNullable(member.getDetail().getProfile())
+                .filter(profile -> profile.address().equals(profileAddress)).isPresent()) {
+            return;
+        }
+
+        if (memberRepository.findByProfile(new Profile(profileAddress)).isPresent()) {
+            throw new DuplicateProfileException("이미 존재하는 프로필 주소입니다. profile:" + profileAddress);
+        }
     }
 
     private void sendWelcomeEmail(Member member) {
