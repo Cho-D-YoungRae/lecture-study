@@ -5,8 +5,8 @@ public class MemberFixture {
     public static MemberRegisterRequest createMemberRegisterRequest(String email) {
         return new MemberRegisterRequest(
                 email,
-                "cho",
-                "secret"
+                "choyr",
+                "verysecret"
         );
     }
 

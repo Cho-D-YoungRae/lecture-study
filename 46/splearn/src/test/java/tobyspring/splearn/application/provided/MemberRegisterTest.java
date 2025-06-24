@@ -1,5 +1,6 @@
 package tobyspring.splearn.application.provided;
 
+import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
@@ -7,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import tobyspring.splearn.SplearnTestConfiguration;
 import tobyspring.splearn.domain.DuplicateEmilException;
 import tobyspring.splearn.domain.Member;
+import tobyspring.splearn.domain.MemberRegisterRequest;
 import tobyspring.splearn.domain.MemberStatus;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,4 +40,25 @@ record MemberRegisterTest(MemberRegister memberRegister) {
                 .isInstanceOf(DuplicateEmilException.class);
     }
 
+    @Test
+    void memberRegisterRequestFail() {
+
+        assertThatThrownBy(() -> memberRegister.register(new MemberRegisterRequest(
+                "cho@splearn.app",
+                "cho",
+                "secret"
+        ))).isInstanceOf(ConstraintViolationException.class);
+
+        assertThatThrownBy(() -> memberRegister.register(new MemberRegisterRequest(
+                "cho@splearn.app",
+                "cho--------------------------------------------------------",
+                "secret"
+        ))).isInstanceOf(ConstraintViolationException.class);
+
+        assertThatThrownBy(() -> memberRegister.register(new MemberRegisterRequest(
+                "chosplearn.app",
+                "cho",
+                "secret"
+        ))).isInstanceOf(ConstraintViolationException.class);
+    }
 }

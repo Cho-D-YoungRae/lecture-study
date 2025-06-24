@@ -1,6 +1,8 @@
 package tobyspring.splearn.application;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import tobyspring.splearn.application.provided.MemberRegister;
 import tobyspring.splearn.application.required.EmailSender;
 import tobyspring.splearn.application.required.MemberRepository;
@@ -11,6 +13,8 @@ import tobyspring.splearn.domain.MemberRegisterRequest;
 import tobyspring.splearn.domain.PasswordEncoder;
 
 @Service
+@Transactional
+@Validated
 public class MemberService implements MemberRegister {
 
     private final MemberRepository memberRepository;
@@ -31,9 +35,9 @@ public class MemberService implements MemberRegister {
     public Member register(MemberRegisterRequest registerRequest) {
         checkDuplicateEmail(registerRequest);
 
-        Member member = memberRepository.save(
-                Member.register(registerRequest, passwordEncoder)
-        );
+        Member member = Member.register(registerRequest, passwordEncoder);
+
+        memberRepository.save(member);
 
         sendWelcomeEmail(member);
 
