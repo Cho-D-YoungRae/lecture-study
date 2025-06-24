@@ -20,6 +20,8 @@ public class Member extends AbstractEntity {
 
     private MemberStatus status;
 
+    private MemberDetail detail;
+
     protected Member() {
     }
 

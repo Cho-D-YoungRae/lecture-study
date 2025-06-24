@@ -77,3 +77,8 @@ spring data 의 repository save 를 호출하면 Event Publication, Auditing 발
 orm.xml 을 사용하면 엔티티에서 도메인과 관련없는 jpa 어노테이션을 제거할 수 있다.
 
 jpa 엔티티는 equals, hashcode 를 생성할 때 jpa buddy 플러그인이 생성해주는 방식을 사용하는 것이 좋다.
+
+회원 상세에는 더 다양한 정보들이 계속 추가될 수 있음(점점 커질 것). 회원은 자주 조회되겠지만, 회원 상세는 그것과 동일한 빈도는 아닐 것으로 보임
+
+> 둘의 테이블을 분리
+
