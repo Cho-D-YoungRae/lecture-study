@@ -1,12 +1,6 @@
 package tobyspring.splearn.domain;
 
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.NaturalIdCache;
 
@@ -15,21 +9,15 @@ import static org.springframework.util.Assert.state;
 
 @Entity
 @NaturalIdCache
-public class Member {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Member extends AbstractEntity {
 
     @NaturalId
-    @Embedded
     private Email email;
 
     private String nickname;
 
     private String passwordHash;
 
-    @Enumerated(EnumType.STRING)
     private MemberStatus status;
 
     protected Member() {
@@ -71,10 +59,6 @@ public class Member {
 
     public void changePassword(String newPassword, PasswordEncoder passwordEncoder) {
         this.passwordHash = passwordEncoder.encode(requireNonNull(newPassword));
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public Email getEmail() {

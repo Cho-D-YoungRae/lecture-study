@@ -2,3 +2,8 @@ spring:
   application.name: splearn
   jpa:
     show-sql: true
+    hibernate:
+      ddl-auto: update
+#  docker:
+#    compose:
+#      lifecycle-management: start_only
