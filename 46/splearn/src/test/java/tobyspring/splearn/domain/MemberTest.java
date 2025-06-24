@@ -2,6 +2,10 @@ package tobyspring.splearn.domain;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import tobyspring.splearn.domain.member.Member;
+import tobyspring.splearn.domain.member.MemberInfoUpdateRequest;
+import tobyspring.splearn.domain.member.MemberStatus;
+import tobyspring.splearn.domain.member.PasswordEncoder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -25,6 +29,7 @@ class MemberTest {
     @Test
     void registerMember() {
         assertThat(member.getStatus()).isEqualTo(MemberStatus.PENDING);
+        assertThat(member.getDetail().getRegisteredAt()).isNotNull();
     }
 
     @Test
@@ -32,16 +37,10 @@ class MemberTest {
         member.activate();
 
         assertThat(member.getStatus()).isEqualTo(MemberStatus.ACTIVE);
+        assertThat(member.getDetail().getActivatedAt()).isNotNull();
     }
 
-    /**
-     * 커스텀 예외 VS 기본 예외
-     * - 의미있는 비즈니스 예외가 있는 경우는 커스텀 예외를 사용하는 것이 좋다.
-     * - 단순히 버그인 경우는 자바 기본 예외를 사용해도 좋다.
-     * <p>
-     * 무의미한 코드(등록 대기가 아닐 때 등록을 하는 경우)여서 그냥 놔두어도 되지 않을까?
-     * -> 버그가 될 수 있음
-     */
+
     @Test
     void activateFail() {
         member.activate();
@@ -57,6 +56,7 @@ class MemberTest {
         member.deactivate();
 
         assertThat(member.getStatus()).isEqualTo(MemberStatus.DEACTIVATED);
+        assertThat(member.getDetail().getDeactivatedAt()).isNotNull();
     }
 
     @Test
@@ -110,5 +110,21 @@ class MemberTest {
                 createMemberRegisterRequest("invalid-email"),
                 passwordEncoder
         )).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void updateInfo() {
+        member.activate();
+
+        var request = new MemberInfoUpdateRequest(
+                "Leo",
+                "toby100",
+                "자기소개"
+        );
+        member.updateInfo(request);
+
+        assertThat(member.getNickname()).isEqualTo(request.nickname());
+        assertThat(member.getDetail().getProfile().address()).isEqualTo(request.profileAddress());
+        assertThat(member.getDetail().getIntroduction()).isEqualTo(request.introduction());
     }
 }

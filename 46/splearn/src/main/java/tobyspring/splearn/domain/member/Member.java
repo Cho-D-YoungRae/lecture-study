@@ -1,8 +1,10 @@
-package tobyspring.splearn.domain;
+package tobyspring.splearn.domain.member;
 
 import jakarta.persistence.Entity;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.NaturalIdCache;
+import tobyspring.splearn.domain.AbstractEntity;
+import tobyspring.splearn.domain.shared.Email;
 
 import static java.util.Objects.requireNonNull;
 import static org.springframework.util.Assert.state;
@@ -35,6 +37,9 @@ public class Member extends AbstractEntity {
         member.passwordHash = passwordEncoder.encode(requireNonNull(createRequest.password()));
 
         member.status = MemberStatus.PENDING;
+
+        member.detail = MemberDetail.create();
+
         return member;
     }
 
@@ -42,6 +47,7 @@ public class Member extends AbstractEntity {
         state(this.status == MemberStatus.PENDING,
                 MemberStatus.PENDING + " 상태가 아닙니다. 현재 상태: " + this.status);
         this.status = MemberStatus.ACTIVE;
+        this.detail.setActivatedAt();
     }
 
     public void deactivate() {
@@ -49,6 +55,7 @@ public class Member extends AbstractEntity {
                 MemberStatus.ACTIVE + " 상태가 아닙니다. 현재 상태: " + this.status);
 
         this.status = MemberStatus.DEACTIVATED;
+        this.detail.deactivate();
     }
 
     public boolean verifyPassword(String password, PasswordEncoder passwordEncoder) {
@@ -57,6 +64,11 @@ public class Member extends AbstractEntity {
 
     public void changeNickname(String nickname) {
         this.nickname = requireNonNull(nickname);
+    }
+
+    public void updateInfo(MemberInfoUpdateRequest updateRequest) {
+        this.nickname = requireNonNull(updateRequest.nickname());
+        this.detail.updateInfo(updateRequest);
     }
 
     public void changePassword(String newPassword, PasswordEncoder passwordEncoder) {
@@ -77,6 +89,10 @@ public class Member extends AbstractEntity {
 
     public MemberStatus getStatus() {
         return status;
+    }
+
+    public MemberDetail getDetail() {
+        return detail;
     }
 
     public boolean isActive() {

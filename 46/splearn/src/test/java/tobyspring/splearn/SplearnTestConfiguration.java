@@ -2,9 +2,9 @@ package tobyspring.splearn;
 
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import tobyspring.splearn.application.required.EmailSender;
+import tobyspring.splearn.application.member.required.EmailSender;
 import tobyspring.splearn.domain.MemberFixture;
-import tobyspring.splearn.domain.PasswordEncoder;
+import tobyspring.splearn.domain.member.PasswordEncoder;
 
 @TestConfiguration
 public class SplearnTestConfiguration {

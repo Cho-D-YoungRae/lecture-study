@@ -1,14 +1,14 @@
-package tobyspring.splearn.application.provided;
+package tobyspring.splearn.application.member.provided;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
-import tobyspring.splearn.application.MemberModifyService;
-import tobyspring.splearn.application.required.EmailSender;
-import tobyspring.splearn.application.required.MemberRepository;
-import tobyspring.splearn.domain.Email;
-import tobyspring.splearn.domain.Member;
+import tobyspring.splearn.application.member.MemberModifyService;
+import tobyspring.splearn.application.member.required.EmailSender;
+import tobyspring.splearn.application.member.required.MemberRepository;
+import tobyspring.splearn.domain.shared.Email;
+import tobyspring.splearn.domain.member.Member;
 import tobyspring.splearn.domain.MemberFixture;
-import tobyspring.splearn.domain.MemberStatus;
+import tobyspring.splearn.domain.member.MemberStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ class MemberRegisterManualTest {
 
     @Test
     void registerTestStub() {
-        MemberRegister register = new MemberModifyService(
+        tobyspring.splearn.application.member.provided.MemberRegister register = new MemberModifyService(
                 null,
                 new MemberRepositoryStub(),
                 new EmailSenderStub(),
@@ -43,7 +43,7 @@ class MemberRegisterManualTest {
     @Test
     void registerTestMock() {
         EmailSenderMock emailSenderMock = new EmailSenderMock();
-        MemberRegister register = new MemberModifyService(
+        tobyspring.splearn.application.member.provided.MemberRegister register = new MemberModifyService(
                 null,
                 new MemberRepositoryStub(),
                 emailSenderMock,
@@ -62,7 +62,7 @@ class MemberRegisterManualTest {
     @Test
     void registerTestMockito() {
         EmailSender emailSenderMock = mock(EmailSender.class);
-        MemberRegister register = new MemberModifyService(
+        tobyspring.splearn.application.member.provided.MemberRegister register = new MemberModifyService(
                 null,
                 new MemberRepositoryStub(),
                 emailSenderMock,
