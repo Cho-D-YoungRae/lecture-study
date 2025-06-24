@@ -4,6 +4,6 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-#  docker:
-#    compose:
-#      lifecycle-management: start_only
+  docker:
+    compose:
+      lifecycle-management: start_only

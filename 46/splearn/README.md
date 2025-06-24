@@ -91,3 +91,4 @@ jpa 엔티티는 equals, hashcode 를 생성할 때 jpa buddy 플러그인이 �
 
 > 둘의 테이블을 분리
 
+request 객체에서 validation(e.g. bean validation) 했다고 해서 도메인 로직에서 검증하지 않아도 된다는 것은 아니다. 다른 곳에서도 사용될 수도 있고 등등...
