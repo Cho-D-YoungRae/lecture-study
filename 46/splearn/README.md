@@ -62,3 +62,9 @@ Member 에 JPA 관련 어노테이션이 있다고 해서 기술에 종속적이
 
 - 커스텀 검증 어노테이션
 - 많이 사용되지 않는 다면, 생성자에서 검증할 수도 있음.
+
+`MemberService.activate` 와 같이 분명히 정상적인 id 가 들어와야 하는 경우 optional 에서 단순히 예외를 던짐 -> 없는 경우를 버그로 보는 것
+
+spring data 의 repository save 를 호출하면 Event Publication, Auditing 발생
+
+조회 로직과 변경 로직의 구현을 같은 곳에 두려고 하지 않는 이유는 시간이 지나면서 의존하는 것들이 점차 달라짐

@@ -2,7 +2,7 @@ package tobyspring.splearn.application.provided;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
-import tobyspring.splearn.application.MemberService;
+import tobyspring.splearn.application.MemberModifyService;
 import tobyspring.splearn.application.required.EmailSender;
 import tobyspring.splearn.application.required.MemberRepository;
 import tobyspring.splearn.domain.Email;
@@ -20,11 +20,15 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+/**
+ * 이거는 목, 스텁을 직접 만드는 것을 학습하기 위해 추가된 테스트
+ */
 class MemberRegisterManualTest {
 
     @Test
     void registerTestStub() {
-        MemberRegister register = new MemberService(
+        MemberRegister register = new MemberModifyService(
+                null,
                 new MemberRepositoryStub(),
                 new EmailSenderStub(),
                 MemberFixture.createPasswordEncoder()
@@ -39,7 +43,8 @@ class MemberRegisterManualTest {
     @Test
     void registerTestMock() {
         EmailSenderMock emailSenderMock = new EmailSenderMock();
-        MemberRegister register = new MemberService(
+        MemberRegister register = new MemberModifyService(
+                null,
                 new MemberRepositoryStub(),
                 emailSenderMock,
                 MemberFixture.createPasswordEncoder()
@@ -57,7 +62,8 @@ class MemberRegisterManualTest {
     @Test
     void registerTestMockito() {
         EmailSender emailSenderMock = mock(EmailSender.class);
-        MemberRegister register = new MemberService(
+        MemberRegister register = new MemberModifyService(
+                null,
                 new MemberRepositoryStub(),
                 emailSenderMock,
                 MemberFixture.createPasswordEncoder()
@@ -71,6 +77,9 @@ class MemberRegisterManualTest {
         verify(emailSenderMock).send(eq(member.getEmail()), any(), any());
     }
 
+    /**
+     * 테스트 학습을 위해서 만들어 봤는데, 인터페이스에 기능 추가됨에 따라 계속 이것도 변경필요해졌음
+     */
     static class MemberRepositoryStub implements MemberRepository {
 
         @Override
@@ -81,6 +90,11 @@ class MemberRegisterManualTest {
 
         @Override
         public Optional<Member> findByEmail(Email email) {
+            return Optional.empty();
+        }
+
+        @Override
+        public Optional<Member> findById(Long id) {
             return Optional.empty();
         }
     }
