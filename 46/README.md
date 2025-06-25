@@ -2,4 +2,4 @@
 
 > [github](https://github.com/tobyspringboot/splearn)
 
-- [ ] 2025/06/20 ~ ing
+- [x] 2025/06/20 ~ 2025/06/25
