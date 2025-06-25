@@ -1,5 +1,7 @@
 package tobyspring.splearn.domain;
 
+import org.springframework.test.util.ReflectionTestUtils;
+import tobyspring.splearn.domain.member.Member;
 import tobyspring.splearn.domain.member.MemberRegisterRequest;
 import tobyspring.splearn.domain.member.PasswordEncoder;
 
@@ -29,5 +31,19 @@ public class MemberFixture {
                 return password.toUpperCase().equals(passwordHash);
             }
         };
+    }
+
+    public static Member createMember() {
+        return Member.register(createMemberRegisterRequest(), createPasswordEncoder());
+    }
+
+    public static Member createMember(Long id) {
+        Member member = Member.register(createMemberRegisterRequest(), createPasswordEncoder());
+        ReflectionTestUtils.setField(member, "id", id);
+        return member;
+    }
+
+    public static Member createMember(String email) {
+        return Member.register(createMemberRegisterRequest(email), createPasswordEncoder());
     }
 }
