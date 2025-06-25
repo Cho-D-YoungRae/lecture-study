@@ -98,3 +98,21 @@ request 객체에서 validation(e.g. bean validation) 했다고 해서 도메인
 이전까지는 `MockMvc` 많이 사용했는데, 스프링 6.2 부터 `MockMvcTester` 추가됨.
 
 > static 메서드를 사용하지 않아서 편하고, AssertJ 와 통합
+
+web mvc test 는 편리하고 실행속도도 상대적으로 빠르지만 불편 -> 목을 계속 준비해야함. 목을 사용하느라 테스트에서 사용하는 값이 실제 값과 달라질 수 있음.  
+web mvc test 는 선택이고 spring boot test 를 통해 통합 테스트를 만들어서 API 전체를 테스트하는 것이 좋음.
+
+> 스프링 테스트 지원 기능을 사용하기 때문에 서버 전체를 띄우는 것보다는 빠르고, 캐싱 기능이 있어서 최대한 스프링 컨텍스트를 테스트 간 공유함.
+
+`@Transactional` 은 충분히 사용할만 하다. 하지만 2가지 예외 상황 유의(직접 롤백 필요)
+
+- propagation REQUIRES_NEW, NESTED 등
+- 별도 스레드에서 데이터 업데이트
+
+`ProblemDetail` 
+
+- RFC9457
+- 예외에 대한 응답
+- 표준이기 때문에 이제 사용하면 좋을 듯
+- type 은 사용하기 번거롭긴함. 상황에 따라서 사용.
+  - open api 의 경우는 사용하면 좋을듯

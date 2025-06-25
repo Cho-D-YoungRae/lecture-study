@@ -2,69 +2,94 @@ package tobyspring.splearn.adapter.webapi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
+import org.springframework.test.web.servlet.assertj.MvcTestResult;
+import org.springframework.transaction.annotation.Transactional;
+import tobyspring.splearn.adapter.webapi.dto.MemberRegisterResponse;
 import tobyspring.splearn.application.member.provided.MemberRegister;
+import tobyspring.splearn.application.member.required.MemberRepository;
 import tobyspring.splearn.domain.MemberFixture;
 import tobyspring.splearn.domain.member.Member;
 import tobyspring.splearn.domain.member.MemberRegisterRequest;
+import tobyspring.splearn.domain.member.MemberStatus;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static tobyspring.splearn.AssertThatUtils.equalsTo;
+import static tobyspring.splearn.AssertThatUtils.nonNull;
 
-@WebMvcTest(MemberApi.class)
+@SpringBootTest
+@AutoConfigureMockMvc
+@Transactional
 class MemberApiTest {
 
-    @MockitoBean
+    MockMvcTester mvcTester;
+    ObjectMapper objectMapper;
+    MemberRepository memberRepository;
     MemberRegister memberRegister;
 
-    @Autowired
-    MockMvcTester mvcTester;
-
-    @Autowired
-    ObjectMapper objectMapper;
+    public MemberApiTest(
+            MockMvcTester mvcTester,
+            ObjectMapper objectMapper,
+            MemberRepository memberRepository,
+            MemberRegister memberRegister
+    ) {
+        this.mvcTester = mvcTester;
+        this.objectMapper = objectMapper;
+        this.memberRepository = memberRepository;
+        this.memberRegister = memberRegister;
+    }
 
     @Test
     void register() throws Exception {
-        Member member = MemberFixture.createMember(1L);
-        when(memberRegister.register(any())).thenReturn(member);
         MemberRegisterRequest request = new MemberRegisterRequest(
                 "cho@splearn.app",
                 "choyr",
                 "verysecret"
         );
 
-        assertThat(
-                mvcTester.post().uri("/api/members")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request))
-        )
+        MvcTestResult result = mvcTester.post().uri("/api/members")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request))
+                .exchange();
+
+        assertThat(result)
                 .hasStatusOk()
                 .bodyJson()
-                .extractingPath("$.memberId").asNumber().isEqualTo(1);
+                .hasPathSatisfying("$.memberId", nonNull())
+                .hasPathSatisfying("$.email", equalsTo(request.email()))
+        ;
 
-        verify(memberRegister).register(request);
+        var response = objectMapper.readValue(
+                result.getResponse().getContentAsString(), MemberRegisterResponse.class);
+        Member member = memberRepository.findById(response.memberId()).get();
+
+        assertThat(member.getEmail().address()).isEqualTo(request.email());
+        assertThat(member.getNickname()).isEqualTo(request.nickname());
+        assertThat(member.getStatus()).isEqualTo(MemberStatus.PENDING);
     }
 
     @Test
-    void registerFail() throws Exception {
+    void duplicateEmail() throws Exception {
+        memberRegister.register(MemberFixture.createMemberRegisterRequest());
+
         MemberRegisterRequest request = new MemberRegisterRequest(
-                "invalid email",
+                "cho@splearn.app",
                 "choyr",
                 "verysecret"
         );
 
-        assertThat(
-                mvcTester.post().uri("/api/members")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request))
-        )
-                .hasStatus(HttpStatus.BAD_REQUEST);
+        MvcTestResult result = mvcTester.post().uri("/api/members")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request))
+                .exchange();
+
+        assertThat(result)
+                .apply(print())
+                .hasStatus(HttpStatus.CONFLICT);
     }
 }
