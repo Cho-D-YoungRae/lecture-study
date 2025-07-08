@@ -3,29 +3,7 @@ import React, {useEffect, useState} from 'react';
 import EmotionItem from "./EmotionItem.jsx";
 import Button from "./Button.jsx";
 import {useNavigate} from "react-router-dom";
-
-const emotionList = [
-  {
-    id: 1,
-    name: "완전 좋음"
-  },
-  {
-    id: 2,
-    name: "좋음"
-  },
-  {
-    id: 3,
-    name: "그럭저럭"
-  },
-  {
-    id: 4,
-    name: "나쁨"
-  },
-  {
-    id: 5,
-    name: "끔찍함"
-  },
-];
+import {emotionList} from "../util/constants.js";
 
 function Editor({ onSubmit, initData }) {
 

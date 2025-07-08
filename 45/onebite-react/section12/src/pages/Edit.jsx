@@ -4,6 +4,7 @@ import Header from "../components/Header.jsx";
 import Button from "../components/Button.jsx";
 import {DiaryDispatchContext, DiaryStateContext} from "../App.jsx";
 import Editor from "../components/Editor.jsx";
+import useDiary from "../hooks/useDiary.jsx";
 
 /*
 navigate 는 컴포넌트가 렌더링된 이후에 실행될 수 있다.
@@ -13,20 +14,7 @@ function Edit() {
   const {id} = useParams();
   const nav = useNavigate();
   const {onDelete, onUpdate} = useContext(DiaryDispatchContext);
-  const data = useContext(DiaryStateContext);
-  const [currentDiaryItem, setCurrentDiaryItem] = useState();
-
-  useEffect(() => {
-    const currentDiaryItem = data.find(
-      (item) => String(item.id) === String(id)
-    );
-
-    if (!currentDiaryItem) {
-      window.alert("존재하지 않는 일기입니다.");
-      nav("/", {replace: true})
-    }
-    setCurrentDiaryItem(currentDiaryItem);
-  }, [id]);
+  const currentDiaryItem = useDiary(id);
 
   const onClickDelete = () => {
     if (window.confirm("일기를 정말 삭제할까요? 다시 복구되지 않아요!")) {

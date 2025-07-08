@@ -2,4 +2,4 @@
 
 > [코드](https://winterlood.notion.site/a873435b477f433ea04a359f89380cc5?v=1bfd06a98a594ce6a4c158f4aafbe0b2)
 
-- [ ] 2025/06/13 ~ ing
+- [x] 2025/06/13 ~ 2025/07/08
