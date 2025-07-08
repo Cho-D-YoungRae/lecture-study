@@ -1,5 +1,5 @@
 import './Editor.css';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import EmotionItem from "./EmotionItem.jsx";
 import Button from "./Button.jsx";
 import {useNavigate} from "react-router-dom";
@@ -27,7 +27,7 @@ const emotionList = [
   },
 ];
 
-function Editor({ onSubmit }) {
+function Editor({ onSubmit, initData }) {
 
   const nav = useNavigate();
 
@@ -37,10 +37,16 @@ function Editor({ onSubmit }) {
     content: "",
   });
 
-  const onChangeInput = (e) => {
-    console.log(e.target.name);
-    console.log(e.target.value);
+  useEffect(() => {
+    if (initData) {
+      setInput({
+        ...initData,
+        createdDate: new Date(Number(initData.createdDate))
+      });
+    }
+  }, [initData]);
 
+  const onChangeInput = (e) => {
     const name = e.target.name;
     let value = e.target.value;
 
@@ -56,7 +62,7 @@ function Editor({ onSubmit }) {
 
   const onClickSubmitButton = () => {
     onSubmit(input);
-  }
+  };
 
   return (
     <div className="Editor">
