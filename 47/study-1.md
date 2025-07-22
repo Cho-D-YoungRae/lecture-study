@@ -162,3 +162,19 @@ services:
 텔레그램에 버튼을 만들어 요약하거나 번역하거나로 만들 수 있다.
 
 ![15-youtube-callback](./images-1/15-youtube-callback.png)
+
+## 섹션 9. 공공API 활용 Agent 구현하기
+
+### 31. 공공데이터 API 를 사용하여 자동화하는 부동산 갭 투자 분석 시스템 만들기
+
+여기서는 xml -> json 변환을 gpt 를 통해 한다. 직접 구현하면 작업이 크기 때문
+
+![31-apartment](./images-1/31-apartment.png)
+
+### 32. 주소만으로 끝내는 아파트 투자 리포트 자동화: 인구통계 + 위치정보까지 완성
+
+![32-apartment](./images-1/32-apartment.png)
+
+### 33. 실거래가 데이터를 자동 분석해 차트로 보여주는 AI 리포트 만들기
+
+![33-apartment](./images-1/33-apartment.png)
