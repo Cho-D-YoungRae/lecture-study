@@ -163,6 +163,31 @@ services:
 
 ![15-youtube-callback](./images-1/15-youtube-callback.png)
 
+## 섹션 7.  RAG AI Agent
+
+### 24. N8N으로 구현하는 나만의 RAG 시스템: 벡터 검색부터 AI 응답까지
+
+RAG(Retrieval-Argumented Generation, 검색 기반 생성)
+
+- AI가 처음 나왔을 때 토큰 제한이 적었기 때문에 내용을 잘게 쪼개서 전달 했었음
+- 랭체인 등을 사용해서 구현하곤 했음
+- 회사 내규 데이터 전달해서 답변하도록 하는 등
+- 벡터화 필요(임베딩)
+
+![020-rag](./images-1/020-rag.png)
+
+### 25. N8N으로 뉴스 요약 AI 만들기: 벡터 DB + 웹검색 통합 RAG 시스템 구현법
+
+새로운 뉴스 피드를 계속 가져오게 될 텐데, 뉴스가 새로운 것인지 알기 위해 redis 에 뉴스 데이터 저장
+
+![021-news-rag-1](./images-1/021-news-rag-1.png)
+
+![021-news-rag-2](./images-1/021-news-rag-2.png)
+
+### 26. 유튜브 자막으로 AI에게 질문하자: N8N + Pinecone으로 RAG 만들기
+
+![022-youtube-rag](./images-1/022-youtube-rag.png)
+
 ## 섹션 9. 공공API 활용 Agent 구현하기
 
 ### 31. 공공데이터 API 를 사용하여 자동화하는 부동산 갭 투자 분석 시스템 만들기
