@@ -21,7 +21,7 @@ n8n 선택 이유
 
 ### 2. 완전 초보를 위한 N8N 설치부터 셀프호스팅까지 – Docker 실습편
 
-GPU 메모리 4기가 이상이면 GPU 사용으로 설치할 수 있음.
+GPU 메모리 8기가 이상이면 GPU 사용으로 설치할 수 있음.
 
 postgresql은 기본은 n8n 만 내부적으로 사용하도록 설정되어 있음.
 
@@ -178,3 +178,23 @@ services:
 ### 33. 실거래가 데이터를 자동 분석해 차트로 보여주는 AI 리포트 만들기
 
 ![33-apartment](./images-1/33-apartment.png)
+
+## 섹션 10. 추가 강좌
+
+### 34. 내 컴퓨터에서 직접 AI 돌리기: Ollama로 LLM 모델 구동하기
+
+ollama 를 연결해서 로컬 혹은 내부에서 모델을 돌릴 수 있다. 파인튜닝도 된다.
+
+### 36. 도커 n8n 안전 업데이트 가이드: 실전 명령어와 주의사항까지
+
+업데이트 필요 시 n8n 의 좌측 밑에 업데이트 표시가 표출된다.
+
+무조건 업데이트 하는 것 보다 릴리즈 노트를 보고 어떤 기능이 추가되었는지, 수정되었는지 확인하고 필요한 경우 업데이트 하는 것이 좋다.
+
+n8n 설치 docker compose 에 기본적으로 이미지를 latest 를 사용하고 있음
+
+업데이트 순서
+
+- `docker compose pull` 업데이트된 이미지 다운로드
+- `docker compose down` 기존 컨테이너 제거
+- `docker compose up -d` 필요에 따라 `--profile gpu-nvidia`, `--profile gpu-amd`, `--profile cpu`
