@@ -69,6 +69,8 @@ HTTP Request Tool 을 사용할 때 이름과 Description 의 설명을 보고 a
 
 ![6-search-workflow](./images-1/06-search-workflow.png)
 
+## 섹션 3. 이메일 AI Agent
+
 ### 7. AI로 네이버 스팸 메일 자동 분류하기: 이메일 에이전트 완전 자동화 실습
 
 MailBox Name 이 INBOX 이면 기본 메일 함을 의미 -> 모든 메일을 감지.
@@ -94,3 +96,69 @@ community nodes 에서 필요한 노드를 설치해서 사용할 수 있다.
 구글 주소록에 등록된 사람에게만 회신할 수 있도록 플로우 수정
 
 ![10-mail](./images-1/10-mail.png)
+
+## 섹션 4. 요약 AI Agent
+
+### 11. 매일 아침 요약 뉴스, AI가 대신 전해드립니다: N8N + 텔레그램 자동화
+
+여러 뉴스를 각각 요약하기 때문에 요약을 위해 ai가 n번 실행된다.
+
+![11-news-feed](./images-1/11-news-feed.png)
+
+### 12. <추가> youtube-transcript 오류를 위한 무료 API 분석부터 직접 서버 구축까지!
+
+![12-youtube-transcript](./images-1/12-youtube-transcript.png)
+
+파이썬 코드를 통해 api 서버를 열고 도커를 통해 배포하여 해당 api 를 사용할 수 있다.
+
+> `http://host.docker.internal:{port}`
+
+![12-youtube-transcript-1](./images-1/12-youtube-transcript-1.png)
+
+```yml
+version: '3'
+
+services:
+ youtube-transcript:
+   build:
+     context: .
+     dockerfile: Dockerfile
+     no_cache: true
+   container_name: youtube-transcript-api
+   ports:
+     - "9012:9012"
+   volumes:
+     - .:/app
+   restart: unless-stopped
+   # 로그 제한 설정
+   logging:
+     options:
+       max-size: "10m"
+       max-file: "3"
+```
+
+### 13. 유튜브 영상 요약봇 만들기: 자막 추출부터 AI 요약까지 노코드 자동화
+
+`apify`: 다양한 api 를 비용을 내고 사용할 수 있는 곳
+
+유튜브 자막 추출이 설정된 언어(영어냐, 한글이냐)와 맞지 않으면 오류가 발생한다.
+
+> 영어, 한글을 추출 노드를 모두 연결해두고 on Error 설정을 continue로 설정하면 동작하도록 할 수 있다.
+
+텍스트 입력으로 받은 유튜브 동영상을 사용하기 때문에 url 을 정규표현식으로 검증하는 것을 `Edit Fields` 에 추가할 수 있다.
+
+![13-youtube](./images-1/13-youtube.png)
+
+### 14. HTTPS 없이 텔레그램 봇 자동화하기: ngrok으로 웹훅 열기 & 자동화 스크립트 구현
+
+`ngrok` 을 통해서 홈 호스팅 환경에서 url 을 열어줄 수 있다.(공유기 포트포워딩 등의 과정 없이) -> 이 주소를 통해 웹훅 사용 가능.
+
+### 15. 유튜브 요약 챗봇 만들기: 텔레그램 인터랙션과 n8n으로 구현하는 AI 자동화
+
+![15-youtube](./images-1/15-youtube.png)
+
+웹훅 등으로 넘겨받은 텍스트 입력에서 _ 등이 없어질 수 있다 -> 입력을 html 로 받는 등의 방법을 사용해볼 수 있다
+
+텔레그램에 버튼을 만들어 요약하거나 번역하거나로 만들 수 있다.
+
+![15-youtube-callback](./images-1/15-youtube-callback.png)
