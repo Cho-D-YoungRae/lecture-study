@@ -188,6 +188,30 @@ RAG(Retrieval-Argumented Generation, 검색 기반 생성)
 
 ![022-youtube-rag](./images-1/022-youtube-rag.png)
 
+## 섹션 8. N8N with MCP
+
+### 27. MCP를 활용한 N8N AI 도구 연결 자동화
+
+![023-mcp](./images-1/023-mcp.png)
+
+![023-1-MCP-SERVER](./images-1/023-1-MCP-SERVER.png)
+
+### 28. MCP 완전 활용법 – AI가 알아서 일정·검색·DM·주소록·노션작성까지 처리한다
+
+디스코드 도구들은 따로 뺴서 워크플로우로 만드느 것이 좋긴 함
+
+![024-MCP-SERVER-EX](./images-1/024-MCP-SERVER-EX.png)
+
+![024-1-image](./images-1/024-1-image.png)
+
+### 29. 오디오로 명령하는 나만의 AI 비서 만들기. MCP + Voice AI
+
+![024-mcp-webhook](./images-1/024-mcp-webhook.png)
+
+### 30. 클로드 데스크탑과 N8N을 연결해 AI 에이전트를 현실화하는 방법
+
+![claude-n8n-mcp](./images-1/claude-n8n-mcp.png)
+
 ## 섹션 9. 공공API 활용 Agent 구현하기
 
 ### 31. 공공데이터 API 를 사용하여 자동화하는 부동산 갭 투자 분석 시스템 만들기
