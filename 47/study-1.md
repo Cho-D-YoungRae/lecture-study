@@ -163,6 +163,46 @@ services:
 
 ![15-youtube-callback](./images-1/15-youtube-callback.png)
 
+## 섹션 6. 이미지 및 비디오 생성 AI Agent
+
+### 20. OpenAI vs. Replicate – AI 이미지 생성의 모든 것
+
+Replicate 는 여러 AI 를 API 로 사용할 수 있게 해주는 서비스
+
+현재까지는 flux 가 이미지 생성 중에서는 가장 좋음.
+
+> chatgpt 에 비해서 좋은 퀄리티에 낮은 가격.
+
+![016-image](./images-1/016-image.png)
+
+### 21. AI 이미지에 개성을 더하다: LoRA를 활용한 맞춤형 스타일 생성 자동화
+
+LORA: LOw-Rank Adaptation
+
+- AI 는 사물을 그릴 수는 있음
+- AI 에게 LORA 를 줌으로써 이미지를 원하는대로 만들 수 있음
+
+허깅페이스에서 로라를 찾아서 Relicate 의 모델에 lora_weight 를 추가할 수 있다.
+
+![017-image-lora](./images-1/017-image-lora.png)
+
+### 22. Redis로 디스코드 트리거 구현 및 이미지 자동 생성·업로드 자동화
+
+![018-image-lora-discord](./images-1/018-image-lora-discord.png)
+
+### 23. 영상 자동화! 이미지 기반 생성부터 업로드까지 워크플로우 구현
+
+동영상 생성 방법
+
+- I2V: Image to Vedio
+- T2V: Text to Vedio
+
+> 강의에서는 I2V 사용
+
+Replicate 에 vedio 모델도 있다.
+
+![019-movie-lora-discord](./images-1/019-movie-lora-discord.png)
+
 ## 섹션 7.  RAG AI Agent
 
 ### 24. N8N으로 구현하는 나만의 RAG 시스템: 벡터 검색부터 AI 응답까지
