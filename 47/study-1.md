@@ -163,6 +163,33 @@ services:
 
 ![15-youtube-callback](./images-1/15-youtube-callback.png)
 
+## 섹션 5. 음성 비서 AI Agent
+
+### 16. n8n으로 만드는 음성 기반 AI 비서: 텔레그램+TTS 완전 자동화 실습
+
+gpt 에도 오디오 기능이 있고, elevnelabs 라는 오디오 AI 만 전문으로 하는 곳 있음.
+
+![013-smart-telegram](./images-1/013-smart-telegram.png)
+
+### 17. 텔레그램으로 구현하는 음성 기반 AI 비서: 메일 확인부터 회신까지 자동화하기
+
+![014-smart-telegram-tool](./images-1/014-smart-telegram-tool.png)
+
+### 18. <추가> 텔레그램 트리거 없이 자동화하기 – 텔레그램 API 직접 호출 실전 구성
+
+텔레그램 트리거나 오류가 생기는 경우가 종종 있음 -> API 를 통해서 API 직접 호출
+
+![s-telegram-api](./images-1/s-telegram-api.png)
+
+### 19. AI 비서 사만다 업그레이드: 일정 관리와 검색 기능 자동화 실전
+
+[open router](https://openrouter.ai/)
+
+- 이것 저것 AI API 를 모아서 API key 1개로 다 사용할 수 있음
+- 어떤 AI 가 많이 사용되는지 확인할 수 있음
+
+![015-smart-telegram-tool2](image.png)
+
 ## 섹션 6. 이미지 및 비디오 생성 AI Agent
 
 ### 20. OpenAI vs. Replicate – AI 이미지 생성의 모든 것
