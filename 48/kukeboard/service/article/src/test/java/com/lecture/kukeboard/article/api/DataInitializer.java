@@ -1,4 +1,4 @@
-package com.lecture.kukeboard.article;
+package com.lecture.kukeboard.article.api;
 
 import com.lecture.kukeboard.article.entity.Article;
 import jakarta.persistence.EntityManager;

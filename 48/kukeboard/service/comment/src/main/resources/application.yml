@@ -2,7 +2,7 @@ server.port: 9001
 
 spring:
   application:
-    name: kukeboard-article-service
+    name: kukeboard-comment-service
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -16,7 +16,7 @@ spring:
     hibernate:
       ddl-auto: none
 
-logging.level:
-  org.hibernate:
-    SQL: debug
-    orm.jdbc.bind: trace
+#logging.level:
+#  org.hibernate:
+#    SQL: debug
+#    orm.jdbc.bind: trace

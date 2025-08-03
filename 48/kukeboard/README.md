@@ -373,3 +373,9 @@ Primary Key 생성 전략 - 유니크 정렬 숫자
 
 > `article_id` 칼럼 Shard Key
 
+댓글 목록 조회- 최대 2depth
+
+- 댓글 목록은 오래된 댓글이 먼저 노출 -> 계층 내에서 순서 유효
+- parent_comment_id 오름차순, comment_id 오름차순 정렬구조
+- article_id asc, parent_comment_id asc, comment_id asc 인덱스 생성
+  - article_id 는 Shard Key 이기 때문에, 단일 샤드에서 게시글별 댓글 목록 조회 가능

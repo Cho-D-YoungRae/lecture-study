@@ -27,3 +27,5 @@ create table comment.comment
     created_at        datetime      not null,
     primary key (comment_id)
 );
+
+create index idx_article_id_parent_comment_id_comment_id on comment.comment (article_id asc, parent_comment_id asc, comment_id desc);

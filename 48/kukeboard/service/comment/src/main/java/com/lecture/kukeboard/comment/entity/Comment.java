@@ -31,7 +31,7 @@ public class Comment {
         Comment comment = new Comment();
         comment.commentId = commentId;
         comment.content = content;
-        comment.parentCommentId = parentCommentId;
+        comment.parentCommentId = parentCommentId == null ? commentId : parentCommentId;
         comment.articleId = articleId;
         comment.writerId = writerId;
         comment.deleted = false;
