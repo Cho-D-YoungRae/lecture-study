@@ -1,7 +1,7 @@
 package com.lecture.kukeboard.comment.api;
 
 import com.lecture.kukeboard.comment.service.request.CommentCreateRequest;
-import com.lecture.kukeboard.comment.service.request.CommentResponse;
+import com.lecture.kukeboard.comment.service.response.CommentResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.client.RestClient;
 

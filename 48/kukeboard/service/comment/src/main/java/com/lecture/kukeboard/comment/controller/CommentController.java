@@ -2,7 +2,7 @@ package com.lecture.kukeboard.comment.controller;
 
 import com.lecture.kukeboard.comment.service.CommentService;
 import com.lecture.kukeboard.comment.service.request.CommentCreateRequest;
-import com.lecture.kukeboard.comment.service.request.CommentResponse;
+import com.lecture.kukeboard.comment.service.response.CommentResponse;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

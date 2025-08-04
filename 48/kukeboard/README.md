@@ -379,3 +379,6 @@ Primary Key 생성 전략 - 유니크 정렬 숫자
 - parent_comment_id 오름차순, comment_id 오름차순 정렬구조
 - article_id asc, parent_comment_id asc, comment_id asc 인덱스 생성
   - article_id 는 Shard Key 이기 때문에, 단일 샤드에서 게시글별 댓글 목록 조회 가능
+
+댓글 목록 조회 - 무한 depth
+

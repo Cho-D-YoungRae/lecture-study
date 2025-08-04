@@ -1,4 +1,4 @@
-package com.lecture.kukeboard.comment.service.request;
+package com.lecture.kukeboard.comment.service.response;
 
 import com.lecture.kukeboard.comment.entity.Comment;
 
