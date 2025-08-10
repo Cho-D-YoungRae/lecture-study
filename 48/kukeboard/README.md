@@ -388,35 +388,37 @@ Primary Key 생성 전략 - 유니크 정렬 숫자
 ```sql
 -- 댓글 목록 조회 - 페이지 번호
 select *
-from (
-    select comment_id
-    from comment
-    where article_id = {articleId}
-    order by parent_comment_id asc, comment_id asc
-    limit {limit} offset {offset}
-) t left join comment on t.comment_id = comment.comment_id;
+from (select comment_id
+      from comment
+      where article_id = {articleId}
+      order by parent_comment_id asc, comment_id asc
+      limit
+      {
+      limit} offset {offset}) t
+         left join comment on t.comment_id = comment.comment_id;
 
 -- 댓글 개수 조회
 select count(*)
-from (
-    select comment_id
-    from comment
-    where article_id = :articleId
-    limit :limit
-) t;
+from (select comment_id
+      from comment
+      where article_id = :articleId
+      limit :limit) t;
 
 -- 댓글 목록 조회 - 무한 스크롤 1번 페이지
 select *
 from comment
 where article_id = {articleId}
 order by parent_comment_id asc, comment_id asc
-limit {limit}
+limit
+{
+limit}
 
 -- 댓글 목록 조회 - 무한 스크롤 2번 페이지 이상
 select *
 from comment
 where article_id = {articleId}
-  and (parent_comment_id > {lastParentCommentId} or (parent_comment_id = {lastParentCommentId} and comment_id > {lastCommentId}))
+  and (parent_comment_id > {lastParentCommentId} or
+       (parent_comment_id = {lastParentCommentId} and comment_id > {lastCommentId}))
 order by parent_comment_id asc, comment_id asc
 limit :limit
 ```
@@ -470,47 +472,53 @@ Backward index scan
 ```sql
 -- 댓글 목록 조회 - 페이지 번호
 select *
-from (
-    select comment_id
-    from comment_v2
-    where article_id = {article_id}
-    order by path asc
-    limit {limit} offset {offset}
-) t left join comment_v2 on t.comment_id = comment_v2.comment_id;
+from (select comment_id
+      from comment_v2
+      where article_id = {article_id}
+      order by path asc
+      limit
+      {
+      limit} offset {offset}) t
+         left join comment_v2 on t.comment_id = comment_v2.comment_id;
 
 -- 카운트 조회
 select count(*)
-from (select comment_if from comment_v2 where article_id = {article_id} limit {limit}) t;
+from (select comment_if from comment_v2 where article_id = {article_id} limit { limit}) t;
 
 -- 댓글 목록 조회 - 무한 스크롤 1번 페이지
 select *
 from comment_v2
 where article_id = {article_id}
 order by path asc
-limit {limit};
+limit
+{
+limit};
 
 -- 댓글 목록 조회 - 무한 스크롤 2번 페이지 이상 (기준점 lath_path)
 select *
 from comment_v2
 where article_id = {article_id} and > {last_path}
 order by path asc
-limit {limit};
+limit
+{
+limit};
 ```
+
 ## `like` 좋아요
 
 요구사항
 
 - 게시글 좋아요
-  - 각 사용자는 각 게시글에 1회 좋아요
+    - 각 사용자는 각 게시글에 1회 좋아요
 - 좋아요 수
 
 ```sql
 create table article_like
 (
     article_like_id bigint auto_increment primary key,
-    article_id bigint not null,
-    user_id bigint not null,
-    created_at datetime not null
+    article_id      bigint   not null,
+    user_id         bigint   not null,
+    created_at      datetime not null
 );
 
 create unique index idx_article_id_user_id on article_like (article_id asc, user_id asc);
@@ -518,3 +526,82 @@ create unique index idx_article_id_user_id on article_like (article_id asc, user
 
 > Shard Key = article_id  
 > 쿼리 패턴에 대한 요구 사항은 없지만, 적절한 분산의 단위로서 선정
+
+좋아요 수 설계
+
+- 대규모 데이터에서 count 쿼리는 성능 이슈
+    - 그리고, 게시글과 달리 일부 카운트만 보여줄 수 없음
+- 좋아요 수에서는 전체 개수를 실시간으로 빠르게 보여줘야 함
+- 조회 시점에 전체 개수를 실시간으로 조회하는게 큰 비용이 든다면, 좋아요가 생성/삭제될 때마다 미리 좋아요 수를 갱신해두는 방법이 있음
+- 좋아요 테이블의 게시글 별 데이터 개수를 미리 하나의 데이터로 비정규화 해두는 것
+- 좋아요 수라는 데이터의 특정
+    - 쓰기 트래픽이 비교적 크지 않음
+        1. 사용자는 게시글을 조회하고, 마음에 드는 게시글을 찾음
+        2. 사용자는 좋아요 액션을 직접 수행
+    - 데이터의 일관성이 비교적 중요
+        - 15명이 좋아요 했는데, 좋아요 수는 10명으로 나오는 현상?
+- 쓰기 트래픽이 비교적 크지 않고, 일관성이 중요하다면
+    - 관계형 데이터베이스의 트랜잭션을 활용해볼 수 있음
+    - 좋아요 테이블의 데이터 생성/삭제와 좋아요 수 갱신을 하나의 트랜잭션으로 묶음
+- 게시글과 좋아요 수의 변경은 라이프사이클이 다름
+    - 게시글은
+        - 게시글을 작성한 사용자가 쓰기 작업을 수행
+        - 트래픽은 상대적으로 적음
+    - 좋아요 수는
+        - 게시글을 조회한 사용자들이 쓰기 작업을 수행
+        - 트래픽은 상대적으로 많음
+- 서로 다른 주체에 의해서 레코드에 락이 잡힐 수 있음
+    - 게시글 쓰기와 좋아요 수 쓰기는 사용자 입장에서 독립적으로 수행되는 기능인데 각 기능에 영향을 끼칠 수 있음
+    - 타임아웃을 짧게 가져가거나 요청량에 제한을 둔다면?
+    - 독립적인 두 기능이 서로에 의해 실패할 수 있음
+        - 작성자와 관계 없는 좋아요 수 갱신으로 인해 작성자의 쓰기 작업 실패
+- 위 문제를 방지하기 위해 게시글과 좋아요 수의 변경은 독립적인 테이블로 분리할 수 있음
+
+좋아요 수 동시성 처리
+
+- 비관적 락(Pessimistic Lock)
+- 낙관적 락(Optimistic Lock)
+- 비동기 순차 처리
+    - 모든 상황을 실시간으로 처리하고 즉시 응답해줄 필요는 없다는 관점
+        - 요청을 대기열에 저장해두고, 이후에 비동기로 순차적으로 처리
+        - 게시글마다 1개의 스레드에서 순차적으로 처리하면, 동시성 문제도 사라짐
+    - 하지만 비용이 듬
+        - 비동기 처리를 위한 시스템 구축 비용
+        - 실시간으로 결과 응답이 안되기 때문에 클라이언트 측 추가 처리 필요
+            - 이미 처리된 것처럼 보이게하고, 실패 시에 알림을 준다던지?
+        - 서비스 정책으로 납득 필요
+        - 데이터의 일관성 관리를 위한 비용
+            - 대기열에서 중복/누락 없이 반드시 1회 실행 보장되기 위한 시스템 구축 필요
+
+```sql
+create table article_like_count
+(
+    article_id bigint primary key,
+    like_count bigint not null,
+    version    bigint not null
+)
+```
+
+> Shard Key = article_id  
+> article_like 테이블과 동일한 데이터베이스 샤드에서 트랜잭션 처리 위함  
+> version: 낙관적 락 처리를 위한 버전 컬럼 생성
+
+게시글 수
+
+```sql
+create table board_article_count
+(
+    board_id      bigint primary key,
+    article_count bigint not null
+);
+```
+
+댓글 수
+
+```sql
+create table board_comment_count
+(
+    article_id    bigint primary key,
+    comment_count bigint not null
+);
+```
