@@ -496,3 +496,25 @@ where article_id = {article_id} and > {last_path}
 order by path asc
 limit {limit};
 ```
+## `like` 좋아요
+
+요구사항
+
+- 게시글 좋아요
+  - 각 사용자는 각 게시글에 1회 좋아요
+- 좋아요 수
+
+```sql
+create table article_like
+(
+    article_like_id bigint auto_increment primary key,
+    article_id bigint not null,
+    user_id bigint not null,
+    created_at datetime not null
+);
+
+create unique index idx_article_id_user_id on article_like (article_id asc, user_id asc);
+```
+
+> Shard Key = article_id  
+> 쿼리 패턴에 대한 요구 사항은 없지만, 적절한 분산의 단위로서 선정
