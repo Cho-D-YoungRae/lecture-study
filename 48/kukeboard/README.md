@@ -606,7 +606,7 @@ create table board_comment_count
 );
 ```
 
-## 조회수
+## `view` 조회수
 
 조회수 요구사항
 
@@ -691,3 +691,14 @@ create table article_view_count
       - 이미 저장된 데이터가 있으면 저장에 실패하도록
         - setIfAbsent 명령어 사용 사용
 - Redis 를 사용하는 방식은 게시글 조회수 증가에 대해서 Lock을 획득한다고 볼 수 있음
+
+## `hot-article` 인기글
+
+Zookeeper
+
+- 카프카에서 사용되는 메타데이터 관리
+  - Broker, Topic, Partition, Consumer Group, Offset 등
+- 고가용성을 위해 여러 대를 연결하여 클러스터를 이룰 수 있음
+- 카프카에서 Zookeeper 와 의존성이 생기므로 더욱 복잡한 구조가 됨
+- 카프카 2.8 이후부터 메타데이터 관리에 대해 Kafka Broker 자체적으로 관리할 수 있게 됨
+  - KRaft 모드로 Zookeeper 의존성을 제거하여 더 간단한 구조
