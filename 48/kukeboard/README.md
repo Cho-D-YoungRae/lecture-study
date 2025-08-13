@@ -760,3 +760,9 @@ Zookeeper
   - Data=게시글 ID
   - Score=게시글 점수
   - 점수 계산해야 되는 날짜는 Set 안에 점수 계산할 모든 데이터 가지고 있어야 함
+
+레디스 한번에 여러 명령어를 수행하기 위해 `RedisTemplate.executePipelined` 사용할 수 있음
+
+1. sorted set 에 zadd 스코어, 게시물 ID
+2. 10개만 유지하므로 나머지 버림
+3. 만료시간 설정
