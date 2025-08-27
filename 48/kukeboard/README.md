@@ -766,3 +766,7 @@ Zookeeper
 1. sorted set 에 zadd 스코어, 게시물 ID
 2. 10개만 유지하므로 나머지 버림
 3. 만료시간 설정
+
+## Transactional Outbox Pattern
+
+정리 하기
