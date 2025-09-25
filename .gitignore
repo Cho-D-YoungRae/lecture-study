@@ -63,3 +63,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Environment variable ###
+.env

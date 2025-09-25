@@ -1,0 +1,19 @@
+[project]
+name = "inflearn-llm-application"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "docx2txt>=0.9",
+    "langchain>=0.3.27",
+    "langchain-chroma>=0.2.6",
+    "langchain-community>=0.3.29",
+    "langchain-ollama>=0.3.8",
+    "langchain-openai>=0.3.33",
+    "langchain-text-splitters>=0.3.11",
+    "langchain-upstage>=0.7.3",
+    "langchainhub>=0.1.21",
+    "notebook>=7.4.5",
+    "python-dotenv>=1.1.1",
+]
