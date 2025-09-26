@@ -11,6 +11,7 @@ dependencies = [
     "langchain-community>=0.3.29",
     "langchain-ollama>=0.3.8",
     "langchain-openai>=0.3.33",
+    "langchain-pinecone>=0.2.12",
     "langchain-text-splitters>=0.3.11",
     "langchain-upstage>=0.7.3",
     "langchainhub>=0.1.21",
