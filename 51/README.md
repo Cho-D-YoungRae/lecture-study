@@ -6,4 +6,4 @@
 > [streamlit 코드(github)](https://github.com/jasonkang14/inflearn-streamlit-lecture)  
 > [gitbook](https://jason-kang.gitbook.io/rag-llm-application-feat.-langchain/)
 
-- [ ] 2025-09-25 ~ ing
+- [x] 2025-09-25 ~ 2025-09-30

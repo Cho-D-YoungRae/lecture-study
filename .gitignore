@@ -66,3 +66,7 @@ out/
 
 ### Environment variable ###
 .env
+
+### Python ###
+__pycache__
+.venv
