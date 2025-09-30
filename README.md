@@ -53,3 +53,4 @@
 49. [김영한의 실전 데이터베이스 - 기본편](./49) - `inflearn`, `김영한`
 50. [진짜 현장에서 통하는 OCR, 이렇게 만듭니다](./50) - `inflearn`, `데이비드최`
 51. [RAG를 활용한 LLM Application 개발 (feat. LangChain)](./51) - `inflearn`, `강병진`
+52. [LangGraph를 활용한 AI Agent 개발 (feat. MCP)](./52) - `inflearn`, `강병진`
