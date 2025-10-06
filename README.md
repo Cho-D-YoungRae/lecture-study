@@ -54,3 +54,4 @@
 50. [진짜 현장에서 통하는 OCR, 이렇게 만듭니다](./50) - `inflearn`, `데이비드최`
 51. [RAG를 활용한 LLM Application 개발 (feat. LangChain)](./51) - `inflearn`, `강병진`
 52. [LangGraph를 활용한 AI Agent 개발 (feat. MCP)](./52) - `inflearn`, `강병진`
+53. [주문시스템으로 알아보는 분산트랜잭션](./53) - `inflearn`, `최상용`
