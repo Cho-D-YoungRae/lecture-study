@@ -1,8 +1,6 @@
 package com.example.monolithic.order.application.dto;
 
-import java.util.List;
-
-public record PlaceOrderCommand(
+public record CreateOrderResult(
         Long orderId
 ) {
 }

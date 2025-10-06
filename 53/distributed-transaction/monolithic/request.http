@@ -1,5 +1,5 @@
-### 주문
-POST http://localhost:8080/orders/place
+### 주문 생성
+POST http://localhost:8080/orders
 Content-Type: application/json
 
 {
@@ -7,4 +7,12 @@ Content-Type: application/json
     {"productId": 1, "quantity": 1},
     {"productId": 2, "quantity": 2}
   ]
+}
+
+### 주문
+POST http://localhost:8080/orders/place
+Content-Type: application/json
+
+{
+    "orderId": 1
 }
