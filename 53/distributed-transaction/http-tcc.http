@@ -1,0 +1,10 @@
+### 상품 예약
+POST http://localhost:8082/product/reserve
+Content-Type: application/json
+
+{
+  "requestId": "1",
+  "items": [
+    {"productId": 1, "reserveQuantity": 1}
+  ]
+}

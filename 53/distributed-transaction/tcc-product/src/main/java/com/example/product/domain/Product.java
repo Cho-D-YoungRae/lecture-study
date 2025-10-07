@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,15 +26,19 @@ public class Product {
 
     private Long reservedQuantity;
 
-    public Product(Long quantity, Long price) {
+    @Version
+    private Long version;
+
+    public Product(Long quantity, Long price, Long reservedQuantity) {
         this.quantity = quantity;
         this.price = price;
+        this.reservedQuantity = reservedQuantity;
     }
 
     public Long reserve(Long requestedQuantity) {
         long reservableQuantity = this.quantity - this.reservedQuantity;
 
-        if (requestedQuantity < requestedQuantity) {
+        if (reservableQuantity < requestedQuantity) {
             throw new IllegalStateException("예약할 수 있는 수량이 부족합니다.");
         }
 

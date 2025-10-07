@@ -1,6 +1,6 @@
 package com.example.product.web;
 
-import com.example.product.application.ProductService;
+import com.example.product.application.ProductFacadeService;
 import com.example.product.application.RedisLockService;
 import com.example.product.application.dto.ProductReserveResult;
 import com.example.product.web.dto.ProductReserveRequest;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ProductController {
 
-    private final ProductService productService;
+    private final ProductFacadeService productService;
     private final RedisLockService redisLockService;
 
     @PostMapping("/product/reserve")
