@@ -48,6 +48,14 @@ public class ProductReservation {
         this.status = ProductReservationStatus.CONFIRMED;
     }
 
+    public void cancel() {
+        if (this.status == ProductReservationStatus.CONFIRMED) {
+            throw new IllegalStateException("이미 확정된 예약은 취소할 수 없습니다.");
+        }
+
+        this.status = ProductReservationStatus.CANCELED;
+    }
+
     public enum ProductReservationStatus {
         RESERVED,
         CONFIRMED,

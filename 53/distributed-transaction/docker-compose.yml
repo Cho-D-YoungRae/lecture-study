@@ -4,12 +4,13 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_DATABASE: commerce_example
       TZ: Asia/Seoul
       MYSQL_ROOT_PASSWORD: secret
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./database.sql:/docker-entrypoint-initdb.d/database.sql
   redis:
     image: redis:8.2.2
     ports:
