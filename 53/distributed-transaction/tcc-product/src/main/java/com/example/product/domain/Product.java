@@ -46,6 +46,19 @@ public class Product {
         return this.price * requestedQuantity;
     }
 
+    public void confirm(Long requestedQuantity) {
+        if (this.quantity < requestedQuantity) {
+            throw new IllegalStateException("재고가 부족합니다.");
+        }
+
+        if (this.reservedQuantity < requestedQuantity) {
+            throw new IllegalStateException("예약된 수량이 부족합니다.");
+        }
+
+        this.quantity -= requestedQuantity;
+        this.reservedQuantity -= requestedQuantity;
+    }
+
     public Long calculatePrice(Long quantity) {
         return this.price * quantity;
     }

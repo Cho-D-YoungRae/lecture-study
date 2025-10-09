@@ -8,3 +8,11 @@ Content-Type: application/json
     {"productId": 1, "reserveQuantity": 1}
   ]
 }
+
+### 상품 예약 확정
+POST http://localhost:8082/product/confirm
+Content-Type: application/json
+
+{
+  "requestId": "1"
+}
