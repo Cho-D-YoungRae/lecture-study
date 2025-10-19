@@ -56,4 +56,4 @@
 52. [LangGraph를 활용한 AI Agent 개발 (feat. MCP)](./52) - `inflearn`, `강병진`
 53. [주문시스템으로 알아보는 분산트랜잭션](./53) - `inflearn`, `최상용`
 54. [회사에서 바로 쓰는 업무자동화 AI 에이전트 (w. n8n, LangGraph)](./54) - `inflearn`, `강병진`
-
+55. [LLM 파인튜닝 1-DAY 워크숍](./55) - `offline`, `안상준`, `정다솔`
