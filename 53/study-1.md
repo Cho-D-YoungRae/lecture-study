@@ -165,3 +165,22 @@ TCC 패턴이란?
 
 - 시간이 지날수록 코디네이터가 복잡해질 수 있음
 - 서비스 간 결합도가 증가
+
+## 33. Orchestration - Order 생성 API 구현
+
+![33-1](images/33-1.png)
+
+## 35. Orchestration - 주문 API 구현
+
+![35-1](images/35-1.png)
+
+## 37. Orchestration - 현재구조의 문제점과 해결방법
+
+![37-1](images/37-1.png)
+
+- 롤백 도중에 에러가 발생하는 경우가 고려되지 않았음
+- 롤백 도중에 에러가 발생하였을 때의 데이터를 기록해서 추후에 재시도할 수 있도록 해야함
+
+![37-2](images/37-2.png)
+
+- 주기적인 배치 프로그램이나 스케줄러를 활용해서 '보상트랜잭션 수행해야할 목록(CompensationRegistry status = PENDING) 조회'
