@@ -3,4 +3,4 @@
 > [github](https://github.com/jasonkang14/inflearn-agent-use-cases-lecture)  
 > [강의자료(노션)](https://www.kangsium.com/agent-use-cases-with-n8n-and-langgraph)
 
-- [ ] 2025-10-11 ~ ing
+- [x] 2025-10-11 ~ ing
