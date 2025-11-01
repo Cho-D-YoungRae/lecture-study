@@ -58,3 +58,4 @@
 54. [회사에서 바로 쓰는 업무자동화 AI 에이전트 (w. n8n, LangGraph)](./54) - `inflearn`, `강병진`
 55. [LLM 파인튜닝 1-DAY 워크숍](./55) - `offline`, `안상준`, `정다솔`
 56. [처음 해보는 맞춤형 LLM 만들기 – LoRA & QLoRA 파인튜닝 입문](./56) - `inflearn`, `HappyAI`
+57. [맞춤형 LLM 만들기 : 처음 시작하는 분을 위한 RAG 기초 개념부터 멀티모달·Agent 실습까지](./57) - `inflearn`, `HappyAI`
