@@ -15,6 +15,9 @@ class ReviewPolicyValidator(
     private val orderItemRepository: OrderItemRepository,
     private val reviewRepository: ReviewRepository,
 ) {
+    /**
+     * 최근 14일간 주문이력이 있을 경우 리뷰 작성 가능
+     */
     fun validateNew(user: User, target: ReviewTarget): ReviewKey {
         if (target.type == ReviewTargetType.PRODUCT) {
             val reviewKeys = orderItemRepository.findRecentOrderItemsForProduct(user.id, target.id, OrderState.PAID, LocalDateTime.now().minusDays(14), EntityStatus.ACTIVE)
@@ -30,6 +33,9 @@ class ReviewPolicyValidator(
         throw UnsupportedOperationException()
     }
 
+    /**
+     * 리뷰 작성 후 7일 이내에만 수정 가능
+     */
     fun validateUpdate(user: User, reviewId: Long) {
         val review = reviewRepository.findByIdAndUserId(reviewId, user.id) ?: throw CoreException(ErrorType.NOT_FOUND_DATA)
         if (review.createdAt.plusDays(7).isBefore(LocalDateTime.now())) throw CoreException(ErrorType.REVIEW_UPDATE_EXPIRED)

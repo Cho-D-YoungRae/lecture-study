@@ -5,6 +5,12 @@ import io.dodn.commerce.core.support.OffsetLimit
 import io.dodn.commerce.core.support.Page
 import org.springframework.stereotype.Service
 
+/**
+ * 리뷰 추가와 업데이트와 같이 로직이 있는 경우에서 응집되어 있는 컴포넌트로 묶었을 때의 장점
+ * * 단위 테스트하기 좋음
+ * * 트랜잭션 묶기 좋음
+ * * 서비스 영역의 코드 보기가 쉬워짐
+ */
 @Service
 class ReviewService(
     private val reviewFinder: ReviewFinder,

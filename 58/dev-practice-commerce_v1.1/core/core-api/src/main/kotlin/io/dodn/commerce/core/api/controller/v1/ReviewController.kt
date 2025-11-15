@@ -23,6 +23,10 @@ import org.springframework.web.bind.annotation.RestController
 class ReviewController(
     private val reviewService: ReviewService,
 ) {
+    /**
+     * 리뷰가 장기적으로 확장될 수 있다는 요구사항이 있는 것
+     * * 지금은 상품에만 달릴 수 있지만, 나중에 판매자에게 리뷰를 할 수 있다거나 상품 옵션 등등 혹은 상품 이외 다른 것
+     */
     @GetMapping("/v1/reviews")
     fun getReviews(
         @RequestParam targetType: ReviewTargetType,

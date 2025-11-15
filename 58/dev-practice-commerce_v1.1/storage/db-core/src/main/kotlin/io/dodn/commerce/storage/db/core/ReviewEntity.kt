@@ -9,6 +9,9 @@ import jakarta.persistence.Index
 import jakarta.persistence.Table
 import java.math.BigDecimal
 
+/**
+ * 리뷰키: 범용적으로 리뷰를 작성할 수 있도록 하기 위해 사용
+ */
 @Entity
 @Table(
     name = "review",
