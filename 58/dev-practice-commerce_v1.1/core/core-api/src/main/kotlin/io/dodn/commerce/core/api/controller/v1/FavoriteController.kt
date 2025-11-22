@@ -28,6 +28,10 @@ class FavoriteController(
         return ApiResponse.success(PageResponse(FavoriteResponse.of(page.content), page.hasNext))
     }
 
+    /**
+     * 찜 처리 API 1개로 찜하기/찜해제를 통합하면 따닥 문제 발생 가능.
+     * 따닥 문제를 방지하기 위해 찜하기/찜해제를 분리 -> 여기서는 타입을 통해서 구분
+     */
     @PostMapping("/v1/favorites")
     fun applyFavorite(
         user: User,
