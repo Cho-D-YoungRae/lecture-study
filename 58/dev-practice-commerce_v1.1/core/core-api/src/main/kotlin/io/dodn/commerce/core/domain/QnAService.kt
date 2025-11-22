@@ -11,6 +11,11 @@ import io.dodn.commerce.storage.db.core.QuestionRepository
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
+/**
+ * 여기서는 컴포넌트화를 시켜놓지 않음.
+ * CRUD 가 간단한 경우 이와 같은 것도 괜찮을 수 있음.
+ * 장기적으로 소프트웨어가 성장해나간다고 생각하면 이곳 저곳의 코드 형태가 너무 다양하면 새로운 사람들이 파악하기 어려움. -> 일관된 형태가 좋음.
+ */
 @Service
 class QnAService(
     private val questionRepository: QuestionRepository,

@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
+/**
+ * Answer API 가 없는데, 서비스 API이므로 답변은 어드민 기능으로 보고 이 코드에는 없음.
+ */
 @RestController
 class QnAController(
     private val qnaService: QnAService,
