@@ -20,6 +20,7 @@ class PointHandler(
         if (amount == BigDecimal.ZERO) return
 
         // NOTE: 모든 유저는 가입 시 Point 테이블 생성
+        // -> 이렇게 하면 구현할 때 서비스 쪽 로직이 심플해짐. 그렇지 않다면 로직에 분기로직 들이 많이 필요할 수 있음.
         val balance = pointBalanceRepository.findByUserId(user.id) ?: throw CoreException(ErrorType.NOT_FOUND_DATA)
         balance.apply(amount)
         pointHistoryRepository.save(
