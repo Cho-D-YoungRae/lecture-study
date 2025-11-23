@@ -1,11 +1,7 @@
 package io.dodn.commerce.core.domain
 
 import io.dodn.commerce.core.enums.EntityStatus
-import io.dodn.commerce.core.enums.OwnedCouponState
-import io.dodn.commerce.core.support.error.CoreException
-import io.dodn.commerce.core.support.error.ErrorType
 import io.dodn.commerce.storage.db.core.CouponRepository
-import io.dodn.commerce.storage.db.core.OwnedCouponEntity
 import io.dodn.commerce.storage.db.core.OwnedCouponRepository
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
@@ -15,6 +11,11 @@ class OwnedCouponService(
     private val couponRepository: CouponRepository,
     private val ownedCouponRepository: OwnedCouponRepository,
 ) {
+    /**
+     * 현재는 운영팀이 만약에 쿠폰의 할인금액이나 만료일을 바꾸면 이미 발급된 모든 쿠폰에 적용됨
+     * * 이는 장점일 수도 단점일 수도 있음 -> 기획쪽의 요구사항에 따라 변경될 수 있음.
+     * * 쿠폰 정보를 변경해도 이미 다운로드 한 사람은 변하지 않도록 하려면 소유 쿠폰쪽에 스냅샷(?)을 저장해야 함.
+     */
     fun getOwnedCoupons(user: User): List<OwnedCoupon> {
         val ownedCoupons = ownedCouponRepository.findByUserIdAndStatus(user.id, EntityStatus.ACTIVE)
         if (ownedCoupons.isEmpty()) return emptyList()
@@ -35,23 +36,6 @@ class OwnedCouponService(
                 ),
             )
         }
-    }
-
-    fun download(user: User, couponId: Long) {
-        val coupon = couponRepository.findByIdAndStatusAndExpiredAtAfter(couponId, EntityStatus.ACTIVE, LocalDateTime.now())
-            ?: throw CoreException(ErrorType.COUPON_NOT_FOUND_OR_EXPIRED)
-
-        val existing = ownedCouponRepository.findByUserIdAndCouponId(user.id, couponId)
-        if (existing != null) {
-            throw CoreException(ErrorType.COUPON_ALREADY_DOWNLOADED)
-        }
-        ownedCouponRepository.save(
-            OwnedCouponEntity(
-                userId = user.id,
-                couponId = coupon.id,
-                state = OwnedCouponState.DOWNLOADED,
-            ),
-        )
     }
 
     fun getOwnedCouponsForCheckout(user: User, productIds: Collection<Long>): List<OwnedCoupon> {
