@@ -14,6 +14,9 @@ class CartService(
     private val cartItemRepository: CartItemRepository,
     private val productRepository: ProductRepository,
 ) {
+    /**
+     * 카트라는 엔티티가 존재하는 것은 아님. 클래스로만 존재 -> 카트는 논리적인 개념.
+     */
     fun getCart(user: User): Cart {
         val items = cartItemRepository.findByUserIdAndStatus(user.id, EntityStatus.ACTIVE)
         val productMap = productRepository.findAllById(items.map { it.productId })

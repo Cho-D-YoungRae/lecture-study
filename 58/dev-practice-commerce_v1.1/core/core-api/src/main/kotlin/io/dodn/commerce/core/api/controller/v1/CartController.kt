@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
+/**
+ * 카트는 하나이고, 카트 안에 들어가는 것이 아이템이라고 정의된 것
+ */
 @RestController
 class CartController(
     private val cartService: CartService,
