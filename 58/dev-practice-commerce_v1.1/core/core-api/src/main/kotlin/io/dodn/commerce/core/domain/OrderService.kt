@@ -20,6 +20,17 @@ class OrderService(
     private val orderItemRepository: OrderItemRepository,
     private val productRepository: ProductRepository,
 ) {
+    /**
+     * 주문은 ID 를 따로 생성한다 -> auto increment 가 아닌 별도의 키 생성기를 통해서 생성
+     * * 보안적인 것
+     * * 경쟁사에서 주문 건수 확인 가능
+     * * OrderKeyGenerator.generate()는 임의로 만든거라 참고해도되고, 안해도 되고
+     *
+     * 주문은 만드는 타이밍에 주문 데이터를 생성하는 것이 좋음
+     * * 안정적으로 핸들링하고 운영하기 편함
+     * * 주문은 중요한 역할을 함
+     * * 쓰레기 데이터가 생길 수 있음 -> 하다가 중간에 이탈..
+     */
     @Transactional
     fun create(user: User, newOrder: NewOrder): String {
         val orderProductIds = newOrder.items.map { it.productId }.toSet()

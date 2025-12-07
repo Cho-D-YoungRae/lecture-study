@@ -26,6 +26,9 @@ class OrderController(
     private val ownedCouponService: OwnedCouponService,
     private val pointService: PointService,
 ) {
+    /**
+     * create, createFromCart 들다 orderService.create() 호출하는 구조 -> 뒷단은 똑같이 처리되는 것
+     */
     @PostMapping("/v1/orders")
     fun create(
         user: User,
@@ -59,6 +62,9 @@ class OrderController(
         )
     }
 
+    /**
+     *
+     */
     @GetMapping("/v1/orders/{orderKey}/checkout")
     fun findOrderForCheckout(
         user: User,
