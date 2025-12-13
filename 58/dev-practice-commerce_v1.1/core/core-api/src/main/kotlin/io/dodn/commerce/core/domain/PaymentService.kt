@@ -61,6 +61,9 @@ class PaymentService(
 
         /**
          * NOTE: PG 승인 API 호출 => 성공 시 다음 로직으로 진행 | 실패 시 예외 발생
+         *
+         * 이 아래로는 결제가 된 것이기 때문에 가급적 예외가 발생하면 안됨 -> 트랜잭션 처리
+         * 어디에 실패하더라도 로깅만 하고 넘어가는 것이 나을 수도 있음
          */
 
         payment.success(
@@ -93,6 +96,19 @@ class PaymentService(
         return payment.id
     }
 
+    /**
+     * 주문의 상태를 기록하지 않음. 결제에 대한 상태를 기록하지 않음. -> TransactionHistory에 실패 기록만 남김
+     * 아래 코드 전략으로 보면
+     * * 주문이 결제가 성공될 떄까지 주문을 재사용 가능
+     * * 결제는 생성될 수는 있음
+     *
+     * 기획에서 결제 실패한 것에 대해서 상태를 알고 싶다고 할 수 있음
+     * * 결제가 실패된건지, 주문창에서 꺼버린건지 등
+     * * 별도 데이터 적재한 걸로 체크할 수 있다면 트랜잭션 히스토리 등을 통해서 결제 실패 상태 등은 알 수 있음
+     *
+     * 상태 핸들링은 서비스를 운영하는데 귀찮고 복잡하게 만들기 때문에 최적화하는게 운영하고 확장해나가는데 도움이 됨
+     * * 상태는 문제를 많이 일으킬 수 있다
+     */
     fun fail(orderKey: String, code: String, message: String) {
         val order = orderRepository.findByOrderKeyAndStateAndStatus(orderKey, OrderState.CREATED, EntityStatus.ACTIVE) ?: throw CoreException(ErrorType.NOT_FOUND_DATA)
         val payment = paymentRepository.findByOrderId(order.id) ?: throw CoreException(ErrorType.NOT_FOUND_DATA)

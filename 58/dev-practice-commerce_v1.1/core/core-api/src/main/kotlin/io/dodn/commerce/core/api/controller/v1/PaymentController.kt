@@ -37,6 +37,10 @@ class PaymentController(
         return ApiResponse.success(CreatePaymentResponse(id))
     }
 
+    /**
+     * PG 사에서 결제 성공 콜백을 받는 엔드포인트
+     * PG 사에서 호출하는 것이기 때문에 RequestParam 은 PG 사의 스펙에 따름
+     */
     @PostMapping("/v1/payments/callback/success")
     fun callbackForSuccess(
         @RequestParam orderId: String,
@@ -51,6 +55,9 @@ class PaymentController(
         return ApiResponse.success()
     }
 
+    /**
+     * PG 사에서 결제 실패 콜백을 받는 엔드포인트
+     */
     @PostMapping("/v1/payments/callback/fail")
     fun callbackForFail(
         @RequestParam orderId: String,

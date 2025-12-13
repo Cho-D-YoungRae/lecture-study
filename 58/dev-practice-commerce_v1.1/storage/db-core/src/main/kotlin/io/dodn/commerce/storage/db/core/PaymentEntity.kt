@@ -26,10 +26,10 @@ class PaymentEntity(
     val usedPoint: BigDecimal,
     val paidAmount: BigDecimal,
     state: PaymentState,
-    externalPaymentKey: String? = null,
-    method: PaymentMethod? = null,
-    approveCode: String? = null,
-    paidAt: LocalDateTime? = null,
+    externalPaymentKey: String? = null, // PG사 결제 고유 키
+    method: PaymentMethod? = null,  // by PG
+    approveCode: String? = null, // by PG
+    paidAt: LocalDateTime? = null,  // // by PG
 ) : BaseEntity() {
     @Enumerated(EnumType.STRING)
     var state: PaymentState = state
