@@ -50,6 +50,20 @@ class CancelService(
         pointHandler.earn(User(payment.userId), PointType.PAYMENT, payment.id, payment.usedPoint)
         pointHandler.deduct(User(payment.userId), PointType.PAYMENT, payment.id, PointAmount.PAYMENT)
 
+        /**
+         * 취소를 결제와 분리하는 것을 선호
+         *
+         * 결제에 취소상태를 두고 결제 하나로 모두 핸들링 할 수도 있으나
+         * 그러면 Payment 는 결제에 대해서만 업데이트되는 것이 아니라 취소에 대해서도 업데이트 되는 것
+         * > 무조건 정답이다라고 할 수는 없음. 하지만 이 선택은 정산쪽에 장점.
+         *
+         * 결제, 취소가 각각의 테이블에 저장되는 구조이고 Immutable 하게 관리
+         * > 저장만 되는 것이면 수정 이력을 확인할 필요 없음
+         *
+         * 데이터가 파편화되어있고 뷰를 그릴 때 좀 더 불편할 수 있다는 단점이 있으므로 트레이드오프 고민.
+         *
+         * 취소가 많이 생길까? -> 일반적인 운영 상황에서 취소는 많이 발생하지는 않는다.
+         */
         val cancel = cancelRepository.save(
             CancelEntity(
                 userId = payment.userId,
