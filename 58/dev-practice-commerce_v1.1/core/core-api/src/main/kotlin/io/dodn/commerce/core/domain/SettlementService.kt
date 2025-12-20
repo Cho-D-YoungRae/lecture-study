@@ -18,8 +18,10 @@ import org.springframework.transaction.annotation.Transactional
 import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
-import kotlin.collections.iterator
 
+/**
+ * 배치를 나누어 놓으면 테스트 하기 쉬움
+ */
 @Service
 class SettlementService(
     private val paymentRepository: PaymentRepository,
