@@ -15,6 +15,10 @@ import io.dodn.commerce.core.support.Page
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 
+/**
+ * 어셈블러들은 api 하위 패키지에 존재 -> API 를 위해 기능을 뭉쳐주는 것
+ * > 어셈블러는 실제로 사용하는 어휘는 아니고 이질감을 주기 위해 이렇게 선택한 어휘라고 함
+ */
 @Component
 class ProductAssembler(
     private val productService: ProductService,
