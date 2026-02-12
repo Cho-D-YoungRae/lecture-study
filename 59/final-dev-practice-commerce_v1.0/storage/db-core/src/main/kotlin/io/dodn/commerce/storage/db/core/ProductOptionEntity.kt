@@ -13,5 +13,5 @@ class ProductOptionEntity(
     val costPrice: BigDecimal,
     val salesPrice: BigDecimal,
     val discountedPrice: BigDecimal,
-    val priority: Int,
+    val priority: Int,  // 정렬을 위해
 ) : BaseEntity()
