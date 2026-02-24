@@ -8,6 +8,9 @@ import io.dodn.commerce.core.support.error.ErrorType
 import io.dodn.commerce.core.support.file.ImageHandle
 import java.math.BigDecimal
 
+/**
+ * 이미지 업로드 후 아이디를 받아서 사용하기 때문에 다른 API 들에서는 ID 로 소통
+ */
 data class AddReviewRequest(
     val userId: Long,
     val targetType: ReviewTargetType,

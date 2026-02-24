@@ -6,6 +6,10 @@ import io.dodn.commerce.core.support.error.ErrorType
 import io.dodn.commerce.core.support.file.ImageHandle
 import java.math.BigDecimal
 
+/**
+ * 리뷰 컨텐츠와 이미지는 성질이 다르고, 라이프사이클이 다르다고 판단
+ * > 별도 클래스로 구성을 함
+ */
 data class UpdateReviewRequest(
     val rate: BigDecimal,
     val content: String,

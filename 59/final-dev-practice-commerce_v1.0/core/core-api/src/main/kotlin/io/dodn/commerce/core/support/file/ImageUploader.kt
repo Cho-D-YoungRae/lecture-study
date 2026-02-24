@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile
 import java.util.UUID
 
+/**
+ * 이미지는 별도 스토리지에 저장하고 저장 후에는 DB에 이미지 정보 저장 후 DB 의 이미지 ID 를 반환
+ */
 @Component
 class ImageUploader(
     private val imageRepository: ImageRepository,
