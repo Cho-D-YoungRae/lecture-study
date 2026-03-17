@@ -22,6 +22,9 @@ class FavoriteAssembler(
     private val brandService: BrandService,
     private val merchantService: MerchantService,
 ) {
+    /**
+     * 웹 같은 경우는 배포가 쉽지만 앱은 하위호환을 신경써줘야 함.
+     */
     fun applyFavorite(user: User, request: ApplyFavoriteRequest) {
         // 호환 처리: 기존 클라이언트는 productId만 보낼 수 있음
         val targetType = request.targetType ?: FavoriteTargetType.PRODUCT

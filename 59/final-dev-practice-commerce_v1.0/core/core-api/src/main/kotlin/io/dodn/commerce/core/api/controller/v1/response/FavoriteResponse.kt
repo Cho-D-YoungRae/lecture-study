@@ -8,6 +8,17 @@ import io.dodn.commerce.core.enums.FavoriteTargetType
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
+/**
+ * 레거시 코드에서는 상품 정보를 안내려 주고 있음
+ * 클라이언트에서 API 를 조합해서 하고 있는 것으로 보이는데 아쉬운 구조 였음
+ * ```kotlin
+ * data class FavoriteResponse(
+ *     val id: Long,
+ *     val productId: Long,
+ *     val favoritedAt: LocalDateTime,
+ * )
+ * ```
+ */
 data class FavoriteResponse(
     val id: Long,
     val targetType: FavoriteTargetType,
