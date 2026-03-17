@@ -29,6 +29,20 @@ class PaymentProcessor(
     private val transactionHistoryRepository: TransactionHistoryRepository,
     private val cancelBalanceRepository: CancelBalanceRepository,
 ) {
+    /**
+     * ## 쿠폰 다회권 동시성 처리 이슈
+     *
+     * 경합이 발생했을 때 낙관적 락으로 처리하고 예외를 던지도록 했다.
+     * > 돈이 빠져나간 뒤에 쿠폰을 사용하고 있어서 낙관적 락 충돌 발생해서 예외를 던지면 다 롤백이 될 것
+     *
+     * 여기서 고민을 해야한다.
+     *
+     * 쿠폰이 동시성 충돌이 난다는 것은 일반적인 상황이 아니다. -> 어뷰저일 수도 있다.
+     *
+     * 혹은 가족 계정처럼 아이디를 돌려 쓸 수 있다.
+     *
+     * 이런 것들은 결국 전략이 된다. 어떻게 서비스를 운영할 것인가 어떻게 기능을 만들 것인가를 고민한다.
+     */
     @Transactional
     fun success(orderKey: String, externalPaymentKey: String): Long {
         val order = orderRepository.findByOrderKeyAndStateAndStatus(orderKey, OrderState.CREATED, EntityStatus.ACTIVE)

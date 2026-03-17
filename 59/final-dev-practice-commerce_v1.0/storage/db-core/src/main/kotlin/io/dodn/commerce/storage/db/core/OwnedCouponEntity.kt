@@ -9,6 +9,12 @@ import jakarta.persistence.Index
 import jakarta.persistence.Table
 import jakarta.persistence.Version
 
+/**
+ * 엔티티에 로직이 들어있어서 어디가 도메인 객체인가? 헷갈릴 수 있다.
+ *
+ * 여기있는 로직들을 도메인쪽으로 가져와서 로직 처리를 하고 엔티티는 그냥 값만 반영하도록 변경할 수 있다.
+ * > 팀에서 결정하면 됨
+ */
 @Entity
 @Table(
     name = "owned_coupon",
