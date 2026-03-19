@@ -6,6 +6,11 @@ import jakarta.persistence.Index
 import jakarta.persistence.Table
 import java.time.LocalDateTime
 
+
+/**
+ * 공유 장바구니는 언젠가 지워질 수도 있음을 생각한다. -> CartAccessEntity가 액세스 키와 만료 관련 정보도 갖는다.
+ * > 카트가 만료되는 것은 공유 장바구니로 인해 생긴 기능.
+ */
 @Entity
 @Table(
     name = "cart_access",

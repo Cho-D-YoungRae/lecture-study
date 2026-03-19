@@ -21,6 +21,10 @@ class CartHandler(
         private const val EXPIRATION_DAYS = 7L
     }
 
+    /**
+     * 나도 공유 장바구니에 대한 접근 권한을 인가 받는다 > '내 거니까 나는 안 넣어도 된다'로 접근하지 않음
+     * > 로직이 일률적을로 공유 장바구니를 쓰려면 권한 검사를 하도록 깔끔하게 할 수 있음
+     */
     fun createSharedCart(userId: Long): CartAccess {
         val cart = cartRepository.save(
             CartEntity(

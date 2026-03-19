@@ -12,6 +12,11 @@ import org.springframework.transaction.annotation.Transactional
 class CartItemManager(
     private val cartItemRepository: CartItemRepository,
 ) {
+    /**
+     * 카트 아이템에서는 쉐어드 카트가 안보인다. > 카트 타입을 모른다.
+     * 카트 아이템은 자기가 어디에 추가된지 몰라도 된다.
+     * 
+     */
     @Transactional
     fun addItem(owner: CartOwner, item: AddCartItem): Long {
         val existing = cartItemRepository.findByCartIdAndProductIdAndProductOptionId(owner.cartId, item.productId, item.productOptionId)

@@ -16,6 +16,12 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
+/**
+ * 공유 장바구니도 카트라는 응집된 개념이기 때문에 한 개의 컨트롤러에 넣었다.
+ *
+ * shard-cart 가 붙은 것은 공유 장바구니 전용 기능, 안 붙은 것은 전체 장바구니 기능
+ *
+ */
 @RestController
 class CartController(
     private val cartService: CartService,
@@ -72,6 +78,9 @@ class CartController(
         return ApiResponse.success()
     }
 
+    /**
+     * 링크를 받았을 때 공유 장바구니를 수락하는 기능
+     */
     @PostMapping("/v1/cart/{accessKey}/access")
     fun accessCart(@PathVariable accessKey: String, user: User): ApiResponse<Any> {
         cartService.access(user, accessKey)
