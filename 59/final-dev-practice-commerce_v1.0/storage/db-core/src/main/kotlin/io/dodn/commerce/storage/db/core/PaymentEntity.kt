@@ -10,6 +10,9 @@ import jakarta.persistence.Table
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
+/**
+ * 조르기를 추가하면서 주문을 만든 사람과 결제한 사람이 달라질 수 있음 -> payerUserId 추가
+ */
 @Entity
 @Table(
     name = "payment",
