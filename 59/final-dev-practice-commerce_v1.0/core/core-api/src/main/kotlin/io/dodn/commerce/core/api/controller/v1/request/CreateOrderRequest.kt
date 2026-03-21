@@ -6,6 +6,9 @@ import io.dodn.commerce.core.domain.User
 import io.dodn.commerce.core.support.error.CoreException
 import io.dodn.commerce.core.support.error.ErrorType
 
+/**
+ * 강사는 클래스 안에 클래스 만드는 것을 선호하지 않지만 프레젠테이션 레이어에서는 스펙을 보여줘야 되기도 하다보니 어느 정도 허용
+ */
 data class CreateOrderRequest(
     val targets: List<CreateOrderTarget>,
 ) {
