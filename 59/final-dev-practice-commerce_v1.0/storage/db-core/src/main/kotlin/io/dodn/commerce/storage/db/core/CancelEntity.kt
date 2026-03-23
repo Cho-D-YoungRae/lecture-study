@@ -8,6 +8,10 @@ import jakarta.persistence.Table
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
+/**
+ * 부분 취소일 때는 orderItemId 가 없을 것
+ * > null 혹은 -1 등의 값 활용 (강사는 -1 사용)
+ */
 @Entity
 @Table(name = "cancel")
 class CancelEntity(

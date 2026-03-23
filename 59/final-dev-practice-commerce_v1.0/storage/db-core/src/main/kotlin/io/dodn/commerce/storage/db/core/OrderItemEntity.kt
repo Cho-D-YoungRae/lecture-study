@@ -11,6 +11,8 @@ import java.math.BigDecimal
  * order item 이 product 기준 -> product option 기준으로 변경
  *
  * 마이그레이션이 필요. 기존 product 에 대해 어떤 product option id 사용할 것 인가?
+ *
+ * 부분 취소가 생기면서 order 에 상태가 필요해짐. -> 어떤 것이 취소됐는지
  */
 @Entity
 @Table(name = "order_item")
