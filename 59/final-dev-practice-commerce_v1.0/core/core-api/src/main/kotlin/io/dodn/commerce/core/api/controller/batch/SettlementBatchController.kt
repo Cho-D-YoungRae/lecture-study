@@ -7,6 +7,12 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDate
 
+/**
+ * 정산 입금 배치만 변경되면 된다.
+ * - 데이터 적재와 계산은 변경되지 않아도 된다.
+ * - 매일매일 데이터를 모아놓으면 이 데이터들을 합쳐서 n일치 데이터를 만들 수 있다.
+ * - 데이터는 매일매일 쌓아 놓는 것이 이후 다양한 요구사항에 더 유연하게 대처할 수 있다.
+ */
 @RestController
 class SettlementBatchController(
     private val settlementService: SettlementService,
